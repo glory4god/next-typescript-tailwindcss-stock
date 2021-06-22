@@ -4,7 +4,11 @@ import type {
   DataCondition,
   CompanyValueData,
 } from '../../../types/chart/ChartType';
-import { getToday, maxPrice, minPrice } from '../../../lib/context/Context';
+import {
+  getToday,
+  maxPrice,
+  minPrice,
+} from '../../../lib/context/ChartContext';
 
 interface Props {
   className?: string;

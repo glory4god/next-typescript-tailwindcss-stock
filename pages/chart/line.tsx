@@ -19,7 +19,7 @@ import {
   value,
   graphEffect,
   getToday,
-} from '../../lib/context/Context';
+} from '../../lib/context/ChartContext';
 
 interface Props {}
 

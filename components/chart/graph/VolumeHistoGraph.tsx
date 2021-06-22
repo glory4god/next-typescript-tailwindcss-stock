@@ -11,7 +11,10 @@ import {
   ReferenceLine,
 } from 'recharts';
 
-import { volumeMaxPrice, volumeMinPrice } from '../../../lib/context/Context';
+import {
+  volumeMaxPrice,
+  volumeMinPrice,
+} from '../../../lib/context/ChartContext';
 import type { CompanyValueData } from '../../../types/chart/ChartType';
 import type { WindowSize } from '../GraphHeader/GraphHeader';
 import { maxMinData } from '../DataInfo/DataInfo';

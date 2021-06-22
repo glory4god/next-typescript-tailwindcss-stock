@@ -11,7 +11,7 @@ import {
   Label,
   ReferenceLine,
 } from 'recharts';
-import { maxPrice, minPrice } from '../../../lib/context/Context';
+import { maxPrice, minPrice } from '../../../lib/context/ChartContext';
 import type { CompanyValueData } from '../../../types/chart/ChartType';
 import type { WindowSize } from '../GraphHeader/GraphHeader';
 import { maxMinData } from '../DataInfo/DataInfo';

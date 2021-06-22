@@ -14,7 +14,7 @@ import type {
   CompanyValueData,
   CustomOpenCloseData,
 } from '../../../types/chart/ChartType';
-import { maxPrice, minPrice } from '../../../lib/context/Context';
+import { maxPrice, minPrice } from '../../../lib/context/ChartContext';
 import type { WindowSize } from '../GraphHeader/GraphHeader';
 import { maxMinData } from '../DataInfo/DataInfo';
 
