@@ -4,7 +4,7 @@ import type { GetChatData } from '../../../types/chat/ChatType';
 interface Props {
   chat: GetChatData;
 }
-const ChatContent: React.FC<Props> = ({ chat }) => {
+const ChatList: React.FC<Props> = ({ chat }) => {
   return (
     <div className="py-1">
       <div style={{ fontSize: '8px' }}>
@@ -15,4 +15,4 @@ const ChatContent: React.FC<Props> = ({ chat }) => {
   );
 };
 
-export default React.memo(ChatContent);
+export default React.memo(ChatList);

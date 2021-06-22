@@ -1,7 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 import Paper from '@material-ui/core/Paper';
-import ChatContent from '../ChatList';
+import ChatList from '../ChatList';
 import ChatInput from '../ChatInput';
 import type {
   GetChatData,
@@ -80,9 +80,7 @@ const ChatBox: React.FC<Props> = ({ className }) => {
         <div className="w-60">
           <div className="p-2 h-80 overflow-y-scroll border-2">
             {chatList.map((arr, idx) => {
-              return (
-                <ChatContent key={'chat' + arr.userName + idx} chat={arr} />
-              );
+              return <ChatList key={'chat' + arr.userName + idx} chat={arr} />;
             })}
             <div ref={chatRef} />
           </div>

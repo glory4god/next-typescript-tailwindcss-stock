@@ -2,7 +2,7 @@ import React from 'react';
 import cn from 'classnames';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import type { PostChatDataForm } from '../ChatBox/ChatBox';
+import type { PostChatDataForm } from '../../../types/chat/ChatType';
 
 interface Props {
   className?: string;
