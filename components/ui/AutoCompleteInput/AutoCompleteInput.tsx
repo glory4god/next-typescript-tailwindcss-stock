@@ -7,10 +7,10 @@ interface Props {
   className?: string;
   data: Array<any>;
   label: string;
-  disabled: boolean;
   id: string;
   value: string | undefined;
-  onChange: (e: any, newValue: string | undefined) => void;
+  disabled?: boolean;
+  onChange?: (e: any, newValue: string | undefined) => void;
 }
 
 const AutoCompleteInput: React.FC<Props> = ({
@@ -31,7 +31,7 @@ const AutoCompleteInput: React.FC<Props> = ({
         disabled={disabled}
         options={data}
         renderInput={(params: any) => (
-          <TextField {...params} size="small" label={label} margin="normal" />
+          <TextField {...params} size="small" label={label} margin="dense" />
         )}
       />
     </div>

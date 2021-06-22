@@ -9,8 +9,8 @@ interface Props {
   selectedDate: Date | null;
   startDate: Date | null;
   endDate: Date | null;
-  disabled: boolean;
   openToDate: string;
+  disabled?: boolean;
   onChange: (date: Date) => void;
 }
 

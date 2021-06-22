@@ -7,8 +7,8 @@ interface Props {
   data: Array<any>;
   label: string;
   value: string | undefined;
-  disabled: boolean;
-  onChange: (
+  disabled?: boolean;
+  onChange?: (
     e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
   ) => void;
 }
@@ -30,7 +30,7 @@ const SelectInput: React.FC<Props> = ({
       size="small"
       label={label}
       disabled={disabled}
-      margin="normal">
+      margin="dense">
       {data.map((option, key) => (
         <MenuItem key={option + key} value={option}>
           {option}
