@@ -40,7 +40,7 @@ const DataInfo: React.FC<Props> = ({
       <h2 className="font-bold text-lg pb-4">DATA INFOMATION</h2>{' '}
       <p>종목 : {data.company}</p>
       <p>
-        날짜 :{' '}
+        기간 :{' '}
         {dateRange.length === 2 && (
           <span>
             {dateRange[0] ? getToday(dateRange[0]) : ''} ~{' '}
@@ -49,10 +49,10 @@ const DataInfo: React.FC<Props> = ({
         )}
       </p>
       <p>
-        최고가 : {maxValue[1]} : {maxValue[0]}
+        최고가 : {maxValue[0]} ({maxValue[1]})
       </p>
       <p>
-        최저가 : {minValue[1]} : {minValue[0]}
+        최저가 : {minValue[0]} ({minValue[1]})
       </p>
     </div>
   );

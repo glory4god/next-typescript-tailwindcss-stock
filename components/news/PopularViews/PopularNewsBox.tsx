@@ -1,6 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
-import type { News } from '../../../types/news/NewsType';
+import type { PostNews } from '../../../types/news/NewsType';
 import NewsSearchList from '../NewsSearchList';
 
 interface Props {
@@ -9,7 +9,7 @@ interface Props {
 }
 
 const PopularNewsBox: React.FC<Props> = ({ className, failed }) => {
-  const [popNews, setPopNews] = React.useState<Array<News>>();
+  const [popNews, setPopNews] = React.useState<Array<PostNews>>();
   const [loading, setLoading] = React.useState<boolean>(false);
   // const timer = React.useRef<number>();
 
@@ -44,13 +44,13 @@ const PopularNewsBox: React.FC<Props> = ({ className, failed }) => {
   return (
     <div className={cn(className)}>
       {!loading ? (
-        popNews?.map((arr: News, key: number) => {
+        popNews?.map((arr: PostNews, key: number) => {
           if (key < 5) {
             return (
               <div key={'news' + key}>
                 <NewsSearchList
                   className="text-sm py-1"
-                  arr={arr}></NewsSearchList>
+                  data={arr}></NewsSearchList>
               </div>
             );
           }

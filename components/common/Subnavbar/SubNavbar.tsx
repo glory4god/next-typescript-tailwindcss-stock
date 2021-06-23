@@ -1,16 +1,15 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import Link from 'next/link';
 import Button from '@material-ui/core/Button';
 
 interface Props {
-  className?: string;
   pages: {
     main: string;
     sub: { first: string; second: string; third: string; forth?: string };
   };
 }
 
-const SubNavbar: FC<Props> = ({ className, pages }) => {
+const SubNavbar: FC<Props> = ({ pages }) => {
   return (
     <div className="text-xs space-x-6">
       <Link href={`/${pages.main}/${pages.sub.first}`}>
@@ -39,4 +38,4 @@ const SubNavbar: FC<Props> = ({ className, pages }) => {
   );
 };
 
-export default SubNavbar;
+export default React.memo(SubNavbar);

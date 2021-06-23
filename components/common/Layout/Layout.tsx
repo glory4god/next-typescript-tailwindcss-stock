@@ -4,11 +4,7 @@ import Navbar from '../Navbar';
 import Footer from '../Footer';
 import ChatBox from '../../chat/ChatBox';
 
-interface Props {
-  className?: string;
-}
-
-const Layout: FC<Props> = ({ children }) => {
+export default function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div>
       <Navbar title="TITLE" />
@@ -17,6 +13,4 @@ const Layout: FC<Props> = ({ children }) => {
       <Footer />
     </div>
   );
-};
-
-export default Layout;
+}

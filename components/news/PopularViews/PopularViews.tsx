@@ -53,7 +53,9 @@ const PopularViews: React.FC<Props> = ({ className }) => {
           </div>
         </Paper>
       </Paper>
-      <Paper className="h-11 pt-3" elevation={3}>
+      <Paper
+        className={`${isClicked.news === true ? 'max-h-96' : 'h-12'} pt-3`}
+        elevation={3}>
         <h1 className="cursor-pointer" onClick={() => clickPopularNews()}>
           Popular News
           {!isClicked.news ? <ArrowDropDownIcon /> : <ArrowDropUpIcon />}
