@@ -10,7 +10,12 @@ export type News = {
   description: string;
   pubDate: string;
 };
-export type PostUrlData = {
+
+export type PostNews = {
   title: string;
-  url: string;
+  link: string;
+  originallink: string;
+  description: string;
+  pubDate: string;
+  keyword: string;
 };
