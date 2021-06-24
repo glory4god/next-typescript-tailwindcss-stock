@@ -73,9 +73,11 @@ const Navbar: FC<Props> = ({ className, title }) => {
         </div>
       </Paper>
       <Paper className="w-full xl:px-44 lg:px-32 lg:h-16 px-10 fixed md:h-16 md:flex hidden text-4xl font-bold justify-between  pt-3">
-        <Link href="/">
-          <a className="text-4xl font-bold">{title}</a>
-        </Link>
+        <h1>
+          <Link href="/">
+            <a className="text-4xl font-bold">{title}</a>
+          </Link>
+        </h1>
         <div className="font-bold space-x-10 text-xl pt-3 ">
           <Link href="/chart/line">
             <a className="hover:text-indigo-400">CHART</a>

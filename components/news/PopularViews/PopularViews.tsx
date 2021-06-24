@@ -33,10 +33,10 @@ const PopularViews: React.FC<Props> = ({ className }) => {
       <Paper
         className={`${isClicked.keyword === true ? 'max-h-96' : 'h-12'} pt-3`}
         elevation={3}>
-        <h1 className="cursor-pointer" onClick={() => clickPopularKeyword()}>
+        <h2 className="cursor-pointer" onClick={() => clickPopularKeyword()}>
           Popular Keyword
           {!isClicked.keyword ? <ArrowDropDownIcon /> : <ArrowDropUpIcon />}
-        </h1>
+        </h2>
         <Paper elevation={4}>
           <div
             className={`${
@@ -56,10 +56,10 @@ const PopularViews: React.FC<Props> = ({ className }) => {
       <Paper
         className={`${isClicked.news === true ? 'max-h-96' : 'h-12'} pt-3`}
         elevation={3}>
-        <h1 className="cursor-pointer" onClick={() => clickPopularNews()}>
+        <h2 className="cursor-pointer" onClick={() => clickPopularNews()}>
           Popular News
           {!isClicked.news ? <ArrowDropDownIcon /> : <ArrowDropUpIcon />}
-        </h1>
+        </h2>
         <Paper elevation={4}>
           <div
             className={`${
