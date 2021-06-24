@@ -1,21 +1,16 @@
 import React from 'react';
 import cn from 'classnames';
-import type { News } from '../../../types/news/NewsType';
+import type { News, PostNews } from '../../../types/news/NewsType';
 
 interface Props {
   className?: string;
-  arr: News;
+  data: PostNews;
 }
 
-export type PostUrlData = {
-  title: string;
-  url: string;
-};
+const NewsSearchList: React.FC<Props> = ({ className, data }) => {
+  const pubDateList = data.pubDate.split(' ');
 
-const NewsSearchList: React.FC<Props> = ({ className, arr }) => {
-  const pubDateList = arr.pubDate.split(' ');
-
-  const postUrl = async (arr: News) => {
+  const postUrl = async (data: PostNews) => {
     const response = await fetch(
       'http://localhost:8080/api/finance/url/post/',
       {
@@ -23,7 +18,7 @@ const NewsSearchList: React.FC<Props> = ({ className, arr }) => {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(arr),
+        body: JSON.stringify(data),
       },
     );
 
@@ -38,13 +33,13 @@ const NewsSearchList: React.FC<Props> = ({ className, arr }) => {
       <span
         className="cursor-pointer max-w-xl overflow-x-hidden"
         onClick={() => {
-          postUrl(arr);
-          var win = window.open(arr.link);
+          postUrl(data);
+          var win = window.open(data.link);
           if (win !== null) {
             win.focus();
           }
         }}
-        dangerouslySetInnerHTML={{ __html: arr.title }}
+        dangerouslySetInnerHTML={{ __html: data.title }}
       />
       <span className="text-xs">
         {' ' + pubDateList[2] + ' ' + pubDateList[1]}
