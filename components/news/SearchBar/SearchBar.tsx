@@ -8,18 +8,15 @@ import { KeywordFetcher, News } from '../../../types/news/NewsType';
 
 interface Props {
   className?: string;
+  topic: Array<string>;
 }
 
-const InitialKeywordFetcher: KeywordFetcher = {
-  keyword: '삼성전자',
-  sort: 'sim',
-};
-
-const SearchBar: React.FC<Props> = ({ className }) => {
+const SearchBar: React.FC<Props> = ({ className, topic }) => {
   const [newsList, setNewsList] = React.useState<Array<News>>([]);
-  const [fetchData, setFetchData] = React.useState<KeywordFetcher>(
-    InitialKeywordFetcher,
-  );
+  const [fetchData, setFetchData] = React.useState<KeywordFetcher>({
+    keyword: topic[Math.floor(Math.random() * 9)],
+    sort: 'sim',
+  });
   const [isShowNews, setIsShowNews] = React.useState<boolean>(false);
   const [loading, setLoading] = React.useState<boolean>(false);
   const [temp, setTemp] = React.useState<string | undefined>(undefined);
@@ -105,7 +102,7 @@ const SearchBar: React.FC<Props> = ({ className }) => {
         <div
           className={`${
             isShowNews === true ? 'opacity-100 max-h-auto' : 'opacity-0 max-h-0'
-          } transition:max-height duration-700 md:h-96 h-52 px-2 overflow-y-scroll`}>
+          } transition:max-height duration-700 md:h-96 h-52 px-2 overflow-y-scroll bg-white `}>
           {loading
             ? 'loading...'
             : newsList.map((arr, key) => {
@@ -113,7 +110,13 @@ const SearchBar: React.FC<Props> = ({ className }) => {
                   <div key={'news' + key}>
                     <NewsSearchList
                       className="text-sm py-1 px-3 flex justify-between "
-                      arr={arr}
+                      data={{
+                        ...arr,
+                        keyword:
+                          fetchData.keyword === undefined
+                            ? ''
+                            : fetchData.keyword,
+                      }}
                     />
                   </div>
                 );
@@ -152,6 +155,7 @@ const SearchBar: React.FC<Props> = ({ className }) => {
             </div>
           </div>
         )}
+        {console.log(topic[2])}
       </Paper>
     </Paper>
   );
