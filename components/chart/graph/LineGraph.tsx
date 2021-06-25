@@ -1,5 +1,4 @@
 import React from 'react';
-import cn from 'classnames';
 import {
   LineChart,
   XAxis,
@@ -10,31 +9,23 @@ import {
   Label,
   ReferenceLine,
 } from 'recharts';
-import { maxPrice, minPrice } from '../../../lib/context/ChartContext';
 import type { CompanyValueData } from '../../../types/chart/ChartType';
 import type { WindowSize } from '../GraphHeader/GraphHeader';
 import { maxMinData } from '../DataInfo/DataInfo';
 
 interface Props {
-  className?: string;
   data: Array<CompanyValueData>;
   YValue: string;
   windowSize: WindowSize;
+  max: maxMinData;
+  min: maxMinData;
 }
 
-const LineGraph: React.FC<Props> = ({
-  className,
-  data,
-  YValue,
-  windowSize,
-}) => {
+const LineGraph: React.FC<Props> = ({ data, YValue, windowSize, max, min }) => {
   const splitY = YValue.split('&');
 
-  const max: maxMinData = maxPrice(data);
-  const min: maxMinData = minPrice(data);
-
   return (
-    <div className={cn(className, {})}>
+    <>
       <h3>LINE GRAPH</h3>
       <LineChart
         width={
@@ -69,7 +60,7 @@ const LineGraph: React.FC<Props> = ({
           );
         })}
       </LineChart>
-    </div>
+    </>
   );
 };
 export default LineGraph;

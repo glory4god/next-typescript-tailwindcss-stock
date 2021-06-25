@@ -1,5 +1,4 @@
 import React from 'react';
-import cn from 'classnames';
 import {
   BarChart,
   XAxis,
@@ -11,29 +10,27 @@ import {
   Label,
   ReferenceLine,
 } from 'recharts';
-import { maxPrice, minPrice } from '../../../lib/context/ChartContext';
 import type { CompanyValueData } from '../../../types/chart/ChartType';
 import type { WindowSize } from '../GraphHeader/GraphHeader';
 import { maxMinData } from '../DataInfo/DataInfo';
 
 interface Props {
-  className?: string;
   data: Array<CompanyValueData>;
   YValue: string;
   windowSize: WindowSize;
+  max: maxMinData;
+  min: maxMinData;
 }
 
 const HistoGraph: React.FC<Props> = ({
-  className,
   data,
   YValue,
   windowSize,
+  max,
+  min,
 }) => {
-  const max: maxMinData = maxPrice(data);
-  const min: maxMinData = minPrice(data);
-
   return (
-    <div className={cn(className)}>
+    <>
       <h3>HISTO GRAPH</h3>
       <BarChart
         width={
@@ -59,7 +56,7 @@ const HistoGraph: React.FC<Props> = ({
         <Tooltip />
         <Bar type="monotone" dataKey={YValue} fill="#8b85ff" />
       </BarChart>
-    </div>
+    </>
   );
 };
 export default HistoGraph;

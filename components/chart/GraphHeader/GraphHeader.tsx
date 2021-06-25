@@ -5,16 +5,20 @@ import HistoChartGraph from '../graph/HistoGraph';
 import type {
   DataCondition,
   CompanyValueData,
+  CustomOpenCloseData,
 } from '../../../types/chart/ChartType';
-import CustomStockChart from '../graph/CustomGraph';
+import CustomStockChart from '../graph/CustomStockChart';
 import ChartVolumeGraph from '../graph/VolumeHistoGraph';
 import useWindowSize from '../../../lib/hooks/useWindowSize';
+import { maxMinData } from '../DataInfo/DataInfo';
+import { maxPrice, minPrice } from '../../../lib/context/ChartContext';
 
 interface Props {
   className?: string;
   dataCondition: DataCondition;
   dateRange: Array<Date | null>;
   valueData: Array<CompanyValueData>;
+  customData: Array<CustomOpenCloseData>;
 }
 
 export type WindowSize = {
@@ -26,9 +30,13 @@ const GraphHeader: React.FC<Props> = ({
   className,
   valueData,
   dataCondition,
+  customData,
   dateRange,
 }) => {
   const windowSize: WindowSize = useWindowSize();
+
+  const max: maxMinData = maxPrice(valueData);
+  const min: maxMinData = minPrice(valueData);
 
   return (
     <div className={cn(className)}>
@@ -44,6 +52,8 @@ const GraphHeader: React.FC<Props> = ({
                 ? 'close'
                 : dataCondition.value.toLowerCase()
             }
+            max={max}
+            min={min}
           />
         </>
       )}
@@ -57,10 +67,17 @@ const GraphHeader: React.FC<Props> = ({
                 ? 'close'
                 : dataCondition.value.toLowerCase()
             }
+            max={max}
+            min={min}
           />
         </>
       )}
-      <CustomStockChart data={valueData} windowSize={windowSize} />
+      <CustomStockChart
+        customData={customData}
+        windowSize={windowSize}
+        max={max}
+        min={min}
+      />
       <ChartVolumeGraph
         data={valueData}
         windowSize={windowSize}

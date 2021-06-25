@@ -1,5 +1,4 @@
 import React from 'react';
-import cn from 'classnames';
 import {
   BarChart,
   XAxis,
@@ -19,7 +18,6 @@ import type { CompanyValueData } from '../../../types/chart/ChartType';
 import type { WindowSize } from '../GraphHeader/GraphHeader';
 import { maxMinData } from '../DataInfo/DataInfo';
 interface Props {
-  className?: string;
   data: Array<CompanyValueData>;
   YValue: string;
   windowSize: WindowSize;
@@ -32,7 +30,7 @@ type VolumeData = {
 };
 
 const VolumHistoGraph: React.FC<Props> = React.memo(
-  ({ className, data, YValue, windowSize }) => {
+  ({ data, YValue, windowSize }) => {
     let customData: Array<VolumeData> = [];
 
     // 나중에 서버에서 만들어서 가져오는 걸로
@@ -51,7 +49,7 @@ const VolumHistoGraph: React.FC<Props> = React.memo(
     const min: maxMinData = volumeMinPrice(data);
 
     return (
-      <div className={cn(className)}>
+      <>
         <h3>VOLUME</h3>
         <BarChart
           width={
@@ -79,7 +77,7 @@ const VolumHistoGraph: React.FC<Props> = React.memo(
           <Bar type="monotone" dataKey="volumeRed" fill="#ff0000" />
           <Bar type="monotone" dataKey="volumeBlue" fill="#0004ff" />
         </BarChart>
-      </div>
+      </>
     );
   },
 );
