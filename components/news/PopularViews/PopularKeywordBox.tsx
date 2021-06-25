@@ -14,7 +14,7 @@ const PopularKeywordBox: React.FC<Props> = ({ className, failed }) => {
   const getKeywordList = async () => {
     setLoading(true);
     const response = await fetch(
-      'http://localhost:8080/api/finance/news/popular/keyword',
+      'http://localhost:8080/api/v1/news/pop-keyword',
     );
 
     if (!response.ok) {

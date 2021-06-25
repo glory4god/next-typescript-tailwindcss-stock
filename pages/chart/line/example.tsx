@@ -1,10 +1,9 @@
-import React, { FC } from 'react';
+import React from 'react';
 import { GetStaticProps } from 'next';
 import Head from 'next/head';
 import Link from 'next/link';
 import Container from '../../../components/ui/Container';
 import Button from '@material-ui/core/Button';
-import SubNavbar from '../../../components/common/Subnavbar';
 import SelectCalender from '../../../components/ui/Calender';
 import SelectInput from '../../../components/ui/SelectInput';
 import AutoCompleteInput from '../../../components/ui/AutoCompleteInput';
@@ -13,6 +12,7 @@ import DataInfo from '../../../components/chart/DataInfo';
 import type {
   DataCondition,
   CompanyValueData,
+  CustomOpenCloseData,
 } from '../../../types/chart/ChartType';
 import {
   conditionList,
@@ -40,8 +40,10 @@ const dateRange: Array<Date | null> = [
 
 export default function Example({
   valueData,
+  customData,
 }: {
   valueData: Array<CompanyValueData>;
+  customData: Array<CustomOpenCloseData>;
 }) {
   return (
     <Container>
@@ -134,6 +136,7 @@ export default function Example({
           dataCondition={initialDataCondition}
           dateRange={dateRange}
           valueData={valueData}
+          customData={customData}
         />
         <DataInfo
           className="border-t-2 pt-4"
@@ -148,12 +151,15 @@ export default function Example({
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const valueData = (await fetcher(
-    `http://localhost:8080/api/stock/data/condition/1?start=2018-01-08&end=2021-06-04`,
+    `http://localhost:8080/api/v1/chart/company/1?start=2018-01-08&end=2021-06-04`,
   )) as Array<CompanyValueData>;
-
+  const customData = (await fetcher(
+    `http://localhost:8080/api/v1/chart/company/custom/1?start=2018-01-08&end=2021-06-04`,
+  )) as Array<CustomOpenCloseData>;
   return {
     props: {
       valueData: valueData,
+      customData: customData,
     },
   };
 };

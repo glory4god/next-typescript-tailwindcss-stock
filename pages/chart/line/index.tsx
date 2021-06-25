@@ -12,6 +12,7 @@ import SaveReport from '../../../components/chart/SaveReport';
 import type {
   DataCondition,
   CompanyValueData,
+  CustomOpenCloseData,
 } from '../../../types/chart/ChartType';
 import {
   conditionList,
@@ -49,6 +50,9 @@ const Line: FC<Props> = () => {
   const [companyEndDate, setCompanyEndDate] = React.useState<string>('');
   const [dateRange, setDateRange] = React.useState<Array<Date | null>>([]);
   const [valueData, setValueData] = React.useState<Array<CompanyValueData>>([]);
+  const [customData, setCustomData] = React.useState<
+    Array<CustomOpenCloseData>
+  >([]);
   const [isLoading, setIsLoading] = React.useState<IsLoading>({
     isSave: false,
     isDrawing: false,
@@ -60,7 +64,7 @@ const Line: FC<Props> = () => {
       console.log('getCompanyData!');
       const toLowerMarket = market?.toLowerCase();
       const response = (await fetcher(
-        `http://localhost:8080/api/stock/company/${toLowerMarket}`,
+        `http://localhost:8080/api/v1/chart/company-market/${toLowerMarket}`,
       )) as Array<string>;
 
       setCompany(response);
@@ -73,7 +77,7 @@ const Line: FC<Props> = () => {
         console.log('getCompanyListData!');
         const toLowerMarket = market?.toLowerCase();
         const response = (await fetcher(
-          `http://localhost:8080/api/stock/companyname/${toLowerMarket}`,
+          `http://localhost:8080/api/v1/chart/companyname/${toLowerMarket}`,
         )) as Array<string>;
         setCompanyList(response);
       }
@@ -83,7 +87,7 @@ const Line: FC<Props> = () => {
 
   const getDateRange = React.useCallback(async (companyId: string) => {
     const response = await fetch(
-      `http://localhost:8080/api/stock/data/${companyId}`,
+      `http://localhost:8080/api/v1/chart/company-date/${companyId}`,
     );
 
     if (!response.ok) {
@@ -103,17 +107,24 @@ const Line: FC<Props> = () => {
         isSave: false,
         isDrawing: true,
       });
-      const response = await fetch(
-        `http://localhost:8080/api/stock/data/condition/${companyName}?start=${start}&end=${end}`,
+      const response1 = await fetch(
+        `http://localhost:8080/api/v1/chart/company/${companyName}?start=${start}&end=${end}`,
       );
-      if (!response.ok) {
+      const response2 = await fetch(
+        `http://localhost:8080/api/v1/chart/company/custom/${companyName}?start=${start}&end=${end}`,
+      );
+
+      if (!response1.ok || !response2.ok) {
         setIsLoading({ isDrawing: false, isSave: false });
         return window.alert('failed!');
       }
-      const resJson = await response.json();
-      setValueData(resJson);
+      const resJson1 = await response1.json();
+      const resJson2 = await response2.json();
+      setValueData(resJson1);
+      setCustomData(resJson2);
       setIsLoading({ isSave: true, isDrawing: false });
     },
+
     [],
   );
 
@@ -226,6 +237,7 @@ const Line: FC<Props> = () => {
               disabled={dataCondition.market === ''}
               label="COMPANY"
               data={companyList}
+              placeholder="COMPANY"
             />
           </div>
           <div className="mt-2">
@@ -285,6 +297,7 @@ const Line: FC<Props> = () => {
                 disabled={dateRange.length === 2 ? false : true}
                 label="VALUE"
                 data={value}
+                placeholder="VALUE"
               />
               <AutoCompleteInput
                 onChange={(
@@ -301,6 +314,7 @@ const Line: FC<Props> = () => {
                 disabled={dataCondition.value === ''}
                 label="GRAPH TYPE"
                 data={graphEffect}
+                placeholder="GRAPH EFFECT"
               />
             </div>
             <div className="mt-2">
@@ -343,6 +357,7 @@ const Line: FC<Props> = () => {
               dataCondition={dataCondition}
               dateRange={dateRange}
               valueData={valueData}
+              customData={customData}
             />
             <DataInfo
               className="border-t-2 pt-4"
