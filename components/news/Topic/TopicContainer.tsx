@@ -4,6 +4,7 @@ import TopicTag from './TopicTag';
 import fetcher from '../../../lib/fetcher';
 import TopicView from './TopicView';
 import type { PostNews } from '../../../types/news/NewsType';
+import { useKeyword } from '../../../lib/hooks/useKeyword';
 
 interface Props {
   className?: string;
@@ -14,20 +15,26 @@ const TopicContainer: React.FC<Props> = ({ className, topic }) => {
   const [hotKeywordList, setHotKeywordList] = React.useState<Array<PostNews>>(
     [],
   );
+  const [property, setProperty] = React.useState<string>(topic[0]);
+
+  // const {
+  //   keywordList,
+  //   isLoading,
+  //   isError,
+  // }: { keywordList: Array<PostNews>; isLoading: boolean; isError: boolean } =
+  //   useKeyword(topic[0]);
+
   const getHotKeyword = async (topic: string) => {
     const value = (await fetcher(
-      `http://localhost:8080/api/finance/url/${topic}`,
+      `http://localhost:8080/api/v1/news/pop-url/${topic}`,
     )) as Array<PostNews>;
 
     setHotKeywordList(value);
-    console.log(value);
   };
 
   React.useEffect(() => {
     getHotKeyword(topic[0]);
   }, [topic]);
-
-  const [property, setProperty] = React.useState<string>(topic[0]);
 
   return (
     <div className={cn(className)}>
