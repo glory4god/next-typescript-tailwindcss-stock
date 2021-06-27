@@ -4,7 +4,7 @@ import SearchBar from '../../components/news/SearchBar';
 import Head from 'next/head';
 import Container from '../../components/ui/Container';
 
-import { GetServerSideProps } from 'next';
+import { GetStaticProps } from 'next';
 import fetcher from '../../lib/fetcher';
 import TopicContainer from '../../components/news/Topic';
 
@@ -27,7 +27,7 @@ export default function News({ topic }: { topic: Array<string> }) {
   );
 }
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getStaticProps: GetStaticProps = async (context) => {
   const res = (await fetcher(
     'http://localhost:8080/api/v1/news/pop-keyword',
   )) as Array<string>;
