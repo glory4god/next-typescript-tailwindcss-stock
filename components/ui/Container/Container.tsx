@@ -1,4 +1,4 @@
-import { FC } from 'react';
+import React, { FC } from 'react';
 import cn from 'classnames';
 
 interface ContainerProps {
@@ -18,4 +18,4 @@ const Container: FC<ContainerProps> = ({ children, className }) => {
   );
 };
 
-export default Container;
+export default React.memo(Container);
