@@ -1,5 +1,6 @@
 import React from 'react';
 import cn from 'classnames';
+import Button from '@material-ui/core/Button';
 
 interface Props {
   className?: string;
@@ -9,12 +10,13 @@ interface Props {
 const PopularKeywordBox: React.FC<Props> = ({ className, failed }) => {
   const [popKeyword, setPopKeyword] = React.useState<Array<string>>([]);
   const [loading, setLoading] = React.useState<boolean>(false);
+  const [isDaily, setIsDaily] = React.useState<boolean>(true);
   // const timer = React.useRef<number>();
 
-  const getKeywordList = async () => {
+  const getDailyKeyword = async () => {
     setLoading(true);
     const response = await fetch(
-      'http://localhost:8080/api/v1/news/pop-keyword',
+      'http://localhost:8080/api/v1/news/pop-keyword/daily',
     );
 
     if (!response.ok) {
@@ -22,16 +24,33 @@ const PopularKeywordBox: React.FC<Props> = ({ className, failed }) => {
       failed();
       return window.alert('get failed!');
     }
+
     const resJson = await response.json();
     setPopKeyword(resJson);
-    console.log(resJson);
+    setIsDaily(true);
     setLoading(false);
   };
+  const getWeeklyKeyword = async () => {
+    setLoading(true);
+    const response = await fetch(
+      'http://localhost:8080/api/v1/news/pop-keyword/weekly',
+    );
 
+    if (!response.ok) {
+      setLoading(false);
+      failed();
+      return window.alert('get failed!');
+    }
+
+    const resJson = await response.json();
+    setPopKeyword(resJson);
+    setIsDaily(false);
+    setLoading(false);
+  };
   React.useEffect(() => {
-    getKeywordList();
+    getDailyKeyword();
     // 타입스크립트에서 setInterval 쓸 때는 window로 해야하는 듯!
-    // timer.current = window.setInterval(getKeywordList, 8000);
+    // timer.current = window.setInterval(getDailyKeyword, 8000);
     // return () => {
     //   clearInterval(timer.current);
     // };
@@ -54,6 +73,24 @@ const PopularKeywordBox: React.FC<Props> = ({ className, failed }) => {
       ) : (
         <div>loading...</div>
       )}
+      <Button
+        size="small"
+        style={{
+          color: `${isDaily ? '#818cf8' : 'black'}`,
+          fontWeight: `${isDaily ? 'bold' : 'lighter'}`,
+        }}
+        onClick={() => getDailyKeyword()}>
+        DAILY
+      </Button>
+      <Button
+        size="small"
+        style={{
+          color: `${!isDaily ? '#818cf8' : 'black'}`,
+          fontWeight: `${!isDaily ? 'bold' : 'lighter'}`,
+        }}
+        onClick={() => getWeeklyKeyword()}>
+        WEEKLY
+      </Button>
     </div>
   );
 };

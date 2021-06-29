@@ -2,6 +2,7 @@ import React from 'react';
 import cn from 'classnames';
 import type { PostNews } from '../../../types/news/NewsType';
 import NewsSearchList from '../NewsSearchList';
+import Button from '@material-ui/core/Button';
 
 interface Props {
   className?: string;
@@ -11,11 +12,15 @@ interface Props {
 const PopularNewsBox: React.FC<Props> = ({ className, failed }) => {
   const [popNews, setPopNews] = React.useState<Array<PostNews>>();
   const [loading, setLoading] = React.useState<boolean>(false);
+  const [isDaily, setIsDaily] = React.useState<boolean>(true);
+
   // const timer = React.useRef<number>();
 
-  const getKeywordList = async () => {
+  const getDailyNews = async () => {
     setLoading(true);
-    const response = await fetch('http://localhost:8080/api/v1/news/pop-url');
+    const response = await fetch(
+      'http://localhost:8080/api/v1/news/pop-url/daily',
+    );
 
     if (!response.ok) {
       setLoading(false);
@@ -25,14 +30,32 @@ const PopularNewsBox: React.FC<Props> = ({ className, failed }) => {
     }
     const resJson = await response.json();
     setPopNews(resJson);
-    console.log(resJson);
+    setIsDaily(true);
+    setLoading(false);
+  };
+
+  const getWeeklyNews = async () => {
+    setLoading(true);
+    const response = await fetch(
+      'http://localhost:8080/api/v1/news/pop-url/weekly',
+    );
+
+    if (!response.ok) {
+      setLoading(false);
+
+      failed();
+      return window.alert('get failed!');
+    }
+    const resJson = await response.json();
+    setPopNews(resJson);
+    setIsDaily(false);
     setLoading(false);
   };
 
   React.useEffect(() => {
-    getKeywordList();
+    getDailyNews();
     // 타입스크립트에서 setInterval 쓸 때는 window로 해야하는 듯!
-    // timer.current = window.setInterval(getKeywordList, 8000);
+    // timer.current = window.setInterval(getDailyNews, 8000);
     // return () => {
     //   clearInterval(timer.current);
     // };
@@ -57,6 +80,24 @@ const PopularNewsBox: React.FC<Props> = ({ className, failed }) => {
       ) : (
         <div>loading...</div>
       )}
+      <Button
+        size="small"
+        style={{
+          color: `${isDaily ? '#818cf8' : 'black'}`,
+          fontWeight: `${isDaily ? 'bold' : 'lighter'}`,
+        }}
+        onClick={() => getDailyNews()}>
+        DAILY
+      </Button>
+      <Button
+        size="small"
+        style={{
+          color: `${!isDaily ? '#818cf8' : 'black'}`,
+          fontWeight: `${!isDaily ? 'bold' : 'lighter'}`,
+        }}
+        onClick={() => getWeeklyNews()}>
+        WEEKLY
+      </Button>
     </div>
   );
 };
