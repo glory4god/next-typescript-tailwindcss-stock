@@ -31,7 +31,7 @@ const SearchBar: React.FC<Props> = ({ className, topic }) => {
     if (fetchData.keyword !== undefined) {
       setLoading(true);
       const response = await fetch(
-        `http://localhost:8080/api/v1/news/${fetchData.keyword}?sort=${fetchData.sort}`,
+        `http://54.180.68.136:8080/api/v1/news/${fetchData.keyword}?sort=${fetchData.sort}`,
       );
 
       if (!response.ok) {

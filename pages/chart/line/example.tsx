@@ -50,7 +50,7 @@ export default function Example({
       <Head>
         <title>TITLE-CHART/EXAMPLE</title>
       </Head>
-      {/* <div className="md:mt-4">
+      <div className="md:mt-4">
         <div className="text-right">
           <Link href="/chart/line">
             <a>
@@ -144,22 +144,22 @@ export default function Example({
           dateRange={dateRange}
           valueData={valueData}
         />
-      </> */}
+      </>
     </Container>
   );
 }
 
-// export const getStaticProps: GetStaticProps = async (context) => {
-//   const valueData = (await fetcher(
-//     `http://localhost:8080/api/v1/chart/company/1?start=2018-01-08&end=2021-06-04`,
-//   )) as Array<CompanyValueData>;
-//   const customData = (await fetcher(
-//     `http://localhost:8080/api/v1/chart/company/custom/1?start=2018-01-08&end=2021-06-04`,
-//   )) as Array<CustomOpenCloseData>;
-//   return {
-//     props: {
-//       valueData: valueData,
-//       customData: customData,
-//     },
-//   };
-// };
+export const getStaticProps: GetStaticProps = async (context) => {
+  const valueData = (await fetcher(
+    `http://54.180.68.136:8080/api/v1/chart/company/1?start=2018-01-08&end=2021-06-04`,
+  )) as Array<CompanyValueData>;
+  const customData = (await fetcher(
+    `http://54.180.68.136:8080/api/v1/chart/company/custom/1?start=2018-01-08&end=2021-06-04`,
+  )) as Array<CustomOpenCloseData>;
+  return {
+    props: {
+      valueData: valueData,
+      customData: customData,
+    },
+  };
+};

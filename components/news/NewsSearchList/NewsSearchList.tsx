@@ -11,13 +11,16 @@ const NewsSearchList: React.FC<Props> = ({ className, data }) => {
   const pubDateList = data.pubDate.split(' ');
 
   const postUrl = async (data: PostNews) => {
-    const response = await fetch('http://localhost:8080/api/v1/news/url/post', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
+    const response = await fetch(
+      'http://54.180.68.136:8080/api/v1/news/url/post',
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(data),
       },
-      body: JSON.stringify(data),
-    });
+    );
 
     console.log('postUrl!');
     if (!response.ok) {

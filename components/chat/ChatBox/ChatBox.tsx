@@ -22,7 +22,9 @@ const ChatBox: React.FC<Props> = ({ className }) => {
   const chatRef = React.useRef<HTMLDivElement>(null);
 
   const getChatData = async () => {
-    const response = await fetch('http://localhost:8080/api/stock/data/chat');
+    const response = await fetch(
+      'http://54.180.68.136:8080/api/stock/data/chat',
+    );
     if (!response.ok) {
       return window.alert('get failed!');
     }
@@ -32,7 +34,7 @@ const ChatBox: React.FC<Props> = ({ className }) => {
 
   const postChatData = React.useCallback(async (item: PostChatDataForm) => {
     const response = await fetch(
-      'http://localhost:8080/api/stock/data/chat/post',
+      'http://54.180.68.136:8080/api/stock/data/chat/post',
       {
         method: 'POST',
         headers: {

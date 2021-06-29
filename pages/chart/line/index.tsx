@@ -64,7 +64,7 @@ const Line: FC<Props> = () => {
       console.log('getCompanyData!');
       const toLowerMarket = market?.toLowerCase();
       const response = (await fetcher(
-        `http://localhost:8080/api/v1/chart/company-market/${toLowerMarket}`,
+        `http://54.180.68.136:8080/api/v1/chart/company-market/${toLowerMarket}`,
       )) as Array<string>;
 
       setCompany(response);
@@ -77,7 +77,7 @@ const Line: FC<Props> = () => {
         console.log('getCompanyListData!');
         const toLowerMarket = market?.toLowerCase();
         const response = (await fetcher(
-          `http://localhost:8080/api/v1/chart/companyname/${toLowerMarket}`,
+          `http://54.180.68.136:8080/api/v1/chart/companyname/${toLowerMarket}`,
         )) as Array<string>;
         setCompanyList(response);
       }
@@ -87,7 +87,7 @@ const Line: FC<Props> = () => {
 
   const getDateRange = React.useCallback(async (companyId: string) => {
     const response = await fetch(
-      `http://localhost:8080/api/v1/chart/company-date/${companyId}`,
+      `http://54.180.68.136:8080/api/v1/chart/company-date/${companyId}`,
     );
 
     if (!response.ok) {
@@ -108,10 +108,10 @@ const Line: FC<Props> = () => {
         isDrawing: true,
       });
       const response1 = await fetch(
-        `http://localhost:8080/api/v1/chart/company/${companyName}?start=${start}&end=${end}`,
+        `http://54.180.68.136:8080/api/v1/chart/company/${companyName}?start=${start}&end=${end}`,
       );
       const response2 = await fetch(
-        `http://localhost:8080/api/v1/chart/company/custom/${companyName}?start=${start}&end=${end}`,
+        `http://54.180.68.136:8080/api/v1/chart/company/custom/${companyName}?start=${start}&end=${end}`,
       );
 
       if (!response1.ok || !response2.ok) {

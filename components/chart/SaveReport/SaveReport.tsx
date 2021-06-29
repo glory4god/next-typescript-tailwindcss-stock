@@ -52,7 +52,7 @@ const SaveReport: React.FC<Props> = ({ className, dataCondition, refresh }) => {
       loading: true,
     }));
     const response = await fetch(
-      'http://localhost:8080/api/user/chart-record/post',
+      'http://54.180.68.136:8080/api/user/chart-record/post',
       {
         method: 'POST',
         headers: {
