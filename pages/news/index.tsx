@@ -27,9 +27,11 @@ export default function News({ topic }: { topic: Array<string> }) {
   );
 }
 
+// 한 번 fetch 하면 그 뒤로는 fetch를 안함!!
+// serverside는 계속 fetch 보내는 다른 점이 있음!!
 export const getStaticProps: GetStaticProps = async (context) => {
   const res = (await fetcher(
-    'http://localhost:8080/api/v1/news/pop-keyword',
+    'http://localhost:8080/api/v1/news/pop-keyword/daily',
   )) as Array<string>;
 
   const topic = res.filter((arr, idx) => {
