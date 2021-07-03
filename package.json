@@ -25,7 +25,9 @@
     "react-datepicker": "^4.1.1",
     "react-dom": "17.0.2",
     "react-responsive": "^8.2.0",
+    "react-stomp": "^5.1.0",
     "recharts": "^2.0.9",
+    "sockjs": "^0.3.21",
     "swr": "^0.5.6",
     "tailwindcss": "^2.1.4"
   },
@@ -33,6 +35,9 @@
     "@types/node": "^15.12.2",
     "@types/react": "^17.0.11",
     "@types/react-datepicker": "^3.1.8",
+    "@types/sockjs": "^0.3.32",
+    "@types/sockjs-client": "^1.5.0",
+    "@types/stompjs": "^2.3.4",
     "eslint": "7.28.0",
     "eslint-config-next": "11.0.0",
     "typescript": "^4.3.2"
