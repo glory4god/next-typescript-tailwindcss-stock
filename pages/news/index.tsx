@@ -31,7 +31,7 @@ export default function News({ topic }: { topic: Array<string> }) {
 // serverside는 계속 fetch 보내는 다른 점이 있음!!
 export const getStaticProps: GetStaticProps = async (context) => {
   const res = (await fetcher(
-    'http://54.180.68.136:8080/api/v1/news/pop-keyword/daily',
+    'http://54.180.68.136:8080/api/v1/news/pop-keyword/weekly',
   )) as Array<string>;
 
   const topic = res.filter((arr, idx) => {
