@@ -4,7 +4,6 @@ import TopicTag from './TopicTag';
 import fetcher from '../../../lib/fetcher';
 import TopicView from './TopicView';
 import type { PostNews } from '../../../types/news/NewsType';
-import { useKeyword } from '../../../lib/hooks/useKeyword';
 
 interface Props {
   className?: string;
@@ -39,8 +38,8 @@ const TopicContainer: React.FC<Props> = ({ className, topic }) => {
 
   return (
     <div className={cn(className)}>
-      <h2 className="py-2">#Daily Hot Keyword</h2>
-      <div className="flex space-x-2 mt-2 ">
+      <h2 className="py-2 text-left">#Daily Hot Keyword</h2>
+      <div className="flex space-x-2 my-6 ">
         {topic.length !== 0 ? (
           topic.map((arr: string, key: number) => {
             if (key < 5) {
@@ -74,7 +73,7 @@ const TopicContainer: React.FC<Props> = ({ className, topic }) => {
           </>
         )}
       </div>
-      <div className="lg:grid lg:grid-cols-2 lg:gap-y-6 lg:justify-items-center mt-8 flex flex-col items-center">
+      <div className="lg:grid lg:grid-cols-2 lg:gap-y-6 lg:justify-items-center mt-12 flex flex-col items-center">
         {hotKeywordList.length !== 0 ? (
           hotKeywordList.map((news, key) => {
             return (

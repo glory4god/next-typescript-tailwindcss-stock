@@ -18,7 +18,7 @@ const TopicTag: React.FC<Props> = ({
     <div
       className={cn(
         className,
-        'md:px-6 px-2 flex h-10 rounded-3xl md:text-sm text-xs w-full font-bold text-white cursor-pointer justify-center items-center',
+        'md:px-6 px-3 flex h-10 rounded-3xl text-sm font-bold text-white cursor-pointer justify-center items-center',
         {
           'bg-indigo-400 ': clicked === true,
           'bg-indigo-200': clicked === false,

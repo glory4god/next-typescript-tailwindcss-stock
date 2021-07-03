@@ -21,12 +21,10 @@ const TopicView: React.FC<Props> = ({
     <div
       style={{ width: '328px', height: '400px' }}
       className="border-2 rounded-xl px-4 my-2">
-      <h3 className="text-xl text-left pl-4 font-bold py-6">#{topic}</h3>
-      <div className="flex justify-between h-28">
-        <h4
-          className=" w-72 text-left"
-          dangerouslySetInnerHTML={{ __html: title }}
-        />
+      <div className="text-xl flex justify-between text-left px-4 font-bold py-8">
+        <span className="bg-indigo-200 rounded-3xl text-xs text-white px-4 py-1">
+          # {topic}
+        </span>
         <LinkIcon
           onClick={() => {
             if (skeleton === false) {
@@ -36,9 +34,13 @@ const TopicView: React.FC<Props> = ({
               }
             }
           }}
-          className="cursor-pointer bottom mt-5"
+          className="cursor-pointer"
         />
       </div>
+      <h4
+        className="h-28 text-left text-lg"
+        dangerouslySetInnerHTML={{ __html: title }}
+      />
       <p dangerouslySetInnerHTML={{ __html: description }} />
       {/* <Image src={link} alt={title} /> */}
     </div>
