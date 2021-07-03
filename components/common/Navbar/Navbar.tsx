@@ -46,7 +46,7 @@ const Navbar: FC<Props> = ({ className, title }) => {
                       popupState.close();
                       window.alert('not launching');
                     }}>
-                    <Link href="/report">
+                    <Link href="/report/total">
                       <a className="w-full">REPORT</a>
                     </Link>
                   </MenuItem>
@@ -88,7 +88,7 @@ const Navbar: FC<Props> = ({ className, title }) => {
           <Link href="/ai">
             <a className="hover:text-indigo-400">AI</a>
           </Link>
-          <Link href="/report">
+          <Link href="/report/total">
             <a className="hover:text-indigo-400">REPORT</a>
           </Link>
         </div>

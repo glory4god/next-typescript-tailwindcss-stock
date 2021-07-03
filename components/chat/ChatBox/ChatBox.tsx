@@ -23,7 +23,9 @@ export type Message = {
   date: string;
 };
 
-let sockJs = new SockJS('http://54.180.68.136:8080/api/v2/web-socket');
+let sockJs = new SockJS('http://54.180.68.136:8080/api/v2/web-socket', {
+  Credential: true,
+});
 let stompClient: Stomp.Client = Stomp.over(sockJs);
 stompClient.debug = () => {};
 

@@ -17,7 +17,7 @@ export default function News({ topic }: { topic: Array<string> }) {
       <div className="mt-6 md:flex md:space-x-4">
         <div className="md:w-3/4">
           <SearchBar className=" h-11" topic={topic} />
-          <TopicContainer className="my-4" topic={topic} />
+          <TopicContainer className="mt-10" topic={topic} />
         </div>
         <div className="md:w-1/4 ">
           <PopularViews className=" space-y-2" />
