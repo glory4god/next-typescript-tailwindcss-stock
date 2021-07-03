@@ -1,13 +1,17 @@
 import React from 'react';
+import cn from 'classnames';
 import type { Message } from '../ChatBox/ChatBox';
 interface Props {
   chat: Message;
+  isUser: boolean;
 }
-const ChatList: React.FC<Props> = ({ chat }) => {
+const ChatList: React.FC<Props> = ({ chat, isUser }) => {
   return (
-    <div className="py-1">
-      <div style={{ fontSize: '8px' }}>
-        {chat.username} :{chat.date.toString().substr(11, 18)}
+    <div className={cn('py-1', { 'text-right': isUser })}>
+      <div
+        className={cn({ ' text-indigo-400': isUser })}
+        style={{ fontSize: '8px' }}>
+        {!isUser ? chat.username : '나'} - {chat.date.slice(11, 19)}
       </div>
       <div style={{ fontSize: '14px' }}>{chat.content}</div>
     </div>

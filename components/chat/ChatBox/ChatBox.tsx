@@ -23,7 +23,7 @@ export type Message = {
   date: string;
 };
 
-let sockJs = new SockJS('http://localhost:8080/api/v2/web-socket');
+let sockJs = new SockJS('http://54.180.68.136:8080/api/v2/web-socket');
 let stompClient: Stomp.Client = Stomp.over(sockJs);
 stompClient.debug = () => {};
 
@@ -37,7 +37,7 @@ const ChatBox: React.FC<Props> = ({ className }) => {
 
   const initialData = async () => {
     const data: Array<Message> = (await fetcher(
-      'http://localhost:8080/api/v2/web-socket/topic/roomId/all',
+      'http://54.180.68.136:8080/api/v2/web-socket/topic/roomId/all',
     )) as Array<Message>;
     setContents(data);
   };
@@ -62,6 +62,8 @@ const ChatBox: React.FC<Props> = ({ className }) => {
         setContents((prev) => [...prev, newMessage]);
       });
     });
+    scrollToBottom();
+    console.log(contents);
   }, [contents]);
 
   const onKeyDown = (e: React.KeyboardEvent) => {
@@ -75,10 +77,6 @@ const ChatBox: React.FC<Props> = ({ className }) => {
     chatRef.current?.scrollIntoView({ behavior: 'auto' });
   };
 
-  React.useEffect(() => {
-    scrollToBottom();
-  }, [contents]);
-
   // isClick true일 때, Escape 키 누르면 false 될 수 있는 기능 필요
   return (
     <Paper className={cn(className)}>
@@ -91,7 +89,13 @@ const ChatBox: React.FC<Props> = ({ className }) => {
         <div className="w-60">
           <div className="p-2 h-80 overflow-y-scroll border-2">
             {contents.map((arr, idx) => {
-              return <ChatList key={'chat' + arr.username + idx} chat={arr} />;
+              return (
+                <ChatList
+                  key={'chat' + arr.username + idx}
+                  chat={arr}
+                  isUser={arr.username === username}
+                />
+              );
             })}
             <div ref={chatRef} />
           </div>
