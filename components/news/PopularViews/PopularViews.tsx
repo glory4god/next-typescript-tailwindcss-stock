@@ -75,7 +75,7 @@ const PopularViews: React.FC<Props> = ({ className }) => {
             } transition:max-height duration-300 ease-out mt-1`}>
             {menu.news && (
               <PopularNewsBox
-                className="px-2 pt-2 "
+                className="px-2 pt-2"
                 failed={() => setMenu(() => ({ ...menu, news: false }))}
               />
             )}

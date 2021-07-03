@@ -41,7 +41,7 @@ const NewsSearchList: React.FC<Props> = ({ className, data }) => {
         }}
         dangerouslySetInnerHTML={{ __html: data.title }}
       />
-      <span className="text-xs">
+      <span className="text-xs w-11 text-right">
         {' ' + pubDateList[2] + ' ' + pubDateList[1]}
       </span>
     </div>
