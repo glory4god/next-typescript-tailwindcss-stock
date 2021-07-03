@@ -34,45 +34,76 @@ const TopicContainer: React.FC<Props> = ({ className, topic }) => {
 
   React.useEffect(() => {
     getHotKeyword(topic[0]);
+    setProperty(topic[0]);
   }, [topic]);
 
   return (
     <div className={cn(className)}>
-      <h2 className="py-2">#Hot Keyword</h2>
+      <h2 className="py-2">#Daily Hot Keyword</h2>
       <div className="flex space-x-2 mt-2 ">
-        {topic?.map((arr: string, key: number) => {
-          if (key < 5) {
-            return (
-              <TopicTag
-                title={'#' + arr}
-                key={arr + key}
-                onClick={() => {
-                  const temp: Array<string> = topic.filter((value: string) => {
-                    if (value === arr) {
-                      return value;
-                    }
-                  });
-                  setProperty(temp[0]);
-                  getHotKeyword(arr);
-                }}
-                clicked={property === arr}
-              />
-            );
-          }
-        })}
+        {topic.length !== 0 ? (
+          topic.map((arr: string, key: number) => {
+            if (key < 5) {
+              return (
+                <TopicTag
+                  title={'#' + arr}
+                  key={arr + key}
+                  onClick={() => {
+                    const temp: Array<string> = topic.filter(
+                      (value: string) => {
+                        if (value === arr) {
+                          return value;
+                        }
+                      },
+                    );
+                    setProperty(temp[0]);
+                    getHotKeyword(arr);
+                  }}
+                  clicked={property === arr}
+                />
+              );
+            }
+          })
+        ) : (
+          <>
+            <TopicTag title="..." clicked={true} />
+            <TopicTag title="..." clicked={false} />
+            <TopicTag title="..." clicked={false} />
+            <TopicTag title="..." clicked={false} />
+            <TopicTag title="..." clicked={false} />
+          </>
+        )}
       </div>
       <div className="lg:grid lg:grid-cols-2 lg:gap-y-6 lg:justify-items-center mt-8 flex flex-col items-center">
-        {hotKeywordList.map((news, key) => {
-          return (
-            <TopicView
-              key={key}
-              topic={news.keyword}
-              link={news.link}
-              title={news.title}
-              description={news.description}
-            />
-          );
-        })}
+        {hotKeywordList.length !== 0 ? (
+          hotKeywordList.map((news, key) => {
+            return (
+              <TopicView
+                key={key}
+                topic={news.keyword}
+                link={news.link}
+                title={news.title}
+                description={news.description}
+                skeleton={false}
+              />
+            );
+          })
+        ) : (
+          <>
+            {[0, 1, 2, 3].map((arr) => {
+              return (
+                <TopicView
+                  key={'skeleton' + arr}
+                  topic="..."
+                  link="..."
+                  title="아직 뉴스가 없습니다!"
+                  description="..."
+                  skeleton={true}
+                />
+              );
+            })}
+          </>
+        )}
       </div>
     </div>
   );

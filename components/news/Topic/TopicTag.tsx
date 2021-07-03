@@ -5,7 +5,7 @@ interface Props {
   className?: string;
   title: string;
   clicked: boolean;
-  onClick: () => void;
+  onClick?: () => void;
 }
 
 const TopicTag: React.FC<Props> = ({

@@ -7,9 +7,16 @@ interface Props {
   link: string;
   title: string;
   description: string;
+  skeleton: boolean;
 }
 
-const TopicView: React.FC<Props> = ({ topic, link, title, description }) => {
+const TopicView: React.FC<Props> = ({
+  topic,
+  link,
+  title,
+  description,
+  skeleton,
+}) => {
   return (
     <div
       style={{ width: '328px', height: '400px' }}
@@ -22,9 +29,11 @@ const TopicView: React.FC<Props> = ({ topic, link, title, description }) => {
         />
         <LinkIcon
           onClick={() => {
-            var win = window.open(link);
-            if (win !== null) {
-              win.focus();
+            if (skeleton === false) {
+              var win = window.open(link);
+              if (win !== null) {
+                win.focus();
+              }
             }
           }}
           className="cursor-pointer bottom mt-5"
