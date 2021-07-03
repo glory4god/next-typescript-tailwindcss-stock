@@ -23,7 +23,7 @@ export type Message = {
   date: string;
 };
 
-let sockJs = new SockJS('http://localhost:8080/api/v2/web-socket');
+let sockJs = new SockJS('http://54.180.68.136:8080/api/v2/web-socket');
 let stompClient: Stomp.Client = Stomp.over(sockJs);
 stompClient.debug = () => {};
 
@@ -37,7 +37,7 @@ const ChatBox: React.FC<Props> = ({ className }) => {
 
   const initialData = async () => {
     const data: Array<Message> = (await fetcher(
-      'http://localhost:8080/api/v2/web-socket/topic/roomId/all',
+      'http://54.180.68.136:8080/api/v2/web-socket/topic/roomId/all',
     )) as Array<Message>;
     setContents(data);
   };

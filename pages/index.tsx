@@ -15,7 +15,7 @@ export default function Home() {
       <Container>
         <div className=" pt-14 pb-12 px-6">
           <h2>T I T L E</h2>
-          <p className="py-4">어떤 말을 넣지?!!?!?!?!</p>
+          <p className="py-4">MAIN PAGE</p>
           {/* <Slider height="small" /> */}
           {/* <BottomInfo className="mt-40 mb-8" /> */}
         </div>

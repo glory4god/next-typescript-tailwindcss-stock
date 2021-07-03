@@ -86,8 +86,9 @@ const Line: FC<Props> = () => {
   );
 
   const getDateRange = React.useCallback(async (companyId: string) => {
+    console.log(companyId);
     const response = await fetch(
-      `http://54.180.68.136:8080/api/v1/chart/company-date/${companyId}`,
+      `http://54.180.68.136:8080/api/v1/chart/companydate/${companyId}`,
     );
 
     if (!response.ok) {
