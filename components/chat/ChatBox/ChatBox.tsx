@@ -2,73 +2,82 @@ import React from 'react';
 import cn from 'classnames';
 import Paper from '@material-ui/core/Paper';
 import ChatList from '../ChatList';
-import ChatInput from '../ChatInput';
-import type {
-  GetChatData,
-  PostChatDataForm,
-} from '../../../types/chat/ChatType';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
+import SockJS from 'sockjs-client';
+import Stomp from 'stompjs';
+import fetcher from '../../../lib/fetcher';
 
 interface Props {
   className?: string;
 }
 
+type PostMessage = {
+  username: string;
+  content: string;
+};
+
+export type Message = {
+  username: string;
+  content: string;
+  date: string;
+};
+
+let sockJs = new SockJS('http://localhost:8080/api/v2/web-socket');
+let stompClient: Stomp.Client = Stomp.over(sockJs);
+stompClient.debug = () => {};
+
 const ChatBox: React.FC<Props> = ({ className }) => {
-  const [postChatForm, setPostChatForm] = React.useState<PostChatDataForm>({
-    userName: 'hayoung',
-    content: '',
-  });
-  const [chatList, setChatList] = React.useState<Array<GetChatData>>([]);
+  const [contents, setContents] = React.useState<Message[]>([]);
+  const [username, setUsername] = React.useState<string>('');
+  const [message, setMessage] = React.useState<string>('');
+  const [login, setLogin] = React.useState<boolean>(false);
   const [isClick, setIsClick] = React.useState<boolean>(false);
   const chatRef = React.useRef<HTMLDivElement>(null);
 
-  const getChatData = async () => {
-    const response = await fetch(
-      'http://54.180.68.136:8080/api/stock/data/chat',
-    );
-    if (!response.ok) {
-      return window.alert('get failed!');
+  const initialData = async () => {
+    const data: Array<Message> = (await fetcher(
+      'http://localhost:8080/api/v2/web-socket/topic/roomId/all',
+    )) as Array<Message>;
+    setContents(data);
+  };
+  React.useEffect(() => {
+    initialData();
+    scrollToBottom();
+  }, [login, isClick]);
+
+  const handleEnter = (username: string, content: string) => {
+    if (content.length === 0) {
+      return window.alert(`There's not content!!`);
     }
-    const resJson = await response.json();
-    setChatList(resJson);
+    const newMessage: PostMessage = { username, content };
+    stompClient.send('/send-message', {}, JSON.stringify(newMessage));
+    setMessage('');
   };
 
-  const postChatData = React.useCallback(async (item: PostChatDataForm) => {
-    const response = await fetch(
-      'http://54.180.68.136:8080/api/stock/data/chat/post',
-      {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(item),
-      },
-    );
-    if (!response.ok) {
-      return window.alert('post failed!');
-    }
-    getChatData();
-  }, []);
-
   React.useEffect(() => {
-    getChatData();
-  }, []);
+    stompClient.connect({}, () => {
+      stompClient.subscribe('/topic/roomId', (data) => {
+        const newMessage: Message = JSON.parse(data.body) as Message;
+        setContents((prev) => [...prev, newMessage]);
+      });
+    });
+  }, [contents]);
+
+  const onKeyDown = (e: React.KeyboardEvent) => {
+    if (e.key === 'Enter') {
+      handleEnter(username, message);
+    }
+  };
 
   //스크롤 최하단으로 보내기 ref 함수
   const scrollToBottom = () => {
     chatRef.current?.scrollIntoView({ behavior: 'auto' });
   };
+
   React.useEffect(() => {
     scrollToBottom();
-  }, [chatList, isClick]);
-
-  const onChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-  ) => {
-    setPostChatForm(() => ({
-      ...postChatForm,
-      content: e.target.value,
-    }));
-  };
+  }, [contents]);
 
   // isClick true일 때, Escape 키 누르면 false 될 수 있는 기능 필요
   return (
@@ -81,20 +90,46 @@ const ChatBox: React.FC<Props> = ({ className }) => {
       {isClick && (
         <div className="w-60">
           <div className="p-2 h-80 overflow-y-scroll border-2">
-            {chatList.map((arr, idx) => {
-              return <ChatList key={'chat' + arr.userName + idx} chat={arr} />;
+            {contents.map((arr, idx) => {
+              return <ChatList key={'chat' + arr.username + idx} chat={arr} />;
             })}
             <div ref={chatRef} />
           </div>
-          <ChatInput
-            className="flex px-1"
-            onChange={onChange}
-            postChatForm={postChatForm}
-            postChatData={postChatData}
-            resetInput={() =>
-              setPostChatForm(() => ({ ...postChatForm, content: '' }))
-            }
-          />
+          <div className="flex px-1">
+            {login ? (
+              <>
+                <TextField
+                  value={message}
+                  onChange={(e) => setMessage(e.target.value)}
+                  onKeyDown={onKeyDown}
+                />
+                <Button
+                  size="small"
+                  onClick={() => handleEnter(username, message)}>
+                  전송
+                </Button>
+              </>
+            ) : (
+              <>
+                <TextField
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  onKeyDown={(e: React.KeyboardEvent) => {
+                    if (e.key === 'Enter') {
+                      setLogin(true);
+                    }
+                  }}
+                  placeholder="아이디를 입력하세요"
+                />
+                <Button
+                  size="small"
+                  onClick={() => () => setLogin(true)}
+                  disabled={username.length === 0}>
+                  전송
+                </Button>
+              </>
+            )}
+          </div>
         </div>
       )}
     </Paper>
