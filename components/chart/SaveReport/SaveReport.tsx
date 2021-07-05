@@ -2,6 +2,7 @@ import React from 'react';
 import cn from 'classnames';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
+import type { PostChartReport } from '../../../types/report/ReportType';
 
 interface Props {
   className?: string;
@@ -9,50 +10,33 @@ interface Props {
   refresh: () => void;
 }
 
-type PostBoardCondition = {
-  companyName: string | undefined;
-  value: string | undefined;
-  graphEffect: string | undefined;
-  startDate: string;
-  endDate: string;
-  title: string;
-  content: string;
-};
-
 type Save = {
   loading: boolean;
   editing: boolean;
-};
-type WritingText = {
-  title: string;
-  content: string;
 };
 
 const InitialSave: Save = {
   loading: false,
   editing: false,
 };
-const InitialWritingText: WritingText = {
-  title: '',
-  content: '',
-};
 
 const SaveReport: React.FC<Props> = ({ className, dataCondition, refresh }) => {
   const [isSave, setIsSave] = React.useState<Save>(InitialSave);
-  const [writing, setWriting] = React.useState<WritingText>(InitialWritingText);
-  const [postBoardItem, setPostBoardItem] = React.useState<PostBoardCondition>({
+  const [postBoardItem, setPostBoardItem] = React.useState<PostChartReport>({
     ...dataCondition,
+    username: 'hayoung',
     title: '',
     content: '',
   });
 
-  const postReport = async (item: PostBoardCondition) => {
+  const postReport = async (item: PostChartReport) => {
+    console.log(item);
     setIsSave(() => ({
       ...isSave,
       loading: true,
     }));
     const response = await fetch(
-      'http://54.180.68.136:8080/api/user/chart-record/post',
+      'http://localhost:8080/api/v1/user/chart-report/post',
       {
         method: 'POST',
         headers: {
@@ -74,22 +58,21 @@ const SaveReport: React.FC<Props> = ({ className, dataCondition, refresh }) => {
         loading: false,
         editing: false,
       }));
-      setWriting(InitialWritingText);
+      setPostBoardItem(() => ({
+        ...postBoardItem,
+        title: '',
+        content: '',
+      }));
     }
   };
 
-  const postClickHandler = (writing: WritingText) => {
-    if (writing.title === '') {
+  const postClickHandler = (item: PostChartReport) => {
+    if (item.title === '' || item.title === null) {
       return window.alert('제목을 입력하세요');
-    } else if (writing.content === '') {
+    } else if (item.content === '' || item.content === null) {
       return window.alert('내용을 입력하세요');
     } else {
-      setPostBoardItem(() => ({
-        ...postBoardItem,
-        title: writing.title,
-        content: writing.content,
-      }));
-      postReport(postBoardItem);
+      postReport(item);
     }
   };
 
@@ -108,7 +91,6 @@ const SaveReport: React.FC<Props> = ({ className, dataCondition, refresh }) => {
         onClick={() => {
           refresh();
           setIsSave(InitialSave);
-          setWriting(InitialWritingText);
         }}>
         RESET
       </Button>
@@ -118,12 +100,12 @@ const SaveReport: React.FC<Props> = ({ className, dataCondition, refresh }) => {
             onChange={(
               e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
             ) => {
-              setWriting(() => ({
-                ...writing,
+              setPostBoardItem(() => ({
+                ...postBoardItem,
                 title: e.target.value,
               }));
             }}
-            value={writing.title}
+            value={postBoardItem.title}
             label="TITLE"
           />
           <br />
@@ -131,16 +113,16 @@ const SaveReport: React.FC<Props> = ({ className, dataCondition, refresh }) => {
             onChange={(
               e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
             ) => {
-              setWriting(() => ({
-                ...writing,
+              setPostBoardItem(() => ({
+                ...postBoardItem,
                 content: e.target.value,
               }));
             }}
-            value={writing.content}
+            value={postBoardItem.content}
             label="CONTENT"
           />
           <br />
-          <Button onClick={() => postClickHandler(writing)}>
+          <Button onClick={() => postClickHandler(postBoardItem)}>
             {isSave.loading ? 'WRITING...' : 'WRITING'}
           </Button>
           <Button
