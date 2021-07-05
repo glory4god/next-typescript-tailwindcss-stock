@@ -1,4 +1,5 @@
 import React from 'react';
+import Image from 'next/image';
 import cn from 'classnames';
 import TopicTag from './TopicTag';
 import fetcher from '../../../lib/fetcher';
@@ -38,8 +39,8 @@ const TopicContainer: React.FC<Props> = ({ className, topic }) => {
 
   return (
     <div className={cn(className)}>
-      <h2 className="pl-4 py-2 text-left">#Daily Hot Keyword</h2>
-      <div className="lg:pl-4 flex space-x-2 my-6 ">
+      <h2 className="pl-4 text-left text-xl">#Daily Hot Keyword</h2>
+      <div className="lg:pl-4 flex space-x-2 md:my-6 my-4">
         {topic.length !== 0 ? (
           topic.map((arr: string, key: number) => {
             if (key < 5) {
@@ -73,7 +74,7 @@ const TopicContainer: React.FC<Props> = ({ className, topic }) => {
           </>
         )}
       </div>
-      <div className="lg:grid lg:grid-cols-2 lg:gap-y-6 lg:justify-items-center mt-12 flex flex-col items-center">
+      <div className="lg:grid lg:grid-cols-2 lg:gap-y-6 lg:justify-items-center  md:mt-12 mt-6 flex flex-col items-center">
         {hotKeywordList.length !== 0 ? (
           hotKeywordList.map((news, key) => {
             return (

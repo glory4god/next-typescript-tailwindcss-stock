@@ -24,7 +24,7 @@ const TopicView: React.FC<Props> = ({
       style={{ width: '328px', height: '400px' }}
       className="border-2 rounded-xl my-2">
       <div className="text-xl flex justify-between text-left px-8 font-bold py-8 ">
-        <span className="bg-indigo-200 rounded-3xl text-xs text-white px-4 py-1">
+        <span className="bg-indigo-200 rounded-full text-xs text-white px-4 py-1">
           # {topic}
         </span>
         <LinkIcon
@@ -44,8 +44,8 @@ const TopicView: React.FC<Props> = ({
           className="cursor-pointer transform rotate-45"
         />
       </div>
-      <h4
-        className="h-24 text-left text-xl px-4"
+      <div
+        className="h-24 text-left text-lg px-4"
         dangerouslySetInnerHTML={{ __html: title }}
       />
       <div
@@ -59,12 +59,21 @@ const TopicView: React.FC<Props> = ({
           }
         }}>
         {imageUrl !== 'nothing' ? (
+          // <div
+          //   className={styles.image}
+          //   style={{
+          //     backgroundImage: `url(${imageUrl})`,
+          //   }}
+          // />
           <Image
             className={styles.image}
             src={`${imageUrl}`}
             alt={title}
             width={328}
-            height={215}></Image>
+            height={215}
+            objectFit="cover"
+            objectPosition="50% 10%"
+          />
         ) : (
           <Image src={'/favicon.ico'} alt={title} width={328} height={210} />
         )}
