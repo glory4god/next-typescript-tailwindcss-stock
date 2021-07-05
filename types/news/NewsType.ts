@@ -20,7 +20,12 @@ export type PostNews = {
   keyword: string;
 };
 
-export type NewsWithImageUrl<T extends News = News> = {
+export type NewsWithImageUrl = {
+  title: string;
+  link: string;
+  originallink: string;
+  description: string;
+  pubDate: string;
   keyword: string;
   imageUrl: string;
 };
