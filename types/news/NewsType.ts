@@ -19,3 +19,8 @@ export type PostNews = {
   pubDate: string;
   keyword: string;
 };
+
+export type NewsWithImageUrl<T extends News = News> = {
+  keyword: string;
+  imageUrl: string;
+};
