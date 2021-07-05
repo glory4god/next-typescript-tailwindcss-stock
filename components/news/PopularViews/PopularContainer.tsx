@@ -20,7 +20,7 @@ type SearchCondition = {
   weekly: boolean;
 };
 
-const PopularViews: React.FC<Props> = ({ className }) => {
+const PopularContainer: React.FC<Props> = ({ className }) => {
   const [menu, setMenu] = React.useState<Menu>({
     keyword: false,
     news: false,
@@ -51,10 +51,10 @@ const PopularViews: React.FC<Props> = ({ className }) => {
           <div
             className={`${
               menu.keyword === true ? 'max-h-80' : 'max-h-0'
-            } transition:max-height duration-300 ease-out mt-1`}>
+            } transition:max-height duration-300 ease-out`}>
             {menu.keyword && (
               <PopularKeywordBox
-                className="px-3 py-2"
+                className="px-3 pt-2"
                 failed={() => setMenu(() => ({ ...menu, keyword: false }))}
               />
             )}
@@ -86,4 +86,4 @@ const PopularViews: React.FC<Props> = ({ className }) => {
   );
 };
 
-export default PopularViews;
+export default PopularContainer;

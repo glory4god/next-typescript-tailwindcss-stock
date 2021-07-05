@@ -1,1 +1,1 @@
-export { default } from './PopularViews';
+export { default } from './PopularContainer';
