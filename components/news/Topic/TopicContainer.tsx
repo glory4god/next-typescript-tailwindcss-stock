@@ -3,7 +3,7 @@ import cn from 'classnames';
 import TopicTag from './TopicTag';
 import fetcher from '../../../lib/fetcher';
 import TopicView from './TopicView';
-import type { PostNews } from '../../../types/news/NewsType';
+import type { NewsWithImageUrl } from '../../../types/news/NewsType';
 
 interface Props {
   className?: string;
@@ -11,22 +11,22 @@ interface Props {
 }
 
 const TopicContainer: React.FC<Props> = ({ className, topic }) => {
-  const [hotKeywordList, setHotKeywordList] = React.useState<Array<PostNews>>(
-    [],
-  );
+  const [hotKeywordList, setHotKeywordList] = React.useState<
+    Array<NewsWithImageUrl>
+  >([]);
   const [property, setProperty] = React.useState<string>(topic[0]);
 
   // const {
   //   keywordList,
   //   isLoading,
   //   isError,
-  // }: { keywordList: Array<PostNews>; isLoading: boolean; isError: boolean } =
+  // }: { keywordList: Array<NewsWithImageUrl>; isLoading: boolean; isError: boolean } =
   //   useKeyword(topic[0]);
 
   const getHotKeyword = async (topic: string) => {
     const value = (await fetcher(
       `http://54.180.68.136:8080/api/v1/news/pop-url/${topic}`,
-    )) as Array<PostNews>;
+    )) as Array<NewsWithImageUrl>;
 
     setHotKeywordList(value);
   };
@@ -38,8 +38,8 @@ const TopicContainer: React.FC<Props> = ({ className, topic }) => {
 
   return (
     <div className={cn(className)}>
-      <h2 className="py-2 text-left">#Daily Hot Keyword</h2>
-      <div className="flex space-x-2 my-6 ">
+      <h2 className="pl-4 py-2 text-left">#Daily Hot Keyword</h2>
+      <div className="lg:pl-4 flex space-x-2 my-6 ">
         {topic.length !== 0 ? (
           topic.map((arr: string, key: number) => {
             if (key < 5) {
@@ -82,7 +82,7 @@ const TopicContainer: React.FC<Props> = ({ className, topic }) => {
                 topic={news.keyword}
                 link={news.link}
                 title={news.title}
-                description={news.description}
+                imageUrl={news.imageUrl}
                 skeleton={false}
               />
             );
@@ -96,7 +96,7 @@ const TopicContainer: React.FC<Props> = ({ className, topic }) => {
                   topic="..."
                   link="..."
                   title="아직 뉴스가 없습니다!"
-                  description="..."
+                  imageUrl="nothing"
                   skeleton={true}
                 />
               );
@@ -108,4 +108,4 @@ const TopicContainer: React.FC<Props> = ({ className, topic }) => {
   );
 };
 
-export default TopicContainer;
+export default React.memo(TopicContainer);
