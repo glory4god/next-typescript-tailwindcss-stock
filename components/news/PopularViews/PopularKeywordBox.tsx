@@ -1,6 +1,8 @@
 import React from 'react';
 import cn from 'classnames';
 import Button from '@material-ui/core/Button';
+// import useWindowXSize from '../../../lib/hooks/useWindowSize';
+// import type { WindowSize } from '../../chart/GraphHeader/GraphHeader';
 
 interface Props {
   className?: string;
@@ -57,14 +59,24 @@ const PopularKeywordBox: React.FC<Props> = ({ className, failed }) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  // const windowSize: WindowSize = useWindowXSize();
+
   return (
     <div className={cn(className)}>
       {!loading ? (
         popKeyword?.map((arr: string, idx: number) => {
           if (idx < 10) {
             return (
-              <h3 key={arr + idx} title={arr} className="text-left pb-1">
-                {idx + 1}위: {arr.length > 9 ? arr.substr(0, 9) + '...' : arr}
+              <h3
+                key={arr + idx}
+                title={arr}
+                className="text-left text-sm pt-1">
+                {idx + 1}. {arr.length > 10 ? arr.substr(0, 10) + '...' : arr}
+                {/* {windowSize.width > 768 && windowSize.width < 820
+                  ? `${idx + 1}. ${
+                      arr.length > 7 ? arr.substr(0, 7) + '...' : arr
+                    }`
+                  : `${idx + 1}. ${arr}`} */}
               </h3>
             );
           }

@@ -101,8 +101,8 @@ const SearchBar: React.FC<Props> = ({ className, topic }) => {
       <Paper elevation={2}>
         <div
           className={`${
-            isShowNews === true ? 'md:max-h-96 max-h-52' : 'max-h-0'
-          } transition:max-height duration-200 md:h-96 h-52 px-2 overflow-y-scroll bg-white`}>
+            isShowNews === true ? 'max-h-64' : 'max-h-0'
+          } transition:max-height duration-200 h-max-h-64 px-2 overflow-y-scroll bg-white`}>
           {loading
             ? 'loading...'
             : newsList.map((arr, key) => {
@@ -123,7 +123,7 @@ const SearchBar: React.FC<Props> = ({ className, topic }) => {
               })}
         </div>
         {isShowNews && (
-          <div className="flex justify-between px-2 border-t-2  border-gray-100">
+          <div className="flex justify-between px-2 border-t-2 border-gray-100">
             <div>
               <Button
                 style={{

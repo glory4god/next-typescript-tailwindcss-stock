@@ -1,5 +1,4 @@
 import React, { FC } from 'react';
-import cn from 'classnames';
 import Navbar from '../Navbar';
 import Footer from '../Footer';
 import ChatBox from '../../chat/ChatBox';
