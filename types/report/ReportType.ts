@@ -26,5 +26,6 @@ export type ChartReport = {
     modifiedDate: Date;
     good: number;
     bad: number;
+    views: number;
   };
 };
