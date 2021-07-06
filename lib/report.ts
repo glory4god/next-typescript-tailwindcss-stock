@@ -3,7 +3,7 @@ import type { ChartReport } from '../types/report/ReportType';
 
 export async function getReportIds() {
   const report = (await fetcher(
-    'http://localhost:8080/api/v1/user/chart-report',
+    'http://54.180.68.136:8080/api/v1/user/chart-report',
   )) as Array<ChartReport>;
 
   const paths: string[] = report.map((arr) => {
@@ -14,7 +14,7 @@ export async function getReportIds() {
 
 export async function getReportById(id: string) {
   const data = (await fetcher(
-    `http://localhost:8080/api/v1/user/chart-report/${id}`,
+    `http://54.180.68.136:8080/api/v1/user/chart-report/${id}`,
   )) as ChartReport;
   return data;
 }

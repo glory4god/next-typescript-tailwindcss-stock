@@ -7,6 +7,7 @@ module.exports = {
       'cdn.incheonilbo.com',
       'cgeimage.commutil.kr',
       'mimgnews.pstatic.net',
+      'img.insight.co.kr',
     ],
   },
 };

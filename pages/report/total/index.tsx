@@ -29,7 +29,7 @@ export default Total;
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const report = (await fetcher(
-    'http://localhost:8080/api/v1/user/chart-report',
+    'http://54.180.68.136:8080/api/v1/user/chart-report',
   )) as Array<ChartReport>;
   return {
     props: { report },
