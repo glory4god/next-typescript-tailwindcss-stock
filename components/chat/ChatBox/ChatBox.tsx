@@ -23,10 +23,8 @@ export type Message = {
   date: string;
 };
 
-let sockJs = new SockJS('http://54.180.68.136:8080/api/v2/web-socket', {
-  Credential: true,
-});
-let stompClient: Stomp.Client = Stomp.over(sockJs);
+var sockJs = new SockJS('http://54.180.68.136:8080/api/v2/web-socket');
+var stompClient: Stomp.Client = Stomp.over(sockJs);
 stompClient.debug = () => {};
 
 const ChatBox: React.FC<Props> = ({ className }) => {
@@ -65,7 +63,6 @@ const ChatBox: React.FC<Props> = ({ className }) => {
       });
     });
     scrollToBottom();
-    console.log(contents);
   }, [contents]);
 
   const onKeyDown = (e: React.KeyboardEvent) => {
@@ -84,7 +81,9 @@ const ChatBox: React.FC<Props> = ({ className }) => {
     <Paper className={cn(className)}>
       <h1
         className="cursor-pointer p-1 font-bold"
-        onClick={() => setIsClick((c) => !c)}>
+        onClick={() => {
+          setIsClick((c) => !c);
+        }}>
         실시간 채팅
       </h1>
       {isClick && (
