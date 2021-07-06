@@ -11,7 +11,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         <Navbar title="TITLE" />
       </header>
       <main>{children}</main>
-      <ChatBox className="fixed right-2 bottom-2 z-30" />
+      {/* <ChatBox className="fixed right-2 bottom-2 z-30" /> */}
       <Footer />
     </>
   );
