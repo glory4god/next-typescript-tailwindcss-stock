@@ -1,20 +1,25 @@
 import React from 'react';
 import Link from 'next/link';
-import styles from './ReportContent.module.css';
+import styles from './ReportItem.module.css';
 import cn from 'classnames';
 import ThumbUp from '@material-ui/icons/ThumbUp';
 import ThumbDown from '@material-ui/icons/ThumbDown';
 import type { ChartReport } from '../../../types/report/ReportType';
+import { viewsHandler } from '../../../lib/report';
 
 interface Props {
   item: ChartReport;
 }
 
-const BoradContent: React.FC<Props> = ({ item }) => {
+const BoradItem: React.FC<Props> = ({ item }) => {
   return (
     <div className={cn(styles.boardgrid, styles.marginy)}>
       <Link href={`/report/total/${item.id}`}>
-        <a className="font-bold text-base text-left cursor-pointer">
+        <a
+          className="font-bold text-base text-left cursor-pointer pl-4"
+          onClick={() => {
+            viewsHandler(item.id);
+          }}>
           · {item.report.title}
         </a>
       </Link>
@@ -33,4 +38,4 @@ const BoradContent: React.FC<Props> = ({ item }) => {
   );
 };
 
-export default BoradContent;
+export default React.memo(BoradItem);

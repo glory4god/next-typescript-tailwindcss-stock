@@ -21,7 +21,7 @@ const TopicTag: React.FC<Props> = ({
         'md:px-4 px-2 flex py-2 rounded-full text-xs md:font-bold text-white cursor-pointer justify-center items-center',
         {
           'bg-indigo-400': clicked === true,
-          ' text-indigo-400 border-2 border-indigo-200': clicked === false,
+          'text-indigo-400 border-2 border-indigo-200': clicked === false,
         },
       )}
       onClick={onClick}>
