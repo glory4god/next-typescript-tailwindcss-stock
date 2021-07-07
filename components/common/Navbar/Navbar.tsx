@@ -41,11 +41,7 @@ const Navbar: FC<Props> = ({ className, title }) => {
                       <a className="w-full">AI</a>
                     </Link>
                   </MenuItem>
-                  <MenuItem
-                    onClick={() => {
-                      popupState.close();
-                      window.alert('not launching');
-                    }}>
+                  <MenuItem>
                     <Link href="/report/total">
                       <a className="w-full">REPORT</a>
                     </Link>
