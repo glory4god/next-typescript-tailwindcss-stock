@@ -151,10 +151,12 @@ export default function Example({
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const valueData = (await fetcher(
-    `http://54.180.68.136:8080/api/v1/chart/company/1?start=2018-01-08&end=2021-06-04`,
+    process.env.AWS_SERVER +
+      `api/v1/chart/company/1?start=2018-01-08&end=2021-06-04`,
   )) as Array<CompanyValueData>;
   const customData = (await fetcher(
-    `http://54.180.68.136:8080/api/v1/chart/company/custom/1?start=2018-01-08&end=2021-06-04`,
+    process.env.AWS_SERVER +
+      `api/v1/chart/company/custom/1?start=2018-01-08&end=2021-06-04`,
   )) as Array<CustomOpenCloseData>;
   return {
     props: {

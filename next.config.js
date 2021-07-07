@@ -10,4 +10,8 @@ module.exports = {
       'img.insight.co.kr',
     ],
   },
+  env: {
+    LOCAL_SERVER: 'http://localhost:8080/',
+    AWS_SERVER: 'http://54.180.68.136:8080/',
+  },
 };
