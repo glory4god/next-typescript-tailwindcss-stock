@@ -5,8 +5,16 @@ import { GetStaticPaths, GetStaticProps } from 'next';
 import type { ChartReport } from '../../../types/report/ReportType';
 import { getReportById, getReportIds } from '../../../lib/report';
 import { ParsedUrlQuery } from 'querystring';
+import BoardView from '../../../components/report/BoardView';
+import fetcher from '../../../lib/fetcher';
 
-const BoardPage = ({ data }: { data: ChartReport }) => {
+const BoardPage = ({
+  report,
+  reportList,
+}: {
+  report: ChartReport;
+  reportList: Array<ChartReport>;
+}) => {
   return (
     <Container>
       <Subnavbar
@@ -15,11 +23,12 @@ const BoardPage = ({ data }: { data: ChartReport }) => {
           sub: { first: 'total', second: 'company', third: 'my' },
         }}
       />
-      <div>
-        <div>{data.report.title}</div>
-        <div>{data.report.content}</div>
-        <div>{data.username}</div>
-      </div>
+      <h2 className="my-4">CHART REPORT</h2>
+      <BoardView
+        className="text-left"
+        report={report}
+        reportList={reportList}
+      />
     </Container>
   );
 };
@@ -46,9 +55,13 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const { pages } = context.params as IParams;
-  const data = (await getReportById(pages)) as ChartReport;
+  const report = (await getReportById(pages)) as ChartReport;
+
+  const reportList = (await fetcher(
+    process.env.AWS_SERVER + 'api/v1/user/chart-report',
+  )) as Array<ChartReport>;
 
   return {
-    props: { data },
+    props: { report, reportList },
   };
 };
