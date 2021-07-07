@@ -4,7 +4,7 @@ import Subnavbar from '../../../components/common/Subnavbar';
 import Container from '../../../components/ui/Container';
 import type { ChartReport } from '../../../types/report/ReportType';
 import fetcher from '../../../lib/fetcher';
-import BoardContent from '../../../components/report/BoardContent';
+import BoardList from '../../../components/report/BoardList';
 
 const Total = ({ report }: { report: Array<ChartReport> }) => {
   return (
@@ -15,21 +15,17 @@ const Total = ({ report }: { report: Array<ChartReport> }) => {
           sub: { first: 'total', second: 'company', third: 'my' },
         }}
       />
-      <h2 className="mt-6">CHART REPORT</h2>
-      <div>
-        {report.map((arr, idx) => {
-          return <BoardContent key={arr.username + idx} item={arr} />;
-        })}
-      </div>
+      <h2 className="my-4">CHART REPORT</h2>
+      <BoardList report={report} entire={true} />
     </Container>
   );
 };
 
-export default Total;
+export default React.memo(Total);
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const report = (await fetcher(
-    'http://54.180.68.136:8080/api/v1/user/chart-report',
+    process.env.AWS_SERVER + 'api/v1/user/chart-report',
   )) as Array<ChartReport>;
   return {
     props: { report },
