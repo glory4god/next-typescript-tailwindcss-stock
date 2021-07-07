@@ -1,5 +1,5 @@
 import React from 'react';
-import { GetServerSideProps } from 'next';
+import { GetStaticProps } from 'next';
 import Subnavbar from '../../../components/common/Subnavbar';
 import Container from '../../../components/ui/Container';
 import type { ChartReport } from '../../../types/report/ReportType';
@@ -23,7 +23,7 @@ const Total = ({ report }: { report: Array<ChartReport> }) => {
 
 export default React.memo(Total);
 
-export const getServerSideProps: GetServerSideProps = async (context) => {
+export const getStaticProps: GetStaticProps = async (context) => {
   const report = (await fetcher(
     process.env.AWS_SERVER + 'api/v1/user/chart-report',
   )) as Array<ChartReport>;
