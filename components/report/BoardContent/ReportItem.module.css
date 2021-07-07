@@ -3,8 +3,8 @@
   grid-template-columns: 8fr 2fr 1fr 1fr 1fr 2fr;
   font-size: 12px;
   text-align: center;
-  padding-top: 8px;
-  padding-bottom: 8px;
+  padding-top: 18px;
+  padding-bottom: 18px;
   border-bottom: 1px solid gainsboro;
 }
 .marginy > div {

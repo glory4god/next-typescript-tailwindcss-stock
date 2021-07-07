@@ -1,0 +1,17 @@
+.title {
+  margin-bottom: 16px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.reportInfo {
+  height: 48px;
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid gainsboro;
+}
+
+.content {
+  height: 100%;
+  margin-top: 1.5rem;
+}
