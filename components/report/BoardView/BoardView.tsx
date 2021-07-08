@@ -5,6 +5,7 @@ import styles from './BoardView.module.css';
 import ThumbUp from '@material-ui/icons/ThumbUp';
 import ThumbDown from '@material-ui/icons/ThumbDown';
 import LinkIcon from '@material-ui/icons/Link';
+import Button from '@material-ui/core/Button';
 import copy from 'copy-to-clipboard'; // url 클립보드 복사 기능
 import { useRouter } from 'next/dist/client/router';
 import { badHandler, goodHandler } from '../../../lib/report';
@@ -16,9 +17,14 @@ interface Props {
   reportList: Array<ChartReport>;
 }
 
+type CounterType = {
+  good: number;
+  bad: number;
+};
+
 const BoardView: React.FC<Props> = ({ className, report, reportList }) => {
   const pages = useRouter();
-  const [counter, setCounter] = React.useState({
+  const [counter, setCounter] = React.useState<CounterType>({
     good: report.report.good,
     bad: report.report.bad,
   });
@@ -27,8 +33,27 @@ const BoardView: React.FC<Props> = ({ className, report, reportList }) => {
     <div className={cn(className)}>
       <div className={styles.title}>
         <h3 className="text-4xl">{report.report.title}</h3>
-        <div className="pt-4 space-x-4">
-          <span>
+        <div
+          className="pt-4 space-x-4 cursor-pointer"
+          onClick={() => {
+            alert('copied url link!');
+            copy('http://localhost:3000' + pages.asPath);
+          }}>
+          URL 복사 <LinkIcon className="transform rotate-45" />
+        </div>
+      </div>
+      <div className={styles.reportInfo}>
+        <h4>{report.username}</h4>
+        <div>
+          조회 {report.report.views} /{' '}
+          {report.report.modifiedDate.toString().substr(0, 10)}{' '}
+          {report.report.modifiedDate.toString().substr(11)}
+        </div>
+      </div>
+      <div className={styles.content}>
+        <p className="h-96">{report.report.content}</p>
+        <div className="flex justify-between">
+          <div className="space-x-4">
             <ThumbUp
               fontSize="small"
               className="cursor-pointer"
@@ -48,8 +73,6 @@ const BoardView: React.FC<Props> = ({ className, report, reportList }) => {
               }}
             />{' '}
             {counter.good}
-          </span>
-          <span>
             <ThumbDown
               fontSize="small"
               className="cursor-pointer"
@@ -69,26 +92,15 @@ const BoardView: React.FC<Props> = ({ className, report, reportList }) => {
               }}
             />{' '}
             {counter.bad}
-          </span>
-          <LinkIcon
-            className="cursor-pointer transform rotate-45"
-            onClick={() => {
-              copy('http://localhost:3000' + pages.asPath);
-            }}
-          />
+          </div>
+          <div>
+            <Button>수정</Button>
+            <Button>삭제</Button>
+          </div>
         </div>
       </div>
-      <div className={styles.reportInfo}>
-        <h4>{report.username}</h4>
-        <div>
-          조회 {report.report.views} /{' '}
-          {report.report.modifiedDate.toString().substr(0, 10)}{' '}
-          {report.report.modifiedDate.toString().substr(11)}
-        </div>
-      </div>
-      <div className={styles.content}>
-        <p>{report.report.content}</p>
-        <div className="h-96">test 공간</div>
+      <div className={styles.comment}>
+        <h4>댓글</h4>
       </div>
       <BoardList
         report={reportList.filter((c) => c.id !== report.id)}

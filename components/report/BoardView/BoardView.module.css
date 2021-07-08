@@ -13,5 +13,12 @@
 
 .content {
   height: 100%;
-  margin-top: 1.5rem;
+  padding-top: 1.5rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid gainsboro;
+}
+
+.comment {
+  padding: 16px 0px;
+  border-bottom: 1px solid gainsboro;
 }
