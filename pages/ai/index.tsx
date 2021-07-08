@@ -1,9 +1,6 @@
 import React from 'react';
+import Container from '../../components/ui/Container';
 
 export default function Index() {
-  return (
-    <div>
-      <div></div>
-    </div>
-  );
+  return <Container>준비중...</Container>;
 }
