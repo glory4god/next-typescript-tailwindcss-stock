@@ -8,6 +8,7 @@ module.exports = {
       'cgeimage.commutil.kr',
       'mimgnews.pstatic.net',
       'img.insight.co.kr',
+      'www.techholic.co.kr',
     ],
   },
   env: {
