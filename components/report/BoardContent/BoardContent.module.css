@@ -1,0 +1,21 @@
+.boardgrid {
+  display: grid;
+  grid-template-columns: 1fr 3fr 2fr;
+  height: 72px;
+  font-size: 12px;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid gainsboro;
+}
+
+@media (min-width: 1024px) {
+  .boardgrid {
+    display: grid;
+    grid-template-columns: 1fr 4fr 3fr;
+    height: 72px;
+    font-size: 12px;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid gainsboro;
+  }
+}
