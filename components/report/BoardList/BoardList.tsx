@@ -2,6 +2,7 @@ import React from 'react';
 import cn from 'classnames';
 import type { ChartReport } from '../../../types/report/ReportType';
 import BoardContent from '../BoardContent';
+import Button from '@material-ui/core/Button';
 
 interface Props {
   report: Array<ChartReport>;
@@ -19,49 +20,58 @@ const BoardList: React.FC<Props> = ({ report, entire }) => {
   }
   return (
     <>
-      <div style={{ height: `${entire ? '100%' : '100%'}` }}>
+      <div
+        style={{
+          height: '100%',
+        }}>
         {report.map((arr, idx) => {
           if (idx >= (currentBoardPage - 1) * 10 && idx < currentBoardPage * 10)
             return <BoardContent key={arr.username + idx} item={arr} />;
         })}
       </div>
-      <div className="mt-4 text-center">
-        <button
-          className="w-9 text-lg border-indigo-200"
+      <div className="mt-6 text-center flex justify-between items-center">
+        <Button
+          className="border-indigo-200"
           onClick={() => {
             if (currentBoardPage !== 1) {
               setCurrentBoardPage((c) => c - 1);
+            } else {
+              alert('이전 페이지가 없습니다!');
             }
           }}>
-          {'<'}
-        </button>
-        {arr.map((arr) => {
-          // 10으로 나눈 몫이 같은 값들을 추출 (이렇게하면 같은 자리수 목록 추출 가능)
-          if (Math.floor(arr / 10) === Math.floor(currentBoardPage / 10)) {
-            return (
-              <button
-                key={'downButton' + arr}
-                onClick={() => {
-                  setCurrentBoardPage(arr);
-                }}
-                className={cn('w-9 border-2 rounded-md border-indigo-200 ', {
-                  'bg-indigo-400 text-white': currentBoardPage === arr,
-                  'text-indigo-400': currentBoardPage !== arr,
-                })}>
-                {arr}
-              </button>
-            );
-          }
-        })}
-        <button
-          className="w-9 text-lg border-indigo-200"
+          {'< '} 이전
+        </Button>
+        <div>
+          {arr.map((arr) => {
+            // 10으로 나눈 몫이 같은 값들을 추출 (이렇게하면 같은 자리수 목록 추출 가능)
+            if (Math.floor(arr / 10) === Math.floor(currentBoardPage / 10)) {
+              return (
+                <button
+                  key={'downButton' + arr}
+                  onClick={() => {
+                    setCurrentBoardPage(arr);
+                  }}
+                  className={cn('px-3 border-2 rounded-md border-indigo-200 ', {
+                    'bg-indigo-400 text-white': currentBoardPage === arr,
+                    'text-indigo-400': currentBoardPage !== arr,
+                  })}>
+                  {arr}
+                </button>
+              );
+            }
+          })}
+        </div>
+        <Button
+          className="border-indigo-200"
           onClick={() => {
             if (currentBoardPage !== boardPages) {
               setCurrentBoardPage((c) => c + 1);
+            } else {
+              alert('다음 페이지가 없습니다!');
             }
           }}>
-          {'>'}
-        </button>
+          다음 {' >'}
+        </Button>
       </div>
     </>
   );
