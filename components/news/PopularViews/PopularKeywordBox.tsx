@@ -19,6 +19,11 @@ const PopularKeywordBox: React.FC<Props> = ({ className, failed }) => {
     setLoading(true);
     const response = await fetch(
       'http://54.180.68.136:8080/api/v1/news/pop-keyword/daily',
+      {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+        },
+      },
     );
 
     if (!response.ok) {
@@ -36,6 +41,11 @@ const PopularKeywordBox: React.FC<Props> = ({ className, failed }) => {
     setLoading(true);
     const response = await fetch(
       'http://54.180.68.136:8080/api/v1/news/pop-keyword/weekly',
+      {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+        },
+      },
     );
 
     if (!response.ok) {

@@ -33,6 +33,11 @@ const SearchBar: React.FC<Props> = ({ className, topic }) => {
       const response = await fetch(
         process.env.AWS_SERVER +
           `api/v1/news/${fetchData.keyword}?sort=${fetchData.sort}`,
+        {
+          headers: {
+            'Access-Control-Allow-Origin': '*',
+          },
+        },
       );
 
       if (!response.ok) {
