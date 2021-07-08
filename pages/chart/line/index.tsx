@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React from 'react';
 import Link from 'next/link';
 import Container from '../../../components/ui/Container';
 import Button from '@material-ui/core/Button';
@@ -24,8 +24,7 @@ import {
 } from '../../../lib/context/ChartContext';
 import Head from 'next/head';
 import fetcher from '../../../lib/fetcher';
-
-interface Props {}
+import { GetStaticProps } from 'next';
 
 type IsLoading = {
   isSave: boolean;
@@ -40,12 +39,17 @@ const initialDataCondition: DataCondition = {
   value: '',
   graphEffect: '',
 };
-const Line: FC<Props> = () => {
+const Line = ({
+  kospiList,
+  kosdaqList,
+}: {
+  kospiList: Array<string>;
+  kosdaqList: Array<string>;
+}) => {
   const [isSelect, setIsSelect] = React.useState<boolean>(false);
   const [dataCondition, setDataCondition] =
     React.useState<DataCondition>(initialDataCondition);
   const [company, setCompany] = React.useState<Array<any>>([]);
-  const [companyList, setCompanyList] = React.useState<Array<string>>([]);
   const [companyStartDate, setCompanyStartDate] = React.useState<string>('');
   const [companyEndDate, setCompanyEndDate] = React.useState<string>('');
   const [dateRange, setDateRange] = React.useState<Array<Date | null>>([]);
@@ -70,20 +74,6 @@ const Line: FC<Props> = () => {
       setCompany(response);
     }
   }, []);
-  const getCompanyListData = React.useCallback(
-    async (market: string | null) => {
-      setCompanyList([]);
-      if (market !== null) {
-        console.log('getCompanyListData!');
-        const toLowerMarket = market?.toLowerCase();
-        const response = (await fetcher(
-          `http://54.180.68.136:8080/api/v1/chart/companyname/${toLowerMarket}`,
-        )) as Array<string>;
-        setCompanyList(response);
-      }
-    },
-    [],
-  );
 
   const getDateRange = React.useCallback(async (companyId: string) => {
     console.log(companyId);
@@ -211,7 +201,6 @@ const Line: FC<Props> = () => {
                   value: '',
                 }));
                 getCompanyData(e.target.value);
-                getCompanyListData(e.target.value);
                 isToInitialHandler();
               }}
               value={dataCondition.market}
@@ -237,7 +226,7 @@ const Line: FC<Props> = () => {
               id="company"
               disabled={dataCondition.market === ''}
               label="COMPANY"
-              data={companyList}
+              data={dataCondition.market === 'KOSPI' ? kospiList : kosdaqList}
               placeholder="COMPANY"
             />
           </div>
@@ -377,7 +366,6 @@ const Line: FC<Props> = () => {
               }}
               refresh={() => {
                 setDataCondition(initialDataCondition);
-                setCompanyList([]);
                 setCompany([]);
                 setCompanyStartDate('');
                 setCompanyEndDate('');
@@ -394,3 +382,20 @@ const Line: FC<Props> = () => {
 };
 
 export default React.memo(Line);
+
+export const getStaticProps: GetStaticProps = async (context) => {
+  const kospiList = (await fetcher(
+    `http://54.180.68.136:8080/api/v1/chart/companyname/kospi`,
+  )) as Array<string>;
+
+  const kosdaqList = (await fetcher(
+    `http://54.180.68.136:8080/api/v1/chart/companyname/kosdaq`,
+  )) as Array<string>;
+
+  return {
+    props: {
+      kospiList,
+      kosdaqList,
+    },
+  };
+};
