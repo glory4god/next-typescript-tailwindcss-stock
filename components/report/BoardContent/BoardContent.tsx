@@ -14,7 +14,7 @@ interface Props {
 const BoardContent: React.FC<Props> = ({ item }) => {
   const [viewCount, setViewCount] = React.useState<number>(item.report.views);
   return (
-    <div className={styles.boardgrid}>
+    <div className={styles.grid}>
       <Link href={`/report/total/${item.id}`}>
         <a>
           <Image
@@ -26,30 +26,30 @@ const BoardContent: React.FC<Props> = ({ item }) => {
           />
         </a>
       </Link>
-      <Link href={`/report/total/${item.id}`}>
+      <Link href={`/report/chart/${item.id}`}>
         <a
           className="font-bold text-left md:text-base text-xs pl-2"
           onClick={() => {
-            if (viewCount === item.report.views) {
-              setViewCount((c) => c + 1);
-              viewsHandler(item.id);
-            }
+            setViewCount((c) => c + 1);
+            viewsHandler(item.id);
           }}>
           {item.report.title}
         </a>
       </Link>
-      <div className="grid lg:grid-cols-5 grid-cols-2 lg:gap-x-2">
-        <span className=" lg:block hidden my-auto">{item.username}</span>
-        <span className=" lg:block hidden">
+      <div className={styles.detailGrid}>
+        <span className="my-auto">{item.chart.companyName}</span>
+        <span className={styles.hidden}>
           <ThumbUp fontSize="small" style={{ color: '#818cf8' }} />{' '}
           {item.report.good}
         </span>
-        <span className=" lg:block hidden">
+        <span className={styles.hidden}>
           <ThumbDown fontSize="small" style={{ color: '#818cf8' }} />{' '}
           {item.report.bad}
         </span>
         <span>views {item.report.views}</span>
-        <span>{item.report.modifiedDate.toString().substr(0, 10)}</span>
+        <span className={styles.hidden}>
+          {item.report.modifiedDate.toString().substr(0, 10)}
+        </span>
       </div>
     </div>
   );
