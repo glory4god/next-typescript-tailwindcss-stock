@@ -20,7 +20,7 @@ const BoardPage = ({
       <Subnavbar
         pages={{
           main: 'report',
-          sub: { first: 'total', second: 'company', third: 'my' },
+          sub: { first: 'free', second: 'chart', third: 'my' },
         }}
       />
       <h2 className="my-4">CHART REPORT</h2>
@@ -58,7 +58,8 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const report = (await getReportById(pages)) as ChartReport;
 
   const reportList = (await fetcher(
-    process.env.AWS_SERVER + 'api/v1/user/chart-report',
+    process.env.LOCAL_SERVER +
+      'api/v1/user/chart-report/sort-all?sorted=modifiedDate',
   )) as Array<ChartReport>;
 
   return {

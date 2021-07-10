@@ -1,8 +1,8 @@
 import React from 'react';
 import Subnavbar from '../../../components/common/Subnavbar';
-import Container from '../../../components/ui/Container';
+import { Container } from '../../../components/ui';
 
-const My = () => {
+const index = () => {
   return (
     <Container>
       <Subnavbar
@@ -11,9 +11,9 @@ const My = () => {
           sub: { first: 'free', second: 'chart', third: 'my' },
         }}
       />
-      <h2>my page</h2>
+      <h2>free board</h2>
     </Container>
   );
 };
 
-export default My;
+export default index;
