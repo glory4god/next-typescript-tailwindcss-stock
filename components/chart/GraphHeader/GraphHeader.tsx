@@ -16,7 +16,6 @@ import { maxPrice, minPrice } from '../../../lib/context/ChartContext';
 interface Props {
   className?: string;
   dataCondition: DataCondition;
-  dateRange: Array<Date | null>;
   valueData: Array<CompanyValueData>;
   customData: Array<CustomOpenCloseData>;
 }
@@ -31,7 +30,6 @@ const GraphHeader: React.FC<Props> = ({
   valueData,
   dataCondition,
   customData,
-  dateRange,
 }) => {
   const windowSize: WindowSize = useWindowSize();
 
