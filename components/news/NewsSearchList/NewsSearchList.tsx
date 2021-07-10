@@ -12,7 +12,7 @@ const NewsSearchList: React.FC<Props> = ({ className, data }) => {
 
   const postUrl = async (data: PostNews) => {
     const response = await fetch(
-      'http://54.180.68.136:8080/api/v1/news/url/post',
+      process.env.LOCAL_SERVER + 'api/v1/news/url/post',
       {
         method: 'POST',
         headers: {

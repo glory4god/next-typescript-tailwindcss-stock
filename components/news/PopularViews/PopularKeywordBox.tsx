@@ -18,12 +18,7 @@ const PopularKeywordBox: React.FC<Props> = ({ className, failed }) => {
   const getDailyKeyword = async () => {
     setLoading(true);
     const response = await fetch(
-      'http://54.180.68.136:8080/api/v1/news/pop-keyword/daily',
-      {
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-        },
-      },
+      process.env.LOCAL_SERVER + 'api/v1/news/pop-keyword/daily',
     );
 
     if (!response.ok) {
@@ -40,12 +35,7 @@ const PopularKeywordBox: React.FC<Props> = ({ className, failed }) => {
   const getWeeklyKeyword = async () => {
     setLoading(true);
     const response = await fetch(
-      'http://54.180.68.136:8080/api/v1/news/pop-keyword/weekly',
-      {
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-        },
-      },
+      process.env.LOCAL_SERVER + 'api/v1/news/pop-keyword/weekly',
     );
 
     if (!response.ok) {

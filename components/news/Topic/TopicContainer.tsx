@@ -26,7 +26,7 @@ const TopicContainer: React.FC<Props> = ({ className, topic }) => {
 
   const getHotKeyword = async (topic: string) => {
     const value = (await fetcher(
-      process.env.AWS_SERVER + `api/v1/news/pop-url/${topic}`,
+      process.env.LOCAL_SERVER + `api/v1/news/pop-url/${topic}`,
     )) as Array<NewsWithImageUrl>;
 
     setHotKeywordList(value);

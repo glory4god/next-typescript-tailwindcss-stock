@@ -68,7 +68,8 @@ const Line = ({
       console.log('getCompanyData!');
       const toLowerMarket = market?.toLowerCase();
       const response = (await fetcher(
-        `http://54.180.68.136:8080/api/v1/chart/company-market/${toLowerMarket}`,
+        process.env.LOCAL_SERVER +
+          `api/v1/chart/company-market/${toLowerMarket}`,
       )) as Array<string>;
 
       setCompany(response);
@@ -78,7 +79,7 @@ const Line = ({
   const getDateRange = React.useCallback(async (companyId: string) => {
     console.log(companyId);
     const response = await fetch(
-      `http://54.180.68.136:8080/api/v1/chart/companydate/${companyId}`,
+      process.env.LOCAL_SERVER + `api/v1/chart/companydate/${companyId}`,
     );
 
     if (!response.ok) {
@@ -99,10 +100,12 @@ const Line = ({
         isDrawing: true,
       });
       const response1 = await fetch(
-        `http://54.180.68.136:8080/api/v1/chart/company/${companyName}?start=${start}&end=${end}`,
+        process.env.LOCAL_SERVER +
+          `api/v1/chart/company/${companyName}?start=${start}&end=${end}`,
       );
       const response2 = await fetch(
-        `http://54.180.68.136:8080/api/v1/chart/company/custom/${companyName}?start=${start}&end=${end}`,
+        process.env.LOCAL_SERVER +
+          `api/v1/chart/company/custom/${companyName}?start=${start}&end=${end}`,
       );
 
       if (!response1.ok || !response2.ok) {
@@ -345,7 +348,6 @@ const Line = ({
             <GraphHeader
               className="w-full pt-4 md:space-y-6 space-y-2 border-t-2"
               dataCondition={dataCondition}
-              dateRange={dateRange}
               valueData={valueData}
               customData={customData}
             />
@@ -385,11 +387,11 @@ export default React.memo(Line);
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const kospiList = (await fetcher(
-    `http://54.180.68.136:8080/api/v1/chart/companyname/kospi`,
+    process.env.LOCAL_SERVER + `api/v1/chart/companyname/kospi`,
   )) as Array<string>;
 
   const kosdaqList = (await fetcher(
-    `http://54.180.68.136:8080/api/v1/chart/companyname/kosdaq`,
+    process.env.LOCAL_SERVER + `api/v1/chart/companyname/kosdaq`,
   )) as Array<string>;
 
   return {

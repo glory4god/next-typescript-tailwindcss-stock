@@ -19,7 +19,7 @@ const PopularNewsBox: React.FC<Props> = ({ className, failed }) => {
   const getDailyNews = async () => {
     setLoading(true);
     const response = await fetch(
-      'http://54.180.68.136:8080/api/v1/news/pop-url/daily',
+      process.env.LOCAL_SERVER + 'api/v1/news/pop-url/daily',
     );
 
     if (!response.ok) {
@@ -37,7 +37,7 @@ const PopularNewsBox: React.FC<Props> = ({ className, failed }) => {
   const getWeeklyNews = async () => {
     setLoading(true);
     const response = await fetch(
-      'http://54.180.68.136:8080/api/v1/news/pop-url/weekly',
+      process.env.LOCAL_SERVER + 'api/v1/news/pop-url/weekly',
     );
 
     if (!response.ok) {

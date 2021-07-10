@@ -134,7 +134,6 @@ export default function Example({
         <GraphHeader
           className="w-full pt-4 md:space-y-6 space-y-2 border-t-2"
           dataCondition={initialDataCondition}
-          dateRange={dateRange}
           valueData={valueData}
           customData={customData}
         />
@@ -151,11 +150,11 @@ export default function Example({
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const valueData = (await fetcher(
-    process.env.AWS_SERVER +
+    process.env.LOCAL_SERVER +
       `api/v1/chart/company/1?start=2018-01-08&end=2021-06-04`,
   )) as Array<CompanyValueData>;
   const customData = (await fetcher(
-    process.env.AWS_SERVER +
+    process.env.LOCAL_SERVER +
       `api/v1/chart/company/custom/1?start=2018-01-08&end=2021-06-04`,
   )) as Array<CustomOpenCloseData>;
   return {

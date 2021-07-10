@@ -67,7 +67,7 @@ const TopicView: React.FC<Props> = ({
           // />
           <Image
             className={styles.image}
-            src={`${imageUrl}`}
+            src={`${imageUrl}` || '/favicon.ico'}
             alt={title}
             width={328}
             height={215}

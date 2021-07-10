@@ -49,12 +49,7 @@ export default function News({ topic }: { topic: Array<string> }) {
 
 export const getServerSideProps: GetServerSideProps = async (context) => {
   const res = (await fetcher(
-    process.env.AWS_SERVER + 'api/v1/news/pop-keyword/weekly',
-    {
-      headers: {
-        'Access-Control-Allow-Origin': '*',
-      },
-    },
+    process.env.LOCAL_SERVER + 'api/v1/news/pop-keyword/weekly',
   )) as Array<string>;
 
   const topic = res.filter((arr, idx) => {

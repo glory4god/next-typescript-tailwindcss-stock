@@ -31,13 +31,8 @@ const SearchBar: React.FC<Props> = ({ className, topic }) => {
     if (fetchData.keyword !== undefined) {
       setLoading(true);
       const response = await fetch(
-        process.env.AWS_SERVER +
+        process.env.LOCAL_SERVER +
           `api/v1/news/${fetchData.keyword}?sort=${fetchData.sort}`,
-        {
-          headers: {
-            'Access-Control-Allow-Origin': '*',
-          },
-        },
       );
 
       if (!response.ok) {
