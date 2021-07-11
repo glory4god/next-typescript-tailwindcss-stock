@@ -6,15 +6,11 @@ import type { ChartReport } from '../../../types/report/ReportType';
 import { getReportById, getReportIds } from '../../../lib/report';
 import { ParsedUrlQuery } from 'querystring';
 import BoardView from '../../../components/report/BoardView';
-import fetcher from '../../../lib/fetcher';
+import { useSelector } from 'react-redux';
+import { selectReport } from '../../../components/report/reportSlice';
 
-const BoardPage = ({
-  report,
-  reportList,
-}: {
-  report: ChartReport;
-  reportList: Array<ChartReport>;
-}) => {
+const BoardPage = ({ report }: { report: ChartReport }) => {
+  const { reportList } = useSelector(selectReport);
   return (
     <Container>
       <Subnavbar
@@ -57,12 +53,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const { pages } = context.params as IParams;
   const report = (await getReportById(pages)) as ChartReport;
 
-  const reportList = (await fetcher(
-    process.env.LOCAL_SERVER +
-      'api/v1/user/chart-report/sort-all?sorted=modifiedDate',
-  )) as Array<ChartReport>;
-
   return {
-    props: { report, reportList },
+    props: { report },
   };
 };
