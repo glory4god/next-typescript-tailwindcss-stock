@@ -1,4 +1,4 @@
-# My First Project (Stock community)
+# this project .. (Stock community)
 
 ## Stack
  - Nextjs + TypeScript (create-next-app)
