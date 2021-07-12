@@ -28,6 +28,7 @@ const BoardView: React.FC<Props> = ({ className, report, reportList }) => {
     good: report.report.good,
     bad: report.report.bad,
   });
+  const [chartOpen, setChartOpen] = React.useState<boolean>(false);
 
   return (
     <div className={cn(className)}>
@@ -39,19 +40,42 @@ const BoardView: React.FC<Props> = ({ className, report, reportList }) => {
             alert('copied url link!');
             copy('http://localhost:3000' + pages.asPath);
           }}>
-          URL 복사 <LinkIcon className="transform rotate-45" />
+          URL copy <LinkIcon className="transform rotate-45" />
         </div>
       </div>
       <div className={styles.reportInfo}>
         <h4>{report.username}</h4>
         <div>
-          조회 {report.report.views} /{' '}
+          Views {report.report.views} /{' '}
           {report.report.modifiedDate.toString().substr(0, 10)}{' '}
           {report.report.modifiedDate.toString().substr(11)}
         </div>
       </div>
       <div className={styles.content}>
-        <p className="h-96">{report.report.content}</p>
+        <div>
+          <div
+            className="cursor-pointer"
+            onClick={() => {
+              setChartOpen((c) => !c);
+            }}>
+            차트 보기
+          </div>
+          <div
+            className={`${
+              chartOpen === true ? 'max-h-72' : 'max-h-0'
+            } transition:max-height duration-300`}>
+            {chartOpen && (
+              <>
+                <div className="h-48">
+                  {report.chart.companyName} ({report.chart.startDate}~
+                  {report.chart.endDate}) 차트 : {report.chart.value}
+                  <div>차트 이미지 넣으면 좋을 듯</div>
+                </div>
+              </>
+            )}
+          </div>
+          <p className="h-48">{report.report.content}</p>
+        </div>
         <div className="flex justify-between">
           <div className="space-x-4">
             <ThumbUp
@@ -60,16 +84,13 @@ const BoardView: React.FC<Props> = ({ className, report, reportList }) => {
               style={{ color: '#818cf8' }}
               onClick={() => {
                 // 추후에 login 도입 후엔 이미 클릭했다면 취소하는 기능 추가 구현해야함!
-                if (report.report.good !== counter.good) {
-                  alert('이미 눌렀습니다');
-                } else {
-                  goodHandler(report.id, 'up');
-                  setCounter(() => ({
-                    ...counter,
-                    good: counter.good + 1,
-                  }));
-                  alert('좋아요를 눌렀습니다!');
-                }
+
+                goodHandler(report.id, 'up');
+                setCounter(() => ({
+                  ...counter,
+                  good: counter.good + 1,
+                }));
+                alert('좋아요를 눌렀습니다!');
               }}
             />{' '}
             {counter.good}
@@ -79,16 +100,13 @@ const BoardView: React.FC<Props> = ({ className, report, reportList }) => {
               style={{ color: '#818cf8' }}
               onClick={() => {
                 // 추후에 login 도입 후엔 이미 클릭했다면 취소하는 기능 추가 구현해야함!
-                if (report.report.bad !== counter.bad) {
-                  alert('이미 눌렀습니다');
-                } else {
-                  badHandler(report.id, 'up');
-                  setCounter(() => ({
-                    ...counter,
-                    bad: counter.bad + 1,
-                  }));
-                  alert('싫어요를 눌렀습니다!');
-                }
+
+                badHandler(report.id, 'up');
+                setCounter(() => ({
+                  ...counter,
+                  bad: counter.bad + 1,
+                }));
+                alert('싫어요를 눌렀습니다!');
               }}
             />{' '}
             {counter.bad}
@@ -104,7 +122,7 @@ const BoardView: React.FC<Props> = ({ className, report, reportList }) => {
       </div>
       <BoardList
         report={reportList.filter((c) => c.id !== report.id)}
-        entire={false}
+        listNumber={5}
       />
     </div>
   );

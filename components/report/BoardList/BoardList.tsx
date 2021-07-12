@@ -6,18 +6,21 @@ import Button from '@material-ui/core/Button';
 
 interface Props {
   report: Array<ChartReport>;
-  entire: boolean;
+  listNumber: number;
 }
 
-const BoardList: React.FC<Props> = ({ report, entire }) => {
+const BoardList: React.FC<Props> = ({ report, listNumber }) => {
   const [currentBoardPage, setCurrentBoardPage] = React.useState<number>(1);
-
-  const boardPages = Math.ceil(report.length / 10);
+  const boardPages = Math.ceil(report.length / listNumber);
 
   const arr: Array<number> = [];
   for (var t = 1; t <= boardPages; t++) {
     arr.push(t);
   }
+
+  React.useEffect(() => {
+    setCurrentBoardPage(1);
+  }, [report]);
   return (
     <>
       <div
@@ -25,13 +28,15 @@ const BoardList: React.FC<Props> = ({ report, entire }) => {
           height: '100%',
         }}>
         {report.map((arr, idx) => {
-          if (idx >= (currentBoardPage - 1) * 10 && idx < currentBoardPage * 10)
+          if (
+            idx >= (currentBoardPage - 1) * listNumber &&
+            idx < currentBoardPage * listNumber
+          )
             return <BoardContent key={arr.username + idx} item={arr} />;
         })}
       </div>
       <div className="mt-6 text-center flex justify-between items-center">
         <Button
-          className="border-indigo-200"
           onClick={() => {
             if (currentBoardPage !== 1) {
               setCurrentBoardPage((c) => c - 1);
@@ -43,8 +48,8 @@ const BoardList: React.FC<Props> = ({ report, entire }) => {
         </Button>
         <div>
           {arr.map((arr) => {
-            // 10으로 나눈 몫이 같은 값들을 추출 (이렇게하면 같은 자리수 목록 추출 가능)
-            if (Math.floor(arr / 10) === Math.floor(currentBoardPage / 10)) {
+            // listNumber으로 나눈 몫이 같은 값들을 추출 (이렇게하면 같은 자리수 목록 추출 가능)
+            if (Math.floor(arr / 6) === Math.floor(currentBoardPage / 6)) {
               return (
                 <button
                   key={'downButton' + arr}
@@ -62,7 +67,6 @@ const BoardList: React.FC<Props> = ({ report, entire }) => {
           })}
         </div>
         <Button
-          className="border-indigo-200"
           onClick={() => {
             if (currentBoardPage !== boardPages) {
               setCurrentBoardPage((c) => c + 1);
