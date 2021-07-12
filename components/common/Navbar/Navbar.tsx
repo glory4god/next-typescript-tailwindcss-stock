@@ -6,6 +6,7 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import PopupState, { bindTrigger, bindMenu } from 'material-ui-popup-state';
 import MenuIcon from '@material-ui/icons/Menu';
+import Image from 'next/image';
 
 interface Props {
   className?: string;
@@ -15,8 +16,8 @@ interface Props {
 const Navbar: FC<Props> = ({ className, title }) => {
   return (
     <div className={cn(className, 'fixed z-10')}>
-      <Paper className="w-full fixed h-16 flex md:hidden text-3xl font-bold justify-between pt-3">
-        <div>
+      <Paper className="w-full fixed h-16 flex md:hidden text-3xl font-bold justify-between">
+        <div className="flex items-center">
           <PopupState variant="popover" popupId="demo-popup-menu">
             {(popupState) => (
               <>
@@ -42,7 +43,7 @@ const Navbar: FC<Props> = ({ className, title }) => {
                     </Link>
                   </MenuItem>
                   <MenuItem>
-                    <Link href="/report/total">
+                    <Link href="/report/chart">
                       <a className="w-full">REPORT</a>
                     </Link>
                   </MenuItem>
@@ -51,7 +52,7 @@ const Navbar: FC<Props> = ({ className, title }) => {
                       popupState.close();
                       window.alert('not launching');
                     }}>
-                    <Link href="/my">
+                    <Link href="/report/my">
                       <a className="w-full">MY</a>
                     </Link>
                   </MenuItem>
@@ -60,21 +61,33 @@ const Navbar: FC<Props> = ({ className, title }) => {
             )}
           </PopupState>
           <Link href="/">
-            <a className="text-4xl font-bold">{title}</a>
+            <a>
+              <Image
+                src={'/title.png'}
+                alt={'mainlogo'}
+                width={160}
+                height={50}
+              />
+            </a>
           </Link>
         </div>
-        <div className="mr-6 space-x-4 pt-1">
+        <div className="mr-6 space-x-4 pt-3">
           <span>IC</span>
           <span>IC</span>
         </div>
       </Paper>
-      <Paper className="w-full xl:px-44 lg:px-32 lg:h-16 px-10 fixed md:h-16 md:flex hidden text-4xl font-bold justify-between  pt-3">
-        <h1>
-          <Link href="/">
-            <a className="text-4xl font-bold">{title}</a>
-          </Link>
-        </h1>
-        <div className="font-bold space-x-10 text-xl pt-3 ">
+      <Paper className="w-full xl:px-44 lg:px-32 lg:h-16 px-10 fixed md:h-16 md:flex hidden text-4xl font-bold justify-between pt-1">
+        <Link href="/">
+          <a>
+            <Image
+              src={'/title.png'}
+              alt={'mainlogo'}
+              width={150}
+              height={50}
+            />
+          </a>
+        </Link>
+        <div className="font-bold space-x-10 text-xl pt-4 lg:pr-20 pr-6">
           <Link href="/chart/line">
             <a className="hover:text-indigo-400">CHART</a>
           </Link>
@@ -84,11 +97,11 @@ const Navbar: FC<Props> = ({ className, title }) => {
           <Link href="/ai">
             <a className="hover:text-indigo-400">AI</a>
           </Link>
-          <Link href="/report/total">
+          <Link href="/report/chart">
             <a className="hover:text-indigo-400">REPORT</a>
           </Link>
         </div>
-        <div className="space-x-4">
+        <div className="space-x-4 pt-2">
           <span>IC</span>
           <span>IC</span>
         </div>
