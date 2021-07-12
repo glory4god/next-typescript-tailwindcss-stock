@@ -6,11 +6,20 @@ import type { ChartReport } from '../../../types/report/ReportType';
 import { getReportById, getReportIds } from '../../../lib/report';
 import { ParsedUrlQuery } from 'querystring';
 import BoardView from '../../../components/report/BoardView';
-import { useSelector } from 'react-redux';
-import { selectReport } from '../../../components/report/reportSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import {
+  fetchReport,
+  selectReport,
+} from '../../../components/report/reportSlice';
 
 const BoardPage = ({ report }: { report: ChartReport }) => {
   const { reportList } = useSelector(selectReport);
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    if (reportList.length === 0) {
+      dispatch(fetchReport('전체', 'modifiedDate'));
+    }
+  }, []);
   return (
     <Container>
       <Subnavbar
