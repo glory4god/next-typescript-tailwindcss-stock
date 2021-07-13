@@ -1,14 +1,14 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { RootState } from '../../lib/store';
-import { ChartReport } from '../../types/report/ReportType';
+import { RootState } from '../store';
+import { ChartReport } from '../../../types/report/ReportType';
 import { getReportAll, getReportByCompanyName } from './reportApis';
 
-export interface ReportListState {
+export interface ReportListProps {
   loading: boolean;
   reportList: Array<ChartReport>;
 }
 
-const initialState: ReportListState = {
+const initialState: ReportListProps = {
   loading: false,
   reportList: [],
 };

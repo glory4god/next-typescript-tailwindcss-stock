@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchReport,
   selectReport,
-} from '../../../components/report/reportSlice';
+} from '../../../lib/redux/report/reportSlice';
 
 const BoardPage = ({ report }: { report: ChartReport }) => {
   const { reportList } = useSelector(selectReport);

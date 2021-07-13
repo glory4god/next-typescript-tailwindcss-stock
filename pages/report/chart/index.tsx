@@ -10,7 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchReport,
   selectReport,
-} from '../../../components/report/reportSlice';
+} from '../../../lib/redux/report/reportSlice';
 
 const ChartBoardPage = ({ kospiList }: { kospiList: Array<string> }) => {
   const [sorted, setSorted] = React.useState<string>('modifiedDate');
@@ -51,12 +51,12 @@ const ChartBoardPage = ({ kospiList }: { kospiList: Array<string> }) => {
 
   React.useEffect(() => {
     dispatch(fetchReport(currentCompany, sorted));
+
     // sortedHandler(currentCompany, sorted);
   }, [currentCompany, sorted]);
 
   return (
     <Container>
-      {console.log(reportList)}
       <Subnavbar
         pages={{
           main: 'report',
@@ -118,7 +118,7 @@ const ChartBoardPage = ({ kospiList }: { kospiList: Array<string> }) => {
           </Button>
         </div>
       </div>
-      <BoardList report={reportList} entire={true} listNumber={10} />
+      <BoardList report={reportList} listNumber={10} />
     </Container>
   );
 };
@@ -129,6 +129,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const kospiList = (await fetcher(
     process.env.LOCAL_SERVER + `api/v1/chart/companyname/kospi`,
   )) as Array<string>;
+  kospiList.push('전체');
   return {
     props: { kospiList },
   };

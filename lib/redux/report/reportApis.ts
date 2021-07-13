@@ -1,5 +1,5 @@
-import fetcher from '../../lib/fetcher';
-import { ChartReport } from '../../types/report/ReportType';
+import fetcher from '../../fetcher';
+import { ChartReport } from '../../../types/report/ReportType';
 
 export async function getReportByCompanyName(
   companyName: string,
