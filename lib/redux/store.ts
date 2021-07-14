@@ -5,7 +5,7 @@ import kakaoLoginSlice from './kakaoLogin/kakaoLoginSlice';
 export const store = configureStore({
   reducer: {
     report: reportSlice,
-    kakaoLoginSlice,
+    login: kakaoLoginSlice,
   },
 });
 
