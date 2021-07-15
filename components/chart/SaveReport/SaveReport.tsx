@@ -3,6 +3,8 @@ import cn from 'classnames';
 import Button from '@material-ui/core/Button';
 import TextField from '@material-ui/core/TextField';
 import type { PostChartReport } from '../../../types/report/ReportType';
+import { useRouter } from 'next/dist/client/router';
+import { saveLocalPath } from '../../../lib/local/LocalData';
 
 interface Props {
   className?: string;
@@ -28,6 +30,7 @@ const SaveReport: React.FC<Props> = ({ className, dataCondition, refresh }) => {
     title: '',
     content: '',
   });
+  const page = useRouter();
 
   const postReport = async (item: PostChartReport) => {
     console.log(item);
@@ -79,12 +82,13 @@ const SaveReport: React.FC<Props> = ({ className, dataCondition, refresh }) => {
   return (
     <div className={cn(className)}>
       <Button
-        onClick={() =>
+        onClick={() => {
           setIsSave(() => ({
             ...isSave,
             editing: true,
-          }))
-        }>
+          }));
+          saveLocalPath(page.asPath);
+        }}>
         종목 글쓰기
       </Button>
       <Button
