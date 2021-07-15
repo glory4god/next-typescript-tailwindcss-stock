@@ -11,7 +11,7 @@ const ChatList: React.FC<Props> = ({ chat, isUser }) => {
       <div
         className={cn({ ' text-indigo-400': isUser })}
         style={{ fontSize: '8px' }}>
-        {!isUser ? chat.username : '나'} - {chat.date.slice(11, 19)}
+        {!isUser ? chat.username : 'ME'} - {chat.date.slice(11, 19)}
       </div>
       <div style={{ fontSize: '14px' }}>{chat.content}</div>
     </div>

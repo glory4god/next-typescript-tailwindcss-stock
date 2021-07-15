@@ -11,11 +11,11 @@ export default function MyApp({ Component, pageProps }: AppProps) {
   return (
     <>
       <Head />
-      <Layout>
-        <Provider store={store}>
+      <Provider store={store}>
+        <Layout>
           <Component {...pageProps} />
-        </Provider>
-      </Layout>
+        </Layout>
+      </Provider>
     </>
   );
 }

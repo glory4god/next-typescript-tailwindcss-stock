@@ -1,4 +1,5 @@
 import React from 'react';
+import Link from 'next/link';
 import cn from 'classnames';
 import Paper from '@material-ui/core/Paper';
 import ChatList from '../ChatList';
@@ -7,6 +8,8 @@ import Button from '@material-ui/core/Button';
 import SockJS from 'sockjs-client';
 import Stomp from 'stompjs';
 import fetcher from '../../../lib/fetcher';
+import { useSelector } from 'react-redux';
+import { selectKakaoLogin } from '../../../lib/redux/kakaoLogin/kakaoLoginSlice';
 
 interface Props {
   className?: string;
@@ -28,10 +31,9 @@ var stompClient: Stomp.Client = Stomp.over(sockJs);
 stompClient.debug = () => {};
 
 const ChatBox: React.FC<Props> = ({ className }) => {
+  const { login, id } = useSelector(selectKakaoLogin);
   const [contents, setContents] = React.useState<Message[]>([]);
-  const [username, setUsername] = React.useState<string>('');
   const [message, setMessage] = React.useState<string>('');
-  const [login, setLogin] = React.useState<boolean>(false);
   const [isClick, setIsClick] = React.useState<boolean>(false);
   const chatRef = React.useRef<HTMLDivElement>(null);
 
@@ -41,6 +43,7 @@ const ChatBox: React.FC<Props> = ({ className }) => {
     )) as Array<Message>;
     setContents(data);
   };
+
   React.useEffect(() => {
     initialData();
     scrollToBottom();
@@ -67,7 +70,7 @@ const ChatBox: React.FC<Props> = ({ className }) => {
 
   const onKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === 'Enter') {
-      handleEnter(username, message);
+      handleEnter(id.toString(), message);
     }
   };
 
@@ -87,14 +90,14 @@ const ChatBox: React.FC<Props> = ({ className }) => {
         실시간 채팅
       </h1>
       {isClick && (
-        <div className="w-60">
-          <div className="p-2 h-80 overflow-y-scroll border-2">
+        <div className="lg:w-72 w-64">
+          <div className="p-2 lg:h-96 h-80 overflow-y-scroll border-2">
             {contents.map((arr, idx) => {
               return (
                 <ChatList
                   key={'chat' + arr.username + idx}
                   chat={arr}
-                  isUser={arr.username === username}
+                  isUser={arr.username === id.toString()}
                 />
               );
             })}
@@ -110,27 +113,19 @@ const ChatBox: React.FC<Props> = ({ className }) => {
                 />
                 <Button
                   size="small"
-                  onClick={() => handleEnter(username, message)}>
+                  onClick={() => handleEnter(id.toString(), message)}>
                   전송
                 </Button>
               </>
             ) : (
               <>
-                <TextField
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                  onKeyDown={(e: React.KeyboardEvent) => {
-                    if (e.key === 'Enter') {
-                      setLogin(true);
-                    }
-                  }}
-                  placeholder="아이디를 입력하세요"
-                />
-                <Button
-                  size="small"
-                  onClick={() => () => setLogin(true)}
-                  disabled={username.length === 0}>
-                  전송
+                <Button size="small" onClick={() => {}}>
+                  <Link
+                    href={
+                      'https://kauth.kakao.com/oauth/authorize?client_id=536a201af32aa0d66156738f15380b36&redirect_uri=http://localhost:3000/login&response_type=code'
+                    }>
+                    <a> log in first! (click)</a>
+                  </Link>
                 </Button>
               </>
             )}
