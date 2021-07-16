@@ -38,10 +38,33 @@ export const kakaoLoginSlice = createSlice({
       state.loading = false;
       state.login = false;
     },
+
+    logout: (state) => {
+      state.loading = true;
+      state.login = true;
+    },
+    logoutSuccess: (state) => {
+      state.loading = false;
+      state.login = false;
+      state.access_token = '';
+      state.id = 0;
+      state.nickname = '';
+    },
+    logoutFail: (state) => {
+      state.loading = false;
+      state.login = true;
+    },
   },
 });
 
-export const { login, loginSuccess, loginFail } = kakaoLoginSlice.actions;
+export const {
+  login,
+  loginSuccess,
+  loginFail,
+  logout,
+  logoutSuccess,
+  logoutFail,
+} = kakaoLoginSlice.actions;
 export const selectKakaoLogin = (state: RootState) => state.login;
 
 export default kakaoLoginSlice.reducer;
@@ -68,8 +91,31 @@ export const getToken = async (code: string | null) => {
   )) as TokenData;
 };
 
+export function kakaoLogout(token: string) {
+  return async (dispatch: any) => {
+    dispatch(logout());
+    try {
+      const id = (await fetcher(
+        process.env.LOCAL_SERVER + `api/v2/logout/user?token=${token}`,
+      )) as LogoutForm;
+      if (id.id !== 0) {
+        dispatch(logoutSuccess());
+        alert('로그아웃에 성공했습니다!');
+        console.log(id);
+      }
+    } catch (error) {
+      dispatch(logoutFail());
+      alert('로그아웃에 실패했습니다!');
+    }
+  };
+}
+
 export type TokenData = {
   id: number;
   nickname: string;
   access_token: string;
+};
+
+export type LogoutForm = {
+  id: number;
 };
