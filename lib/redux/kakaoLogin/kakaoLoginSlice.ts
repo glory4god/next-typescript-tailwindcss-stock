@@ -1,15 +1,22 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { useRouter } from 'next/dist/client/router';
 import fetcher from '../../fetcher';
 import { RootState } from '../store';
 
 export interface KakaoLoginProps {
   loading: boolean;
+  id: number;
   access_token: string;
+  nickname: string;
+  login: boolean;
 }
 
 const initialState: KakaoLoginProps = {
   loading: false,
+  id: 0,
   access_token: '',
+  nickname: '',
+  login: false,
 };
 
 export const kakaoLoginSlice = createSlice({
@@ -18,13 +25,18 @@ export const kakaoLoginSlice = createSlice({
   reducers: {
     login: (state) => {
       state.loading = true;
+      state.login = false;
     },
-    loginSuccess: (state, action: PayloadAction<string>) => {
-      state.access_token = action.payload;
+    loginSuccess: (state, action: PayloadAction<TokenData>) => {
+      state.access_token = action.payload.access_token;
+      state.id = action.payload.id;
+      state.nickname = action.payload.nickname;
       state.loading = false;
+      state.login = true;
     },
     loginFail: (state) => {
       state.loading = false;
+      state.login = false;
     },
   },
 });
@@ -39,7 +51,8 @@ export function getAccessToken(code: string) {
     dispatch(login());
     try {
       const tokenData = await getToken(code);
-      dispatch(loginSuccess(tokenData.access_token));
+      dispatch(loginSuccess(tokenData));
+      console.log(tokenData);
       localStorage.setItem('token', tokenData.access_token);
       alert('로그인에 성공했습니다!');
     } catch (error) {
@@ -56,10 +69,7 @@ export const getToken = async (code: string | null) => {
 };
 
 export type TokenData = {
+  id: number;
+  nickname: string;
   access_token: string;
-  token_type: string;
-  refresh_token: string;
-  expires_in: string;
-  scope: string;
-  refresh_token_expires_in: string;
 };
