@@ -96,10 +96,11 @@ const Navbar: FC<Props> = ({ className, title }) => {
             </a>
           </Link>
         </div>
-        <div className="mr-6 space-x-4 pt-3">
+        <div className="flex mr-4 space-x-4 pt-2">
           {login ? (
             <Link href={page.asPath}>
               <a
+                className="pt-1"
                 onClick={() => {
                   localStorage.setItem('prevUrl', page.asPath);
                   const token = localStorage.getItem('token');
@@ -117,6 +118,7 @@ const Navbar: FC<Props> = ({ className, title }) => {
                 'https://kauth.kakao.com/oauth/authorize?client_id=536a201af32aa0d66156738f15380b36&redirect_uri=http://localhost:3000/login&response_type=code'
               }>
               <a
+                className="pt-1"
                 onClick={() => {
                   localStorage.setItem('prevUrl', page.asPath);
                 }}>
@@ -124,7 +126,31 @@ const Navbar: FC<Props> = ({ className, title }) => {
               </a>
             </Link>
           )}
-          <span>IC</span>
+          <span>
+            {login ? (
+              <div className="cursor-pointer">
+                <Image
+                  src={'/mainlogo2.png'}
+                  alt="userimage"
+                  width={48}
+                  height={48}
+                />
+              </div>
+            ) : (
+              <div
+                className="cursor-pointer"
+                onClick={() => {
+                  alert('로그인 후 이용 가능합니다.');
+                }}>
+                <Image
+                  src={'/mainlogo2.png'}
+                  alt="userimage"
+                  width={48}
+                  height={48}
+                />
+              </div>
+            )}
+          </span>
         </div>
       </Paper>
       <Paper className="w-full xl:px-44 lg:px-16 lg:h-16 px-10 fixed md:h-16 md:flex hidden text-4xl font-bold justify-between pt-1">
@@ -152,10 +178,11 @@ const Navbar: FC<Props> = ({ className, title }) => {
             <a className="hover:text-indigo-400">REPORT</a>
           </Link>
         </div>
-        <div className="space-x-4 pt-2">
+        <div className="flex space-x-4 pt-1">
           {login ? (
             <Link href={page.asPath}>
               <a
+                className="pt-1"
                 onClick={() => {
                   localStorage.setItem('prevUrl', page.asPath);
                   const token = localStorage.getItem('token');
@@ -173,6 +200,7 @@ const Navbar: FC<Props> = ({ className, title }) => {
                 'https://kauth.kakao.com/oauth/authorize?client_id=536a201af32aa0d66156738f15380b36&redirect_uri=http://localhost:3000/login&response_type=code'
               }>
               <a
+                className="pt-1"
                 onClick={() => {
                   localStorage.setItem('prevUrl', page.asPath);
                 }}>
@@ -180,8 +208,31 @@ const Navbar: FC<Props> = ({ className, title }) => {
               </a>
             </Link>
           )}
-
-          <span>IC</span>
+          <span>
+            {login ? (
+              <div className="cursor-pointer">
+                <Image
+                  src={'/mainlogo2.png'}
+                  alt="userimage"
+                  width={48}
+                  height={48}
+                />
+              </div>
+            ) : (
+              <div
+                className="cursor-pointer"
+                onClick={() => {
+                  alert('로그인 후 이용 가능합니다.');
+                }}>
+                <Image
+                  src={'/mainlogo2.png'}
+                  alt="userimage"
+                  width={48}
+                  height={48}
+                />
+              </div>
+            )}
+          </span>
         </div>
       </Paper>
     </div>
