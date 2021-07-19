@@ -1,5 +1,4 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { useRouter } from 'next/dist/client/router';
 import fetcher from '../../fetcher';
 import { RootState } from '../store';
 
@@ -8,6 +7,7 @@ export interface KakaoLoginProps {
   id: number;
   access_token: string;
   nickname: string;
+  image: string;
   login: boolean;
 }
 
@@ -16,6 +16,7 @@ const initialState: KakaoLoginProps = {
   id: 0,
   access_token: '',
   nickname: '',
+  image: '',
   login: false,
 };
 
@@ -31,6 +32,7 @@ export const kakaoLoginSlice = createSlice({
       state.access_token = action.payload.access_token;
       state.id = action.payload.id;
       state.nickname = action.payload.nickname;
+      state.image = action.payload.image;
       state.loading = false;
       state.login = true;
     },
@@ -77,7 +79,6 @@ export function getAccessToken(code: string) {
       dispatch(loginSuccess(tokenData));
       console.log(tokenData);
       localStorage.setItem('token', tokenData.access_token);
-      alert('로그인에 성공했습니다!');
     } catch (error) {
       dispatch(loginFail());
       alert('로그인에 실패했습니다!');
@@ -113,6 +114,7 @@ export function kakaoLogout(token: string) {
 export type TokenData = {
   id: number;
   nickname: string;
+  image: string;
   access_token: string;
 };
 
