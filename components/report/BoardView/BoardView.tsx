@@ -8,8 +8,11 @@ import LinkIcon from '@material-ui/icons/Link';
 import Button from '@material-ui/core/Button';
 import copy from 'copy-to-clipboard'; // url 클립보드 복사 기능
 import { useRouter } from 'next/dist/client/router';
-import { badHandler, goodHandler } from '../../../lib/report';
+import { goodAndBadHandler } from '../../../lib/report';
 import BoardList from '../BoardList';
+import { useSelector } from 'react-redux';
+import { selectKakaoLogin } from '../../../lib/redux/kakaoLogin/kakaoLoginSlice';
+import fetcher from '../../../lib/fetcher';
 
 interface Props {
   className?: string;
@@ -21,14 +24,111 @@ type CounterType = {
   good: number;
   bad: number;
 };
+type PressedType = {
+  good: boolean;
+  bad: boolean;
+};
 
 const BoardView: React.FC<Props> = ({ className, report, reportList }) => {
   const pages = useRouter();
+
+  const { login, id, nickname } = useSelector(selectKakaoLogin);
+
+  const [pressed, setPressed] = React.useState<PressedType>({
+    good: false,
+    bad: false,
+  });
   const [counter, setCounter] = React.useState<CounterType>({
     good: report.report.good,
     bad: report.report.bad,
   });
   const [chartOpen, setChartOpen] = React.useState<boolean>(false);
+
+  const pressCheck = async (userId: number, reportId: number) => {
+    const press = (await fetcher(
+      process.env.LOCAL_SERVER +
+        `api/v1/user/chart-report/press?user=${userId}&report=${reportId}`,
+    )) as PressedType;
+    setPressed(press);
+  };
+
+  const deleteReport = async (reportId: number, userId: number) => {
+    const result = confirm('게시글을 삭제하시겠습니까?');
+    if (result) {
+      const res = await fetch(
+        process.env.LOCAL_SERVER +
+          `api/v1/user/chart-report/post/${reportId}/${userId}`,
+        {
+          method: 'DELETE',
+        },
+      );
+      if (res.ok) {
+        pages.push('/report/chart');
+      } else {
+        alert('게시글 삭제에 실패했습니다.');
+      }
+    }
+  };
+
+  // TODO : 추후에 login 도입 후엔 이미 클릭했다면 취소하는 기능 추가 구현해야함!
+  // 완료
+  const goodHandler = async () => {
+    if (login) {
+      if (pressed.good === false && pressed.bad === false) {
+        setCounter(() => ({
+          ...counter,
+          good: counter.good + 1,
+        }));
+      } else if (pressed.good === false && pressed.bad === true) {
+        setCounter(() => ({
+          good: counter.good + 1,
+          bad: counter.bad - 1,
+        }));
+      } else if (pressed.bad === false && pressed.good === true) {
+        setCounter(() => ({
+          ...counter,
+          good: counter.good - 1,
+        }));
+      }
+      await goodAndBadHandler('good', id, report.id);
+      pressCheck(id, report.id);
+    } else {
+      alert('로그인 후 이용 가능합니다!');
+    }
+  };
+
+  // TODO : 추후에 login 도입 후엔 이미 클릭했다면 취소하는 기능 추가 구현해야함!
+  // 구현 완료
+  const badHandler = async () => {
+    if (login) {
+      if (pressed.bad === false && pressed.good === false) {
+        setCounter(() => ({
+          ...counter,
+          bad: counter.bad + 1,
+        }));
+      } else if (pressed.bad === false && pressed.good === true) {
+        setCounter(() => ({
+          good: counter.good - 1,
+          bad: counter.bad + 1,
+        }));
+      } else if (pressed.good === false && pressed.bad === true) {
+        setCounter(() => ({
+          ...counter,
+          bad: counter.bad - 1,
+        }));
+      }
+      await goodAndBadHandler('bad', id, report.id);
+      pressCheck(id, report.id);
+    } else {
+      alert('로그인 후 이용 가능합니다!');
+    }
+  };
+
+  React.useEffect(() => {
+    if (login === true) {
+      pressCheck(id, report.id);
+    }
+  }, [counter, login, id, report.id]);
 
   return (
     <div className={cn(className)}>
@@ -78,42 +178,48 @@ const BoardView: React.FC<Props> = ({ className, report, reportList }) => {
         </div>
         <div className="flex justify-between">
           <div className="space-x-4">
+            {console.log(pressed)}
             <ThumbUp
               fontSize="small"
               className="cursor-pointer"
-              style={{ color: '#818cf8' }}
-              onClick={() => {
-                // 추후에 login 도입 후엔 이미 클릭했다면 취소하는 기능 추가 구현해야함!
-
-                goodHandler(report.id, 'up');
-                setCounter(() => ({
-                  ...counter,
-                  good: counter.good + 1,
-                }));
-                alert('좋아요를 눌렀습니다!');
+              style={{
+                color: `${
+                  login === true && pressed.good === true
+                    ? '#818cf8'
+                    : '#a7a8a8'
+                }`,
               }}
+              onClick={() => goodHandler()}
             />{' '}
             {counter.good}
             <ThumbDown
               fontSize="small"
               className="cursor-pointer"
-              style={{ color: '#818cf8' }}
-              onClick={() => {
-                // 추후에 login 도입 후엔 이미 클릭했다면 취소하는 기능 추가 구현해야함!
-
-                badHandler(report.id, 'up');
-                setCounter(() => ({
-                  ...counter,
-                  bad: counter.bad + 1,
-                }));
-                alert('싫어요를 눌렀습니다!');
+              style={{
+                color: `${
+                  login === true && pressed.bad === true ? '#818cf8' : '#a7a8a8'
+                }`,
               }}
+              onClick={() => badHandler()}
             />{' '}
             {counter.bad}
           </div>
           <div>
             <Button>수정</Button>
-            <Button>삭제</Button>
+            <Button
+              onClick={() => {
+                if (login) {
+                  if (report.username === nickname) {
+                    deleteReport(report.id, id);
+                  } else {
+                    alert('게시글을 삭제할 수 없습니다.');
+                  }
+                } else {
+                  alert('로그인 후 이용 가능합니다!');
+                }
+              }}>
+              삭제
+            </Button>
           </div>
         </div>
       </div>
@@ -121,7 +227,7 @@ const BoardView: React.FC<Props> = ({ className, report, reportList }) => {
         <h4>댓글</h4>
       </div>
       <BoardList
-        report={reportList.filter((c) => c.id !== report.id)}
+        reportList={reportList.filter((c) => c.id !== report.id)}
         listNumber={5}
       />
     </div>
