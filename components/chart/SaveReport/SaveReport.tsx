@@ -5,6 +5,8 @@ import TextField from '@material-ui/core/TextField';
 import type { PostChartReport } from '../../../types/report/ReportType';
 import { useRouter } from 'next/dist/client/router';
 import { saveLocalPath } from '../../../lib/local/LocalData';
+import { useSelector } from 'react-redux';
+import { selectKakaoLogin } from '../../../lib/redux/kakaoLogin/kakaoLoginSlice';
 
 interface Props {
   className?: string;
@@ -12,32 +14,30 @@ interface Props {
   refresh: () => void;
 }
 
-type Save = {
-  loading: boolean;
-  editing: boolean;
-};
-
-const InitialSave: Save = {
-  loading: false,
-  editing: false,
-};
-
 const SaveReport: React.FC<Props> = ({ className, dataCondition, refresh }) => {
-  const [isSave, setIsSave] = React.useState<Save>(InitialSave);
+  const { login, nickname } = useSelector(selectKakaoLogin);
+
+  const [loading, setLoading] = React.useState<boolean>(false);
+  const [editing, setEditing] = React.useState<boolean>(false);
   const [postBoardItem, setPostBoardItem] = React.useState<PostChartReport>({
     ...dataCondition,
-    username: 'hayoung',
+    username: '',
     title: '',
     content: '',
   });
   const page = useRouter();
+  React.useEffect(() => {
+    if (login) {
+      setPostBoardItem(() => ({
+        ...postBoardItem,
+        username: nickname,
+      }));
+    }
+  }, [login, nickname]);
 
   const postReport = async (item: PostChartReport) => {
     console.log(item);
-    setIsSave(() => ({
-      ...isSave,
-      loading: true,
-    }));
+    setLoading(true);
     const response = await fetch(
       process.env.LOCAL_SERVER + 'api/v1/user/chart-report/post',
       {
@@ -50,17 +50,11 @@ const SaveReport: React.FC<Props> = ({ className, dataCondition, refresh }) => {
     );
 
     if (!response.ok) {
-      setIsSave(() => ({
-        loading: false,
-        editing: true,
-      }));
+      setLoading(false);
       return window.alert('post failed!');
     } else {
       window.alert('save complete!');
-      setIsSave(() => ({
-        loading: false,
-        editing: false,
-      }));
+      setLoading(false);
       setPostBoardItem(() => ({
         ...postBoardItem,
         title: '',
@@ -83,22 +77,24 @@ const SaveReport: React.FC<Props> = ({ className, dataCondition, refresh }) => {
     <div className={cn(className)}>
       <Button
         onClick={() => {
-          setIsSave(() => ({
-            ...isSave,
-            editing: true,
-          }));
-          saveLocalPath(page.asPath);
+          if (login) {
+            setEditing(true);
+            saveLocalPath(page.asPath);
+          } else {
+            alert('로그인 후 이용 가능합니다.');
+          }
         }}>
         종목 글쓰기
       </Button>
       <Button
         onClick={() => {
           refresh();
-          setIsSave(InitialSave);
+          setEditing(false);
+          setLoading(false);
         }}>
         RESET
       </Button>
-      {isSave.editing && (
+      {editing && (
         <div>
           <TextField
             onChange={(
@@ -127,11 +123,11 @@ const SaveReport: React.FC<Props> = ({ className, dataCondition, refresh }) => {
           />
           <br />
           <Button onClick={() => postClickHandler(postBoardItem)}>
-            {isSave.loading ? 'WRITING...' : 'WRITING'}
+            {loading ? 'WRITING...' : 'WRITING'}
           </Button>
           <Button
             onClick={() => {
-              setIsSave(() => ({ ...isSave, editing: false }));
+              setEditing(false);
             }}>
             CLOSE
           </Button>
