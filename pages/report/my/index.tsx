@@ -1,27 +1,22 @@
 import React from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import Subnavbar from '../../../components/common/Subnavbar';
 import { BoardList } from '../../../components/report';
 import Container from '../../../components/ui/Container';
-import fetcher from '../../../lib/fetcher';
 import { selectKakaoLogin } from '../../../lib/redux/kakaoLogin/kakaoLoginSlice';
-import { ChartReport } from '../../../types/report/ReportType';
+import {
+  fetchUserReport,
+  selectReport,
+} from '../../../lib/redux/report/reportSlice';
 
 const My = () => {
   const { login, id, image } = useSelector(selectKakaoLogin);
-  const [reportList, setReportList] = React.useState<Array<ChartReport>>([]);
-
-  const getUserReportList = async (id: number) => {
-    const res = (await fetcher(
-      process.env.LOCAL_SERVER + `api/v1/user/chart-report/username?id=${id}`,
-    )) as Array<ChartReport>;
-    setReportList(res);
-    console.log(res);
-  };
+  const { reportList } = useSelector(selectReport);
+  const dispatch = useDispatch();
 
   React.useEffect(() => {
     if (login) {
-      getUserReportList(id);
+      dispatch(fetchUserReport(id));
     }
   }, [login, id]);
 
