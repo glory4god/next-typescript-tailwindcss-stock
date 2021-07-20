@@ -17,3 +17,20 @@ export async function getReportAll(sorted: string) {
       `api/v1/user/chart-report/sort-all?sorted=${sorted}`,
   )) as Array<ChartReport>;
 }
+
+export async function getUserReportAll(userId: number) {
+  return (await fetcher(
+    process.env.LOCAL_SERVER + `api/v1/user/chart-report/username?id=${userId}`,
+  )) as Array<ChartReport>;
+}
+
+export async function getSearchReportAll(
+  condition: string,
+  value: string,
+  sorted: string,
+) {
+  return (await fetcher(
+    process.env.LOCAL_SERVER +
+      `api/v1/user/chart-report/search?condition=${condition}&value=${value}&sorted=${sorted}`,
+  )) as Array<ChartReport>;
+}
