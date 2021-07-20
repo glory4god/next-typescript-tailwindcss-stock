@@ -1,8 +1,10 @@
 import React from 'react';
+import cn from 'classnames';
 import TextField from '@material-ui/core/TextField';
 import MenuItem from '@material-ui/core/MenuItem';
 
 interface Props {
+  className?: string;
   id: string;
   data: Array<any>;
   label: string;
@@ -14,6 +16,7 @@ interface Props {
 }
 
 const SelectInput: React.FC<Props> = ({
+  className,
   id,
   data,
   label,
@@ -24,10 +27,10 @@ const SelectInput: React.FC<Props> = ({
   return (
     <TextField
       select
+      className={cn(className)}
       onChange={onChange}
       id={id}
       value={value}
-      size="small"
       label={label}
       disabled={disabled}
       margin="dense">
