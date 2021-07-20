@@ -5,13 +5,13 @@ import BoardContent from '../BoardContent';
 import Button from '@material-ui/core/Button';
 
 interface Props {
-  report: Array<ChartReport>;
+  reportList: Array<ChartReport>;
   listNumber: number;
 }
 
-const BoardList: React.FC<Props> = ({ report, listNumber }) => {
+const BoardList: React.FC<Props> = ({ reportList, listNumber }) => {
   const [currentBoardPage, setCurrentBoardPage] = React.useState<number>(1);
-  const boardPages = Math.ceil(report.length / listNumber);
+  const boardPages = Math.ceil(reportList.length / listNumber);
 
   const arr: Array<number> = [];
   for (var t = 1; t <= boardPages; t++) {
@@ -20,14 +20,14 @@ const BoardList: React.FC<Props> = ({ report, listNumber }) => {
 
   React.useEffect(() => {
     setCurrentBoardPage(1);
-  }, [report]);
+  }, [reportList]);
   return (
     <>
       <div
         style={{
           height: '100%',
         }}>
-        {report.map((arr, idx) => {
+        {reportList?.map((arr, idx) => {
           if (
             idx >= (currentBoardPage - 1) * listNumber &&
             idx < currentBoardPage * listNumber
