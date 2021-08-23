@@ -9,15 +9,33 @@ import { AutoCompleteInput } from '../../../components/ui';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchReport,
+  fetchSearchReport,
   selectReport,
 } from '../../../lib/redux/report/reportSlice';
+import { BoardSearchBar } from '../../../components/report';
 
-const ChartBoardPage = ({ kospiList }: { kospiList: Array<string> }) => {
-  const [sorted, setSorted] = React.useState<string>('modifiedDate');
-  const [currentCompany, setCurrentCompany] = React.useState<string>('전체');
+interface ButtonData {
+  LATEST: string;
+  HOT: string;
+  VIEWS: string;
+}
+
+const buttonData: ButtonData = {
+  LATEST: 'modifiedDate',
+  HOT: 'good',
+  VIEWS: 'views',
+};
+
+const ChartBoardPage = ({ totalList }: { totalList: Array<string> }) => {
   const { loading, reportList } = useSelector(selectReport);
   const dispatch = useDispatch();
 
+  const [sorted, setSorted] = React.useState<string>('modifiedDate');
+  const [currentCompany, setCurrentCompany] = React.useState<string>('전체');
+  const [condition, setCondition] = React.useState<string>('TITLE+CONTENT');
+  const [value, setValue] = React.useState<string>('전체');
+
+  // FIXME: using redux => complete
   // const [loading, setLoading] = React.useState<boolean>(false);
 
   // const sortedHandler = async (
@@ -25,7 +43,7 @@ const ChartBoardPage = ({ kospiList }: { kospiList: Array<string> }) => {
   //   sorted: string,
   // ) => {
   //   setLoading(true);
-  //   const find = kospiList.find((element) => {
+  //   const find = totalList.find((element) => {
   //     if (element === companyName) {
   //       return true;
   //     }
@@ -50,7 +68,11 @@ const ChartBoardPage = ({ kospiList }: { kospiList: Array<string> }) => {
   // };
 
   React.useEffect(() => {
-    dispatch(fetchReport(currentCompany, sorted));
+    if (value === '전체') {
+      dispatch(fetchReport(currentCompany, sorted));
+    } else {
+      dispatch(fetchSearchReport(condition.toLowerCase(), value, sorted));
+    }
 
     // sortedHandler(currentCompany, sorted);
   }, [currentCompany, sorted]);
@@ -68,11 +90,12 @@ const ChartBoardPage = ({ kospiList }: { kospiList: Array<string> }) => {
         <div className="flex">
           <div className="w-36 pl-2">
             <AutoCompleteInput
-              data={kospiList}
+              data={totalList}
               id="list"
               value={currentCompany}
               onChange={(e: HTMLInputElement, newValue: string | undefined) => {
                 if (newValue !== undefined) {
+                  setValue('전체');
                   setCurrentCompany(newValue);
                 }
               }}
@@ -81,13 +104,38 @@ const ChartBoardPage = ({ kospiList }: { kospiList: Array<string> }) => {
           <Button
             size="small"
             onClick={() => {
+              setValue('전체');
               setCurrentCompany('전체');
+              setSorted('modifiedDate');
             }}>
             전체
           </Button>
         </div>
         <div className="text-right">
-          <Button
+          {Object.keys(buttonData).map((arr, idx) => {
+            return (
+              <span key={idx}>
+                <Button
+                  size="small"
+                  style={{
+                    border: `${
+                      sorted === buttonData[arr] ? '1px solid #818cf8' : 'none'
+                    }`,
+                  }}
+                  // FIXME: ts error i dont know.....
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setSorted(buttonData[arr]);
+                  }}
+                  disabled={loading}>
+                  {loading ? arr + '...' : arr}
+                </Button>
+              </span>
+            );
+          })}
+          {
+            // 버튼 여러개를 위처럼 반복문으로 처리!!
+            /* <Button
             size="small"
             style={{
               border: `${
@@ -115,10 +163,22 @@ const ChartBoardPage = ({ kospiList }: { kospiList: Array<string> }) => {
             onClick={() => setSorted('views')}
             disabled={loading}>
             {loading ? 'VIEWS...' : 'VIEWS'}
-          </Button>
+          </Button> */
+          }
         </div>
       </div>
-      <BoardList report={reportList} listNumber={10} />
+      <BoardList reportList={reportList} listNumber={10} />
+      <BoardSearchBar
+        condition={condition}
+        value={value}
+        onSelectChange={(
+          e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+        ) => setCondition(e.target.value)}
+        onInputClick={(
+          e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
+        ) => setValue(e.target.value)}
+        sorted={sorted}
+      />
     </Container>
   );
 };
@@ -129,8 +189,13 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const kospiList = (await fetcher(
     process.env.LOCAL_SERVER + `api/v1/chart/companyname/kospi`,
   )) as Array<string>;
-  kospiList.push('전체');
+  const kosdaqList = (await fetcher(
+    process.env.LOCAL_SERVER + `api/v1/chart/companyname/kosdaq`,
+  )) as Array<string>;
+
+  const totalList: Array<string> = ['전체', ...kospiList, ...kosdaqList];
+
   return {
-    props: { kospiList },
+    props: { totalList },
   };
 };
