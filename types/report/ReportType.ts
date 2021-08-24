@@ -29,3 +29,14 @@ export type ChartReport = {
     views: number;
   };
 };
+
+export type FreeBoard = {
+  id: number;
+  username: string;
+  title: string;
+  content: string;
+  good: number;
+  views: number;
+  createDate: Date;
+  modifiedDate: Date;
+};
