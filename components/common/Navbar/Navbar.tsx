@@ -53,8 +53,8 @@ const Navbar: FC<Props> = ({ className, title }) => {
                     </Link>
                   </MenuItem>
                   <MenuItem>
-                    <Link href="/report/chart">
-                      <a className="w-full">REPORT</a>
+                    <Link href="/board/chart">
+                      <a className="w-full">BOARD</a>
                     </Link>
                   </MenuItem>
                   <MenuItem
@@ -62,7 +62,7 @@ const Navbar: FC<Props> = ({ className, title }) => {
                       popupState.close();
                       window.alert('not launching');
                     }}>
-                    <Link href="/report/my">
+                    <Link href="/board/my">
                       <a className="w-full">MY</a>
                     </Link>
                   </MenuItem>
@@ -174,8 +174,8 @@ const Navbar: FC<Props> = ({ className, title }) => {
           <Link href="/ai">
             <a className="hover:text-indigo-400">AI</a>
           </Link>
-          <Link href="/report/chart">
-            <a className="hover:text-indigo-400">REPORT</a>
+          <Link href="/board/chart">
+            <a className="hover:text-indigo-400">BOARD</a>
           </Link>
         </div>
         <div className="flex space-x-4 pt-1">
