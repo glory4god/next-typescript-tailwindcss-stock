@@ -5,7 +5,7 @@ import { GetStaticPaths, GetStaticProps } from 'next';
 import type { ChartReport } from '../../../types/report/ReportType';
 import { getReportById, getReportIds } from '../../../lib/report';
 import { ParsedUrlQuery } from 'querystring';
-import BoardView from '../../../components/report/BoardView';
+import ReportBoardView from '../../../components/board/ReportBoardView';
 import { useDispatch, useSelector } from 'react-redux';
 import {
   fetchReport,
@@ -24,15 +24,15 @@ const BoardPage = ({ report }: { report: ChartReport }) => {
     <Container>
       <Subnavbar
         pages={{
-          main: 'report',
+          main: 'board',
           sub: { first: 'free', second: 'chart', third: 'my' },
         }}
       />
       <h2 className="my-4">CHART REPORT</h2>
-      <BoardView
+      <ReportBoardView
         className="text-left"
         report={report}
-        reportList={reportList}
+        dataList={reportList}
       />
     </Container>
   );

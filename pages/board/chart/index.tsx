@@ -3,7 +3,7 @@ import { GetStaticProps } from 'next';
 import Subnavbar from '../../../components/common/Subnavbar';
 import Container from '../../../components/ui/Container';
 import fetcher from '../../../lib/fetcher';
-import BoardList from '../../../components/report/BoardList';
+import BoardList from '../../../components/board/BoardList';
 import Button from '@material-ui/core/Button';
 import { AutoCompleteInput } from '../../../components/ui';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,7 +12,7 @@ import {
   fetchSearchReport,
   selectReport,
 } from '../../../lib/redux/report/reportSlice';
-import { BoardSearchBar } from '../../../components/report';
+import { BoardSearchBar } from '../../../components/board';
 
 interface ButtonData {
   LATEST: string;
@@ -33,7 +33,7 @@ const ChartBoardPage = ({ totalList }: { totalList: Array<string> }) => {
   const [sorted, setSorted] = React.useState<string>('modifiedDate');
   const [currentCompany, setCurrentCompany] = React.useState<string>('전체');
   const [condition, setCondition] = React.useState<string>('TITLE+CONTENT');
-  const [value, setValue] = React.useState<string>('전체');
+  const [value, setValue] = React.useState<string>('검색어를 입력하세요');
 
   // FIXME: using redux => complete
   // const [loading, setLoading] = React.useState<boolean>(false);
@@ -68,9 +68,9 @@ const ChartBoardPage = ({ totalList }: { totalList: Array<string> }) => {
   // };
 
   React.useEffect(() => {
-    if (value === '전체') {
+    if (value === '검색어를 입력하세요' || value === '전체') {
       dispatch(fetchReport(currentCompany, sorted));
-    } else {
+    } else if (value !== '') {
       dispatch(fetchSearchReport(condition.toLowerCase(), value, sorted));
     }
 
@@ -81,7 +81,7 @@ const ChartBoardPage = ({ totalList }: { totalList: Array<string> }) => {
     <Container>
       <Subnavbar
         pages={{
-          main: 'report',
+          main: 'board',
           sub: { first: 'free', second: 'chart', third: 'my' },
         }}
       />
@@ -95,7 +95,7 @@ const ChartBoardPage = ({ totalList }: { totalList: Array<string> }) => {
               value={currentCompany}
               onChange={(e: HTMLInputElement, newValue: string | undefined) => {
                 if (newValue !== undefined) {
-                  setValue('전체');
+                  setValue('검색어를 입력하세요');
                   setCurrentCompany(newValue);
                 }
               }}
@@ -104,7 +104,7 @@ const ChartBoardPage = ({ totalList }: { totalList: Array<string> }) => {
           <Button
             size="small"
             onClick={() => {
-              setValue('전체');
+              setValue('검색어를 입력하세요');
               setCurrentCompany('전체');
               setSorted('modifiedDate');
             }}>
@@ -174,9 +174,12 @@ const ChartBoardPage = ({ totalList }: { totalList: Array<string> }) => {
         onSelectChange={(
           e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
         ) => setCondition(e.target.value)}
-        onInputClick={(
+        onInputChange={(
           e: React.ChangeEvent<HTMLTextAreaElement | HTMLInputElement>,
         ) => setValue(e.target.value)}
+        onInputClick={() => {
+          setValue('');
+        }}
         sorted={sorted}
       />
     </Container>
@@ -184,7 +187,6 @@ const ChartBoardPage = ({ totalList }: { totalList: Array<string> }) => {
 };
 
 export default React.memo(ChartBoardPage);
-
 export const getStaticProps: GetStaticProps = async (context) => {
   const kospiList = (await fetcher(
     process.env.LOCAL_SERVER + `api/v1/chart/companyname/kospi`,

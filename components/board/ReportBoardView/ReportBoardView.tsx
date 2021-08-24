@@ -1,7 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
 import { ChartReport } from '../../../types/report/ReportType';
-import styles from './BoardView.module.css';
+import styles from './ReportBoardView.module.css';
 import ThumbUp from '@material-ui/icons/ThumbUp';
 import ThumbDown from '@material-ui/icons/ThumbDown';
 import LinkIcon from '@material-ui/icons/Link';
@@ -17,7 +17,7 @@ import fetcher from '../../../lib/fetcher';
 interface Props {
   className?: string;
   report: ChartReport;
-  reportList: Array<ChartReport>;
+  dataList: Array<ChartReport>;
 }
 
 type CounterType = {
@@ -29,7 +29,7 @@ type PressedType = {
   bad: boolean;
 };
 
-const BoardView: React.FC<Props> = ({ className, report, reportList }) => {
+const ReportBoardView: React.FC<Props> = ({ className, report, dataList }) => {
   const pages = useRouter();
 
   const { login, id, nickname } = useSelector(selectKakaoLogin);
@@ -227,11 +227,11 @@ const BoardView: React.FC<Props> = ({ className, report, reportList }) => {
         <h4>댓글</h4>
       </div>
       <BoardList
-        reportList={reportList.filter((c) => c.id !== report.id)}
+        reportList={dataList?.filter((c) => c.id !== report.id)}
         listNumber={5}
       />
     </div>
   );
 };
 
-export default BoardView;
+export default ReportBoardView;

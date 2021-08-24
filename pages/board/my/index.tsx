@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import Subnavbar from '../../../components/common/Subnavbar';
-import { BoardList } from '../../../components/report';
+import { BoardList } from '../../../components/board';
 import Container from '../../../components/ui/Container';
 import { selectKakaoLogin } from '../../../lib/redux/kakaoLogin/kakaoLoginSlice';
 import {
@@ -24,7 +24,7 @@ const My = () => {
     <Container>
       <Subnavbar
         pages={{
-          main: 'report',
+          main: 'board',
           sub: { first: 'free', second: 'chart', third: 'my' },
         }}
       />

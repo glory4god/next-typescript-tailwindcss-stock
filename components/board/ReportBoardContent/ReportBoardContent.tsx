@@ -1,6 +1,6 @@
 import React from 'react';
 import Link from 'next/link';
-import styles from './BoardContent.module.css';
+import styles from './ReportBoardContent.module.css';
 import ThumbUp from '@material-ui/icons/ThumbUp';
 import ThumbDown from '@material-ui/icons/ThumbDown';
 import type { ChartReport } from '../../../types/report/ReportType';
@@ -13,12 +13,12 @@ interface Props {
   item: ChartReport;
 }
 
-const BoardContent: React.FC<Props> = ({ item }) => {
+const ReportBoardContent: React.FC<Props> = ({ item }) => {
   const { loading } = useSelector(selectReport);
 
   return (
     <div className={styles.grid}>
-      <Link href={`/report/chart/${item.id}`}>
+      <Link href={`/board/chart/${item.id}`}>
         <a>
           <Image
             src={'/KakaoTalk_20210703_202158153.png'}
@@ -29,7 +29,7 @@ const BoardContent: React.FC<Props> = ({ item }) => {
           />
         </a>
       </Link>
-      <Link href={`/report/chart/${item.id}`}>
+      <Link href={`/board/chart/${item.id}`}>
         <a
           className="font-bold text-left md:text-base text-xs pl-2"
           onClick={() => {
@@ -61,4 +61,4 @@ const BoardContent: React.FC<Props> = ({ item }) => {
   );
 };
 
-export default React.memo(BoardContent);
+export default React.memo(ReportBoardContent);
