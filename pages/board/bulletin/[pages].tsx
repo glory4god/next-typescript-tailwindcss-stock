@@ -2,25 +2,30 @@ import React from 'react';
 import Container from '../../../components/ui/Container';
 import Subnavbar from '../../../components/common/Subnavbar';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import type { ChartReport } from '../../../types/report/ReportType';
-import {
-  getReportById,
-  getReportIds,
-} from '../../../lib/redux/report/reportApis';
+import type { BulletinBoard } from '../../../types/report/ReportType';
+
 import { ParsedUrlQuery } from 'querystring';
-import ReportBoardView from '../../../components/board/ReportBoardView';
 import { useDispatch, useSelector } from 'react-redux';
 import {
-  fetchReport,
-  selectReport,
-} from '../../../lib/redux/report/reportSlice';
+  fetchBulletinBoard,
+  selectBulletinBoard,
+} from '../../../lib/redux/bulletinBoard/bulletinBoardSlice';
+import {
+  getBulletinBoardById,
+  getBulletinBoardIds,
+} from '../../../lib/redux/bulletinBoard/bulletinBoardApis';
+import BulletinBoardView from '../../../components/board/BulletinBoardView';
 
-const BoardPage = ({ report }: { report: ChartReport }) => {
-  const { reportList } = useSelector(selectReport);
+const BulletinBoardPage = ({
+  bulletinBoard,
+}: {
+  bulletinBoard: BulletinBoard;
+}) => {
+  const { bulletinBoardList } = useSelector(selectBulletinBoard);
   const dispatch = useDispatch();
   React.useEffect(() => {
-    if (reportList.length === 0) {
-      dispatch(fetchReport('전체', 'modifiedDate'));
+    if (bulletinBoardList.length === 0) {
+      dispatch(fetchBulletinBoard('modifiedDate'));
     }
   }, []);
   return (
@@ -31,17 +36,17 @@ const BoardPage = ({ report }: { report: ChartReport }) => {
           sub: { first: 'bulletin', second: 'chart', third: 'my' },
         }}
       />
-      <h2 className="my-4">CHART REPORT</h2>
-      <ReportBoardView
+      <h2 className="my-4">FREE BOARD</h2>
+      <BulletinBoardView
         className="text-left"
-        report={report}
-        reportList={reportList}
+        board={bulletinBoard}
+        bulletinBoardList={bulletinBoardList}
       />
     </Container>
   );
 };
 
-export default BoardPage;
+export default BulletinBoardPage;
 
 //이 과정이 사실 정확히 뭔지는 모르겠지만 빨간줄이 안뜸 ㅠㅠ
 interface IParams extends ParsedUrlQuery {
@@ -49,7 +54,7 @@ interface IParams extends ParsedUrlQuery {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const arr = (await getReportIds()) as string[];
+  const arr = (await getBulletinBoardIds()) as string[];
   const paths = arr.map((pages) => {
     return {
       params: { pages },
@@ -63,9 +68,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
 
 export const getStaticProps: GetStaticProps = async (context) => {
   const { pages } = context.params as IParams;
-  const report = (await getReportById(pages)) as ChartReport;
+  const bulletinBoard = (await getBulletinBoardById(pages)) as BulletinBoard;
 
   return {
-    props: { report },
+    props: { bulletinBoard },
   };
 };

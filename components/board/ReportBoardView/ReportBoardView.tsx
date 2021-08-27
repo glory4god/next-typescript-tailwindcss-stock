@@ -8,7 +8,7 @@ import LinkIcon from '@material-ui/icons/Link';
 import Button from '@material-ui/core/Button';
 import copy from 'copy-to-clipboard'; // url 클립보드 복사 기능
 import { useRouter } from 'next/dist/client/router';
-import { goodAndBadHandler } from '../../../lib/report';
+import { goodAndBadHandler } from '../../../lib/redux/report/reportApis';
 import BoardList from '../BoardList';
 import { useSelector } from 'react-redux';
 import { selectKakaoLogin } from '../../../lib/redux/kakaoLogin/kakaoLoginSlice';
@@ -17,7 +17,7 @@ import fetcher from '../../../lib/fetcher';
 interface Props {
   className?: string;
   report: ChartReport;
-  dataList: Array<ChartReport>;
+  reportList: Array<ChartReport>;
 }
 
 type CounterType = {
@@ -29,11 +29,16 @@ type PressedType = {
   bad: boolean;
 };
 
-const ReportBoardView: React.FC<Props> = ({ className, report, dataList }) => {
+const ReportBoardView: React.FC<Props> = ({
+  className,
+  report,
+  reportList,
+}) => {
   const pages = useRouter();
 
   const { login, id, nickname } = useSelector(selectKakaoLogin);
 
+  const [loading, setLoading] = React.useState<boolean>(false);
   const [pressed, setPressed] = React.useState<PressedType>({
     good: false,
     bad: false,
@@ -63,7 +68,7 @@ const ReportBoardView: React.FC<Props> = ({ className, report, dataList }) => {
         },
       );
       if (res.ok) {
-        pages.push('/report/chart');
+        pages.push('/board/chart');
       } else {
         alert('게시글 삭제에 실패했습니다.');
       }
@@ -90,7 +95,9 @@ const ReportBoardView: React.FC<Props> = ({ className, report, dataList }) => {
           good: counter.good - 1,
         }));
       }
-      await goodAndBadHandler('good', id, report.id);
+      setLoading(true);
+      await goodAndBadHandler('chart', 'good', id, report.id);
+      setLoading(false);
       pressCheck(id, report.id);
     } else {
       alert('로그인 후 이용 가능합니다!');
@@ -117,7 +124,10 @@ const ReportBoardView: React.FC<Props> = ({ className, report, dataList }) => {
           bad: counter.bad - 1,
         }));
       }
-      await goodAndBadHandler('bad', id, report.id);
+      setLoading(true);
+      await goodAndBadHandler('chart', 'bad', id, report.id);
+      setLoading(false);
+
       pressCheck(id, report.id);
     } else {
       alert('로그인 후 이용 가능합니다!');
@@ -178,7 +188,6 @@ const ReportBoardView: React.FC<Props> = ({ className, report, dataList }) => {
         </div>
         <div className="flex justify-between">
           <div className="space-x-4">
-            {console.log(pressed)}
             <ThumbUp
               fontSize="small"
               className="cursor-pointer"
@@ -189,7 +198,11 @@ const ReportBoardView: React.FC<Props> = ({ className, report, dataList }) => {
                     : '#a7a8a8'
                 }`,
               }}
-              onClick={() => goodHandler()}
+              onClick={() => {
+                if (loading === false) {
+                  goodHandler();
+                }
+              }}
             />{' '}
             {counter.good}
             <ThumbDown
@@ -200,7 +213,11 @@ const ReportBoardView: React.FC<Props> = ({ className, report, dataList }) => {
                   login === true && pressed.bad === true ? '#818cf8' : '#a7a8a8'
                 }`,
               }}
-              onClick={() => badHandler()}
+              onClick={() => {
+                if (loading === false) {
+                  badHandler();
+                }
+              }}
             />{' '}
             {counter.bad}
           </div>
@@ -227,7 +244,7 @@ const ReportBoardView: React.FC<Props> = ({ className, report, dataList }) => {
         <h4>댓글</h4>
       </div>
       <BoardList
-        reportList={dataList?.filter((c) => c.id !== report.id)}
+        reportList={reportList?.filter((c) => c.id !== report.id)}
         listNumber={5}
       />
     </div>

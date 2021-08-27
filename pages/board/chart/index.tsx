@@ -82,7 +82,7 @@ const ChartBoardPage = ({ totalList }: { totalList: Array<string> }) => {
       <Subnavbar
         pages={{
           main: 'board',
-          sub: { first: 'free', second: 'chart', third: 'my' },
+          sub: { first: 'bulletin', second: 'chart', third: 'my' },
         }}
       />
       <h2 className="my-4">CHART REPORT</h2>

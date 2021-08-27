@@ -5,17 +5,17 @@ import Subnavbar from '../../../components/common/Subnavbar';
 import { BoardList } from '../../../components/board';
 import { Container } from '../../../components/ui';
 import {
-  fetchFreeBoard,
-  selectFreeBoard,
-} from '../../../lib/redux/freeBoard/freeBoardSlice';
+  fetchBulletinBoard,
+  selectBulletinBoard,
+} from '../../../lib/redux/bulletinBoard/bulletinBoardSlice';
 import Link from 'next/link';
 
 const FreeBoardPage = () => {
-  const { freeBoardList } = useSelector(selectFreeBoard);
+  const { bulletinBoardList } = useSelector(selectBulletinBoard);
   const dispatch = useDispatch();
 
   React.useEffect(() => {
-    dispatch(fetchFreeBoard());
+    dispatch(fetchBulletinBoard());
   }, []);
 
   return (
@@ -23,7 +23,7 @@ const FreeBoardPage = () => {
       <Subnavbar
         pages={{
           main: 'board',
-          sub: { first: 'free', second: 'chart', third: 'my' },
+          sub: { first: 'bulletin', second: 'chart', third: 'my' },
         }}
       />
       <h2 className="my-4">FREE BOARD</h2>
@@ -34,7 +34,7 @@ const FreeBoardPage = () => {
           </a>
         </Link>
       </div>
-      <BoardList freeBoardList={freeBoardList} listNumber={10} />
+      <BoardList bulletinBoardList={bulletinBoardList} listNumber={10} />
     </Container>
   );
 };

@@ -1,19 +1,22 @@
 import React from 'react';
 import cn from 'classnames';
-import type { ChartReport, FreeBoard } from '../../../types/report/ReportType';
+import type {
+  ChartReport,
+  BulletinBoard,
+} from '../../../types/report/ReportType';
 import BoardContent from '../ReportBoardContent';
 import Button from '@material-ui/core/Button';
-import FreeBoardContent from '../FreeBoardContent';
+import BulletinBoardContent from '../BulletinBoardContent';
 
 interface Props {
   reportList?: ChartReport[];
-  freeBoardList?: FreeBoard[];
+  bulletinBoardList?: BulletinBoard[];
   listNumber: number;
 }
 
 const BoardList: React.FC<Props> = ({
   reportList,
-  freeBoardList,
+  bulletinBoardList,
   listNumber,
 }) => {
   const [currentBoardPage, setCurrentBoardPage] = React.useState<number>(1);
@@ -21,8 +24,8 @@ const BoardList: React.FC<Props> = ({
   let boardPages: number = 0;
   if (reportList !== undefined) {
     boardPages = Math.ceil(reportList.length / listNumber);
-  } else if (freeBoardList !== undefined) {
-    boardPages = Math.ceil(freeBoardList.length / listNumber);
+  } else if (bulletinBoardList !== undefined) {
+    boardPages = Math.ceil(bulletinBoardList.length / listNumber);
   }
 
   const arr: Array<number> = [];
@@ -47,13 +50,15 @@ const BoardList: React.FC<Props> = ({
             )
               return <BoardContent key={arr.username + idx} item={arr} />;
           })}
-        {freeBoardList !== undefined &&
-          freeBoardList?.map((arr, idx) => {
+        {bulletinBoardList !== undefined &&
+          bulletinBoardList?.map((arr, idx) => {
             if (
               idx >= (currentBoardPage - 1) * listNumber &&
               idx < currentBoardPage * listNumber
             )
-              return <FreeBoardContent key={arr.username + idx} item={arr} />;
+              return (
+                <BulletinBoardContent key={arr.username + idx} item={arr} />
+              );
           })}
       </div>
       <div className="mt-6 text-center flex justify-between items-center">

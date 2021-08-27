@@ -1,7 +1,7 @@
 import React from 'react';
 import cn from 'classnames';
-import { FreeBoard } from '../../../types/report/ReportType';
-import styles from './FreeBoardView.module.css';
+import { BulletinBoard } from '../../../types/report/ReportType';
+import styles from './BulletinBoardView.module.css';
 import ThumbUp from '@material-ui/icons/ThumbUp';
 import LinkIcon from '@material-ui/icons/Link';
 import Button from '@material-ui/core/Button';
@@ -16,14 +16,14 @@ import WritingBoard from '../WritingBoard';
 
 interface Props {
   className?: string;
-  board: FreeBoard;
-  freeBoardList: Array<FreeBoard>;
+  board: BulletinBoard;
+  bulletinBoardList: Array<BulletinBoard>;
 }
 
-const FreeBoardView: React.FC<Props> = ({
+const BulletinBoardView: React.FC<Props> = ({
   className,
   board,
-  freeBoardList,
+  bulletinBoardList,
 }) => {
   const pages = useRouter();
 
@@ -175,11 +175,11 @@ const FreeBoardView: React.FC<Props> = ({
         <h4>댓글</h4>
       </div>
       <BoardList
-        freeBoardList={freeBoardList?.filter((c) => c.id !== board.id)}
+        bulletinBoardList={bulletinBoardList?.filter((c) => c.id !== board.id)}
         listNumber={5}
       />
     </div>
   );
 };
 
-export default FreeBoardView;
+export default BulletinBoardView;

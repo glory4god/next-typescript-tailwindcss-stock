@@ -1,18 +1,18 @@
 import React from 'react';
 import Link from 'next/link';
-import styles from './FreeBoardContent.module.css';
+import styles from './BulletinBoardContent.module.css';
 import ThumbUp from '@material-ui/icons/ThumbUp';
-import type { FreeBoard } from '../../../types/report/ReportType';
+import type { BulletinBoard } from '../../../types/report/ReportType';
 import { viewsHandler } from '../../../lib/redux/report/reportApis';
 import { useSelector } from 'react-redux';
-import { selectFreeBoard } from '../../../lib/redux/freeBoard/freeBoardSlice';
+import { selectBulletinBoard } from '../../../lib/redux/bulletinBoard/bulletinBoardSlice';
 
 interface Props {
-  item: FreeBoard;
+  item: BulletinBoard;
 }
 
-const FreeBoardContent: React.FC<Props> = ({ item }) => {
-  const { loading } = useSelector(selectFreeBoard);
+const BulletinBoardContent: React.FC<Props> = ({ item }) => {
+  const { loading } = useSelector(selectBulletinBoard);
 
   const [viewLoading, setViewLoading] = React.useState<boolean>(false);
 
@@ -23,7 +23,7 @@ const FreeBoardContent: React.FC<Props> = ({ item }) => {
 
   return (
     <div className={styles.grid}>
-      <Link href={`/board/free/${item.id}`}>
+      <Link href={`/board/bulletin/${item.id}`}>
         <a
           className="font-bold text-left md:text-base text-xs pl-2"
           onClick={() => {
@@ -34,7 +34,7 @@ const FreeBoardContent: React.FC<Props> = ({ item }) => {
           {loading ? 'loading...' : item.id}
         </a>
       </Link>
-      <Link href={`/board/free/${item.id}`}>
+      <Link href={`/board/bulletin/${item.id}`}>
         <a
           className="font-bold text-left md:text-base text-xs pl-2"
           onClick={() => {
@@ -60,4 +60,4 @@ const FreeBoardContent: React.FC<Props> = ({ item }) => {
   );
 };
 
-export default React.memo(FreeBoardContent);
+export default React.memo(BulletinBoardContent);
