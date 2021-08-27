@@ -34,3 +34,48 @@ export async function getSearchReportAll(
       `api/v1/user/chart-report/search?condition=${condition}&value=${value}&sorted=${sorted}`,
   )) as Array<ChartReport>;
 }
+
+export async function getReportIds() {
+  const report = (await fetcher(
+    process.env.LOCAL_SERVER +
+      'api/v1/user/chart-report/sort-all?sorted=modifiedDate',
+  )) as Array<ChartReport>;
+
+  const paths: string[] = report.map((arr) => {
+    return arr.id.toString();
+  });
+  return paths;
+}
+
+export async function getReportById(id: string) {
+  return (await fetcher(
+    process.env.LOCAL_SERVER + `api/v1/user/chart-report/${id}`,
+  )) as ChartReport;
+}
+
+export async function goodAndBadHandler(
+  dbName: string,
+  value: string,
+  id: number,
+  reportId: number,
+) {
+  return (await fetcher(
+    process.env.LOCAL_SERVER + `api/v1/user/board/patch/${dbName}/${value}`,
+    {
+      method: 'PATCH',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ userId: id, reportId: reportId }),
+    },
+  )) as string;
+}
+
+export async function viewsHandler(dbName: string, id: number) {
+  return (await fetcher(
+    process.env.LOCAL_SERVER + `api/v1/board/views/${dbName}/${id}`,
+    {
+      method: 'PATCH',
+    },
+  )) as string;
+}
