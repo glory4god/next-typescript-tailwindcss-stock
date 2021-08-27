@@ -1,0 +1,52 @@
+.writing > div {
+  margin: 4px 4px;
+}
+.title {
+  border-bottom: 1px solid gainsboro;
+  padding: 24px 8px;
+}
+
+.content {
+  padding: 24px 8px;
+  border-bottom: 1px solid gainsboro;
+}
+
+.input {
+  height: 36px;
+  width: 100%;
+  font-size: 24px;
+}
+
+.textarea {
+  height: 100%;
+  width: 100%;
+  font-size: 16px;
+}
+
+@media (min-width: 880px) {
+  .writing > div {
+    margin: 32px 44px;
+  }
+
+  .title {
+    border-bottom: 1px solid gainsboro;
+    padding: 24px 8px;
+  }
+
+  .content {
+    padding: 24px 8px;
+    border-bottom: 1px solid gainsboro;
+  }
+
+  .input {
+    height: 36px;
+    width: 100%;
+    font-size: 28px;
+  }
+
+  .textarea {
+    height: 100%;
+    width: 100%;
+    font-size: 20px;
+  }
+}
