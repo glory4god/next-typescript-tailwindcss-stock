@@ -1,0 +1,38 @@
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 5fr 3fr;
+  height: 72px;
+  font-size: 12px;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid gainsboro;
+}
+
+.detailGrid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+.hidden {
+  display: none;
+}
+
+@media (min-width: 880px) {
+  .grid {
+    display: grid;
+    grid-template-columns: 1.4fr 6fr 4fr;
+    height: 72px;
+    font-size: 12px;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid gainsboro;
+  }
+
+  .detailGrid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+  }
+  .hidden {
+    display: block;
+  }
+}
