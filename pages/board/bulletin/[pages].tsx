@@ -36,7 +36,7 @@ const BulletinBoardPage = ({
           sub: { first: 'bulletin', second: 'chart', third: 'my' },
         }}
       />
-      <h2 className="my-4">FREE BOARD</h2>
+      <h2 className="my-4">BULLETIN BOARD</h2>
       <BulletinBoardView
         className="text-left"
         board={bulletinBoard}

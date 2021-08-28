@@ -30,7 +30,7 @@ export type ChartReport = {
   };
 };
 
-export type FreeBoard = {
+export type BulletinBoard = {
   id: number;
   username: string;
   title: string;

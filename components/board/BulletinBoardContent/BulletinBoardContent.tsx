@@ -17,7 +17,7 @@ const BulletinBoardContent: React.FC<Props> = ({ item }) => {
   const [viewLoading, setViewLoading] = React.useState<boolean>(false);
 
   const viewClick = async () => {
-    viewsHandler('free', item.id);
+    viewsHandler('bulletin', item.id);
     setViewLoading(true);
   };
 

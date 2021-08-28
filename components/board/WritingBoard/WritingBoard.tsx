@@ -6,12 +6,11 @@ import Button from '@material-ui/core/Button';
 import { useRouter } from 'next/dist/client/router';
 import { useSelector } from 'react-redux';
 import { selectKakaoLogin } from '../../../lib/redux/kakaoLogin/kakaoLoginSlice';
-import fetcher from '../../../lib/fetcher';
-import { FreeBoard } from '../../../types/report/ReportType';
+import { BulletinBoard } from '../../../types/report/ReportType';
 
 interface Props {
   className?: string;
-  board?: FreeBoard;
+  board?: BulletinBoard;
   closeEditing?: () => void;
 }
 
@@ -34,7 +33,7 @@ const WritingBoard: React.FC<Props> = ({ className, board, closeEditing }) => {
   const saveBoard = async (writing: PostBoard) => {
     if (board === undefined) {
       const res = await fetch(
-        process.env.LOCAL_SERVER + 'api/v1/freeboard/post',
+        process.env.LOCAL_SERVER + 'api/v1/bulletinboard/post',
         {
           method: 'POST',
           headers: {
@@ -45,13 +44,13 @@ const WritingBoard: React.FC<Props> = ({ className, board, closeEditing }) => {
       );
 
       if (res.ok) {
-        router.push('http://localhost:3000/board/free');
+        router.push('http://localhost:3000/board/bulletin');
       } else {
         alert('글을 작성하지 못했습니다.');
       }
     } else {
       const res = await fetch(
-        process.env.LOCAL_SERVER + `api/v1/freeboard/update/${board.id}`,
+        process.env.LOCAL_SERVER + `api/v1/bulletinboard/update/${board.id}`,
         {
           method: 'PATCH',
           headers: {
@@ -63,7 +62,7 @@ const WritingBoard: React.FC<Props> = ({ className, board, closeEditing }) => {
       if (res.ok) {
         if (closeEditing !== undefined) {
           closeEditing();
-          router.replace(`http://localhost:3000/board/free/${board.id}`);
+          router.replace(`http://localhost:3000/board/bulletin/${board.id}`);
         }
       } else {
         alert('글을 수정하지 못했습니다.');

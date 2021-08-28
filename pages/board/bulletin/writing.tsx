@@ -18,7 +18,7 @@ const Writing = () => {
       dispatch(fetchBulletinBoard());
     } else {
       alert('로그인 후 이용 가능합니다!');
-      router.push(`http://localhost:3000/board/free`);
+      router.push(`http://localhost:3000/board/bulletin`);
     }
   }, []);
 

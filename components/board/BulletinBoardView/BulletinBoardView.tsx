@@ -37,7 +37,7 @@ const BulletinBoardView: React.FC<Props> = ({
   const pressCheck = async (userId: number, boardId: number) => {
     const press = (await fetcher(
       process.env.LOCAL_SERVER +
-        `api/v1/freeboard/pressed?user=${userId}&board=${boardId}`,
+        `api/v1/bulletinboard/pressed?user=${userId}&board=${boardId}`,
     )) as boolean;
     setPressed(press);
   };
@@ -46,13 +46,14 @@ const BulletinBoardView: React.FC<Props> = ({
     const result = confirm('게시글을 삭제하시겠습니까?');
     if (result) {
       const res = await fetch(
-        process.env.LOCAL_SERVER + `api/v1/freeboard/post/${boardId}/${userId}`,
+        process.env.LOCAL_SERVER +
+          `api/v1/bulletinboard/post/${boardId}/${userId}`,
         {
           method: 'DELETE',
         },
       );
       if (res.ok) {
-        pages.push('/board/free');
+        pages.push('/board/bulletin');
       } else {
         alert('게시글 삭제에 실패했습니다.');
       }
@@ -101,7 +102,7 @@ const BulletinBoardView: React.FC<Props> = ({
       } else {
         setGoodCounter((good) => good - 1);
       }
-      await goodAndBadHandler('free', 'good', id, board.id);
+      await goodAndBadHandler('bulletin', 'good', id, board.id);
       pressCheck(id, board.id);
     } else {
       alert('로그인 후 이용 가능합니다!');

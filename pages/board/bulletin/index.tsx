@@ -10,7 +10,7 @@ import {
 } from '../../../lib/redux/bulletinBoard/bulletinBoardSlice';
 import Link from 'next/link';
 
-const FreeBoardPage = () => {
+const BulletinBoardPage = () => {
   const { bulletinBoardList } = useSelector(selectBulletinBoard);
   const dispatch = useDispatch();
 
@@ -26,9 +26,9 @@ const FreeBoardPage = () => {
           sub: { first: 'bulletin', second: 'chart', third: 'my' },
         }}
       />
-      <h2 className="my-4">FREE BOARD</h2>
+      <h2 className="my-4">BULLETIN BOARD</h2>
       <div className="text-right">
-        <Link href="/board/free/writing">
+        <Link href="/board/bulletin/writing">
           <a href="#">
             <Button>글쓰기</Button>
           </a>
@@ -39,4 +39,4 @@ const FreeBoardPage = () => {
   );
 };
 
-export default FreeBoardPage;
+export default BulletinBoardPage;
