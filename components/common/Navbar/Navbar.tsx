@@ -16,10 +16,9 @@ import {
 
 interface Props {
   className?: string;
-  title: string;
 }
 
-const Navbar: FC<Props> = ({ className, title }) => {
+const Navbar: FC<Props> = ({ className }) => {
   const page = useRouter();
   const { login } = useSelector(selectKakaoLogin);
   const dispatch = useDispatch();
@@ -164,7 +163,7 @@ const Navbar: FC<Props> = ({ className, title }) => {
             />
           </a>
         </Link>
-        <div className="font-bold space-x-10 text-xl pt-4 lg:pr-20 pr-6">
+        <div className="font-bold space-x-10 text-xl pt-4 lg:pr-12 pr-6">
           <Link href="/chart/line">
             <a className="hover:text-indigo-400">CHART</a>
           </Link>
