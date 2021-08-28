@@ -135,7 +135,7 @@ const BulletinBoardView: React.FC<Props> = ({
             </div>
           </div>
           <div className={styles.reportInfo}>
-            <h4>{board.username}</h4>
+            <h4>작성자 : {board.username}</h4>
             <div>
               Views {board.views} /{' '}
               {board.modifiedDate.toString().substr(0, 10)}{' '}

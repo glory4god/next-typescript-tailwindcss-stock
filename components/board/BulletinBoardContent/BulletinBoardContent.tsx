@@ -31,7 +31,7 @@ const BulletinBoardContent: React.FC<Props> = ({ item }) => {
               viewClick();
             }
           }}>
-          {loading ? 'loading...' : item.id}
+          {loading ? 0 : item.id}
         </a>
       </Link>
       <Link href={`/board/bulletin/${item.id}`}>

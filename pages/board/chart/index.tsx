@@ -14,13 +14,13 @@ import {
 } from '../../../lib/redux/report/reportSlice';
 import { BoardSearchBar } from '../../../components/board';
 
-interface ButtonData {
+export interface ButtonData {
   LATEST: string;
   HOT: string;
   VIEWS: string;
 }
 
-const buttonData: ButtonData = {
+const sortedButton: ButtonData = {
   LATEST: 'modifiedDate',
   HOT: 'good',
   VIEWS: 'views',
@@ -112,20 +112,22 @@ const ChartBoardPage = ({ totalList }: { totalList: Array<string> }) => {
           </Button>
         </div>
         <div className="text-right">
-          {Object.keys(buttonData).map((arr, idx) => {
+          {Object.keys(sortedButton).map((arr, idx) => {
             return (
               <span key={idx}>
                 <Button
                   size="small"
                   style={{
                     border: `${
-                      sorted === buttonData[arr] ? '1px solid #818cf8' : 'none'
+                      sorted === sortedButton[arr]
+                        ? '1px solid #818cf8'
+                        : 'none'
                     }`,
                   }}
                   // FIXME: ts error i dont know.....
                   onClick={(e) => {
                     e.preventDefault();
-                    setSorted(buttonData[arr]);
+                    setSorted(sortedButton[arr]);
                   }}
                   disabled={loading}>
                   {loading ? arr + '...' : arr}
