@@ -1,4 +1,4 @@
-# this project .. (Stock community)
+# 주(식하는) 사(람들의) (이야)기
 
 ## Stack
  - Nextjs + TypeScript (create-next-app)
@@ -8,3 +8,4 @@
  - react-redux / redux toolkit 
  - materialUI /recharts / datepicker
  - sockjs / stompjs
+
