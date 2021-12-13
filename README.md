@@ -90,6 +90,6 @@
 
  - webSocket을 이용한 실시간채팅으로 양방향 통신이 가능하다.
  - 로그인(카카오 API)한 유저만 채팅에 참여할 수 있다. (비로그인 상태에선 보기만 가능)
- - 
-<img src="https://user-images.githubusercontent.com/78658208/145834369-8e6634d3-c560-45c7-b8b7-529344ef9496.png" width="330" height="600"/>
+ 
+<img src="https://user-images.githubusercontent.com/78658208/145834369-8e6634d3-c560-45c7-b8b7-529344ef9496.png" width="330" height="450"/>
  
