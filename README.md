@@ -82,8 +82,8 @@
  - transition을 이용한 부드러운 움직임 제공
  
 <img src="https://user-images.githubusercontent.com/78658208/145832203-fe939f54-5a91-44fe-bbfa-8b3147c75476.png" width="300" height="650"/> <img src="https://user-images.githubusercontent.com/78658208/145832358-1ba8fff3-9d86-4971-8003-30897f545b1b.png" width="300" height="650"/> <img src="https://user-images.githubusercontent.com/78658208/145832539-27d40f35-6bfc-4d75-a637-3bd3ef3d1d0b.png" width="300" height="650"/>
- <img src="https://user-images.githubusercontent.com/78658208/145832690-bce3a239-d22a-4d1d-8c05-c21be8228d28.png"  width="500" height="600"/>
- <img src="https://user-images.githubusercontent.com/78658208/145832665-96347198-820d-4a6f-af0e-d6b7e303e96f.png" width="500" height="600"/>
+ <img src="https://user-images.githubusercontent.com/78658208/145832690-bce3a239-d22a-4d1d-8c05-c21be8228d28.png"  width="450" height="600"/>
+ <img src="https://user-images.githubusercontent.com/78658208/145832665-96347198-820d-4a6f-af0e-d6b7e303e96f.png" width="450" height="600"/>
 
 
 ## 실시간 채팅
