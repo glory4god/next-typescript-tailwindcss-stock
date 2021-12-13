@@ -2,7 +2,7 @@
 
 
 ## Stack
-####FE
+#### FE
  - Nextjs + TypeScript (create-next-app)
  - React hooks 
  - TailwindCSS / module.css
@@ -11,7 +11,7 @@
  - materialUI /recharts / datepicker
  - sockjs / stompjs
 
-####BE
+#### BE
  - https://github.com/glory4god/stock-backend
 
 
