@@ -93,3 +93,6 @@
  
 <img src="https://user-images.githubusercontent.com/78658208/145834369-8e6634d3-c560-45c7-b8b7-529344ef9496.png" width="330" height="450"/>
  
+
+## 프로젝트 기술서는 아래 링크에 있습니다.
+https://fixed-mask-ed8.notion.site/1e018fbaa0b34f5d86be186ccd062544
