@@ -45,7 +45,7 @@
 
 ### 3. /board/chart, /board/chart/:[boardId]
 
-<img src="https://user-images.githubusercontent.com/78658208/145827430-2da50e57-2538-4e82-8c62-6ae0307ca754.png" width="100%" height="500"/>
+<img src="https://user-images.githubusercontent.com/78658208/145831613-a5a3a529-f7a5-4be3-a6d6-a9b75160be32.png" width="100%" height="500"/>
 
  - 조회한 차트에 대한 정보를 다른 사람들과 공유할 수 있는 게시판이다.
  - 좌측 상단 셀렉트를 통해 원하는 종목별 게시글 조회가 가능하다.
@@ -68,4 +68,12 @@
 
  - 내가 쓴 게시글 목록을 얻을 수 있다.
 
+
+### Responsive Web
+ - 다양한 환경(pc / tablet / mobile)
+ <img src="https://user-images.githubusercontent.com/78658208/145832203-fe939f54-5a91-44fe-bbfa-8b3147c75476.png" width="375" height="500"/>
+ <img src="https://user-images.githubusercontent.com/78658208/145832358-1ba8fff3-9d86-4971-8003-30897f545b1b.png" width="375" height="500"/>
+ <img src="https://user-images.githubusercontent.com/78658208/145832539-27d40f35-6bfc-4d75-a637-3bd3ef3d1d0b.png" width="375" height="500"/>
+ <img src="(https://user-images.githubusercontent.com/78658208/145832690-bce3a239-d22a-4d1d-8c05-c21be8228d28.png" width="768" height="500"/>
+ <img src="https://user-images.githubusercontent.com/78658208/145832665-96347198-820d-4a6f-af0e-d6b7e303e96f.png" width="768" height="500"/>
 
