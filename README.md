@@ -4,6 +4,13 @@
 - 처음 개발 공부를 시작하면서 단순히 공부만 하는것에 그치지않고 직접 내가 해보고 싶었던 것을 개발하면서 성장하자는 생각과 당시 가장 흥미롭게 생각했던 주식이라는 소재를 갖고, 기존에 존재하는 게시글, 채팅으로만 소통하던 주식 관련 커뮤니티가 아닌 주식에 관심있는 사람들의 더 다양한 정보를 통해 소통하는 커뮤니티를 만들어보자라는 생각으로 시작했던 프로젝트입니다.
 - 다양한 정보란 사용자가 원하는 기업에 내가 원하는 조건에 따른 차트를 직접 그려보고 그 차트를 통해서 전달하고자하는 말이 무엇인지를 소개하는 리포트 형식의 커뮤니티 게시판을 만드려합니다.
 
+
+#### 로고
+
+- 로고의 의미는 프로젝트 이름의 주사기를 누를 때 나오는 물줄기가 주식차트의 실시간 틱이 움직임과 비슷함을 통해 제작하였다.
+<img src="https://user-images.githubusercontent.com/78658208/145834912-be7df61c-3174-44d9-8961-f907dde6ea16.png" width="200" height="200"/>
+
+
 ## Stack
 #### FE
  - Nextjs + TypeScript (create-next-app)
@@ -69,10 +76,20 @@
  - 내가 쓴 게시글 목록을 얻을 수 있다.
 
 
-### Responsive Web
- - 다양한 환경(pc / tablet / mobile)
+## Responsive Web
+
+ - 다양한 환경 제공(pc / tablet / mobile)
+ - transition을 이용한 부드러운 움직임 제공
  
 <img src="https://user-images.githubusercontent.com/78658208/145832203-fe939f54-5a91-44fe-bbfa-8b3147c75476.png" width="330" height="650"/> <img src="https://user-images.githubusercontent.com/78658208/145832358-1ba8fff3-9d86-4971-8003-30897f545b1b.png" width="330" height="650"/> <img src="https://user-images.githubusercontent.com/78658208/145832539-27d40f35-6bfc-4d75-a637-3bd3ef3d1d0b.png" width="330" height="650"/>
- <img src="(https://user-images.githubusercontent.com/78658208/145832690-bce3a239-d22a-4d1d-8c05-c21be8228d28.png"  width="500" height="700"/>
- <img src="https://user-images.githubusercontent.com/78658208/145832665-96347198-820d-4a6f-af0e-d6b7e303e96f.png" width="500" height="700"/>
+ <img src="(https://user-images.githubusercontent.com/78658208/145832690-bce3a239-d22a-4d1d-8c05-c21be8228d28.png"  width="500" height="600"/>
+ <img src="https://user-images.githubusercontent.com/78658208/145832665-96347198-820d-4a6f-af0e-d6b7e303e96f.png" width="500" height="600"/>
 
+
+## 실시간 채팅
+
+ - webSocket을 이용한 실시간채팅으로 양방향 통신이 가능하다.
+ - 로그인(카카오 API)한 유저만 채팅에 참여할 수 있다. (비로그인 상태에선 보기만 가능)
+ - 
+<img src="https://user-images.githubusercontent.com/78658208/145834369-8e6634d3-c560-45c7-b8b7-529344ef9496.png" width="330" height="650"/>
+ 
