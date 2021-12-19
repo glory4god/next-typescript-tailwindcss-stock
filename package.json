@@ -1,10 +1,10 @@
 {
-  "name": "next-typescript-tailwindcss-stcok",
+  "name": "frontend",
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "NODE_ENV='development' node server.js",
+    "build": "next build && next export",
     "start": "next start",
     "lint": "next lint"
   },
