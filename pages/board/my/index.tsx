@@ -8,6 +8,7 @@ import {
   fetchUserReport,
   selectReport,
 } from '../../../lib/redux/report/reportSlice';
+import { GetServerSideProps } from 'next';
 
 const My = () => {
   const { login, id, image } = useSelector(selectKakaoLogin);
@@ -25,7 +26,7 @@ const My = () => {
       <Subnavbar
         pages={{
           main: 'board',
-          sub: { first: 'free', second: 'chart', third: 'my' },
+          sub: { first: 'bulletin', second: 'chart', third: 'my' },
         }}
       />
       <h2 className="my-4">my report</h2>
@@ -39,3 +40,7 @@ const My = () => {
 };
 
 export default My;
+
+export const getServerSideProps: GetServerSideProps = async (context) => {
+  return { props: {} };
+};

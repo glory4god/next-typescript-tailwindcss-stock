@@ -4,7 +4,7 @@ import type {
   ChartReport,
   BulletinBoard,
 } from '../../../types/report/ReportType';
-import BoardContent from '../ReportBoardContent';
+import ReportBoardContent from '../ReportBoardContent';
 import Button from '@material-ui/core/Button';
 import BulletinBoardContent from '../BulletinBoardContent';
 
@@ -48,7 +48,7 @@ const BoardList: React.FC<Props> = ({
               idx >= (currentBoardPage - 1) * listNumber &&
               idx < currentBoardPage * listNumber
             )
-              return <BoardContent key={arr.username + idx} item={arr} />;
+              return <ReportBoardContent key={arr.username + idx} item={arr} />;
           })}
         {bulletinBoardList !== undefined &&
           bulletinBoardList?.map((arr, idx) => {

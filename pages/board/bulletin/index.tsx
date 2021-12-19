@@ -45,27 +45,29 @@ const BulletinBoardPage = () => {
           </Link>
         </div>
         <div>
-          {Object.keys(sortedButton).map((arr, idx) => {
-            return (
-              <Button
-                size="small"
-                style={{
-                  border: `${
-                    sortedColumn === sortedButton[arr]
-                      ? '1px solid #818cf8'
-                      : 'none'
-                  }`,
-                }}
-                key={arr}
-                onClick={(e) => {
-                  e.preventDefault();
-                  setSortedColumn(sortedButton[arr]);
-                }}
-                disabled={loading}>
-                {loading ? arr + '...' : arr}
-              </Button>
-            );
-          })}
+          {Object.keys(sortedButton).map(
+            (arr: 'LATEST' | 'HOT' | 'VIEWS', idx) => {
+              return (
+                <Button
+                  size="small"
+                  style={{
+                    border: `${
+                      sortedColumn === sortedButton[arr]
+                        ? '1px solid #818cf8'
+                        : 'none'
+                    }`,
+                  }}
+                  key={arr}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    setSortedColumn(sortedButton[arr]);
+                  }}
+                  disabled={loading}>
+                  {loading ? arr + '...' : arr}
+                </Button>
+              );
+            },
+          )}
         </div>
       </div>
       <BoardList bulletinBoardList={bulletinBoardList} listNumber={10} />

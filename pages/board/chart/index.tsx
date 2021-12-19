@@ -107,6 +107,7 @@ const ChartBoardPage = ({ totalList }: { totalList: Array<string> }) => {
               setValue('검색어를 입력하세요');
               setCurrentCompany('전체');
               setSorted('modifiedDate');
+              dispatch(fetchReport(currentCompany, sorted));
             }}>
             전체
           </Button>

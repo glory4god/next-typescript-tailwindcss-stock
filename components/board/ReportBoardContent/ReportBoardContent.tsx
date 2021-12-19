@@ -4,7 +4,7 @@ import styles from './ReportBoardContent.module.css';
 import ThumbUp from '@material-ui/icons/ThumbUp';
 import ThumbDown from '@material-ui/icons/ThumbDown';
 import type { ChartReport } from '../../../types/report/ReportType';
-import { viewsHandler } from '../../../lib/report';
+import { viewsHandler } from '../../../lib/redux/report/reportApis';
 import Image from 'next/image';
 import { useSelector } from 'react-redux';
 import { selectReport } from '../../../lib/redux/report/reportSlice';
@@ -15,6 +15,12 @@ interface Props {
 
 const ReportBoardContent: React.FC<Props> = ({ item }) => {
   const { loading } = useSelector(selectReport);
+  const [viewLoading, setViewLoading] = React.useState<boolean>(false);
+
+  const viewClick = async () => {
+    await viewsHandler('chart', item.id);
+    setViewLoading(true);
+  };
 
   return (
     <div className={styles.grid}>
@@ -33,7 +39,9 @@ const ReportBoardContent: React.FC<Props> = ({ item }) => {
         <a
           className="font-bold text-left md:text-base text-xs pl-2"
           onClick={() => {
-            viewsHandler(item.id);
+            if (viewLoading === false) {
+              viewClick();
+            }
           }}>
           {loading ? 'loading...' : item.report.title}
         </a>

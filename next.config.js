@@ -9,6 +9,8 @@ module.exports = {
       'mimgnews.pstatic.net',
       'img.insight.co.kr',
       'www.techholic.co.kr',
+      'cdn.gukjenews.com',
+      'cdn.smedaily.co.kr',
     ],
   },
   env: {

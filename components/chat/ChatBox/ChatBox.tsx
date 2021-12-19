@@ -90,8 +90,8 @@ const ChatBox: React.FC<Props> = ({ className }) => {
         실시간 채팅
       </h1>
       {isClick && (
-        <div className="lg:w-72 w-64">
-          <div className="p-2 lg:h-96 h-80 overflow-y-scroll border-2">
+        <div className="w-64">
+          <div className="p-2 h-80 overflow-y-scroll border-2">
             {contents.map((arr, idx) => {
               return (
                 <ChatList

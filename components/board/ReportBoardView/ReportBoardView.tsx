@@ -10,9 +10,13 @@ import copy from 'copy-to-clipboard'; // url 클립보드 복사 기능
 import { useRouter } from 'next/dist/client/router';
 import { goodAndBadHandler } from '../../../lib/redux/report/reportApis';
 import BoardList from '../BoardList';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectKakaoLogin } from '../../../lib/redux/kakaoLogin/kakaoLoginSlice';
 import fetcher from '../../../lib/fetcher';
+import {
+  selectReport,
+  userIdCheck,
+} from '../../../lib/redux/report/reportSlice';
 
 interface Props {
   className?: string;
@@ -37,6 +41,8 @@ const ReportBoardView: React.FC<Props> = ({
   const pages = useRouter();
 
   const { login, id, nickname } = useSelector(selectKakaoLogin);
+  const { isWriter } = useSelector(selectReport);
+  const dispatch = useDispatch();
 
   const [loading, setLoading] = React.useState<boolean>(false);
   const [pressed, setPressed] = React.useState<PressedType>({
@@ -137,8 +143,9 @@ const ReportBoardView: React.FC<Props> = ({
   React.useEffect(() => {
     if (login === true) {
       pressCheck(id, report.id);
+      dispatch(userIdCheck(id, report.username));
     }
-  }, [counter, login, id, report.id]);
+  }, [counter, login, id, report.id, nickname]);
 
   return (
     <div className={cn(className)}>
@@ -221,23 +228,25 @@ const ReportBoardView: React.FC<Props> = ({
             />{' '}
             {counter.bad}
           </div>
-          <div>
-            <Button>수정</Button>
-            <Button
-              onClick={() => {
-                if (login) {
-                  if (report.username === nickname) {
-                    deleteReport(report.id, id);
+          {isWriter && (
+            <div>
+              <Button>수정</Button>
+              <Button
+                onClick={() => {
+                  if (login) {
+                    if (report.username === nickname) {
+                      deleteReport(report.id, id);
+                    } else {
+                      alert('게시글을 삭제할 수 없습니다.');
+                    }
                   } else {
-                    alert('게시글을 삭제할 수 없습니다.');
+                    alert('로그인 후 이용 가능합니다!');
                   }
-                } else {
-                  alert('로그인 후 이용 가능합니다!');
-                }
-              }}>
-              삭제
-            </Button>
-          </div>
+                }}>
+                삭제
+              </Button>
+            </div>
+          )}
         </div>
       </div>
       <div className={styles.comment}>

@@ -9,10 +9,14 @@ import copy from 'copy-to-clipboard'; // url 클립보드 복사 기능
 import { useRouter } from 'next/dist/client/router';
 import { goodAndBadHandler } from '../../../lib/redux/report/reportApis';
 import BoardList from '../BoardList';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { selectKakaoLogin } from '../../../lib/redux/kakaoLogin/kakaoLoginSlice';
 import fetcher from '../../../lib/fetcher';
 import WritingBoard from '../WritingBoard';
+import {
+  selectReport,
+  userIdCheck,
+} from '../../../lib/redux/report/reportSlice';
 
 interface Props {
   className?: string;
@@ -28,7 +32,9 @@ const BulletinBoardView: React.FC<Props> = ({
   const pages = useRouter();
 
   const { login, id, nickname } = useSelector(selectKakaoLogin);
-  const [isWriter, setIsWriter] = React.useState<boolean>(false);
+  const { isWriter } = useSelector(selectReport);
+  const dispatch = useDispatch();
+
   const [isEditing, setIsEditing] = React.useState<boolean>(false);
 
   const [goodCounter, setGoodCounter] = React.useState<number>(board.good);
@@ -60,16 +66,16 @@ const BulletinBoardView: React.FC<Props> = ({
     }
   };
 
-  const userIdChecker = async (id: number, nickname: string) => {
-    const checkId = (await fetcher(
-      process.env.LOCAL_SERVER + `api/v2/user/${nickname}`,
-    )) as number;
-    if (id === checkId) {
-      setIsWriter(true);
-    } else {
-      setIsWriter(false);
-    }
-  };
+  // const userIdChecker = async (id: number, nickname: string) => {
+  //   const checkId = (await fetcher(
+  //     process.env.LOCAL_SERVER + `api/v2/user/${nickname}`,
+  //   )) as number;
+  //   if (id === checkId) {
+  //     setIsWriter(true);
+  //   } else {
+  //     setIsWriter(false);
+  //   }
+  // };
 
   const deleteHandler = () => {
     if (login) {
@@ -113,9 +119,8 @@ const BulletinBoardView: React.FC<Props> = ({
   React.useEffect(() => {
     if (login === true) {
       pressCheck(id, board.id);
-      userIdChecker(id, board.username);
+      dispatch(userIdCheck(id, board.username));
     } else {
-      setIsWriter(false);
     }
   }, [goodCounter, login, id, board]);
 

@@ -25,13 +25,16 @@ export async function getUserReportAll(userId: number) {
 }
 
 export async function getSearchReportAll(
-  condition: string,
+  dbName: string,
+  column: string,
   value: string,
   sorted: string,
 ) {
   return (await fetcher(
     process.env.LOCAL_SERVER +
-      `api/v1/user/chart-report/search?condition=${condition}&value=${value}&sorted=${sorted}`,
+      `api/v1/board/search?dbname=${dbName}&column=${
+        column === 'title+content' ? 'content' : column
+      }&value=${value}&sorted=${sorted}`,
   )) as Array<ChartReport>;
 }
 
@@ -78,4 +81,10 @@ export async function viewsHandler(dbName: string, id: number) {
       method: 'PATCH',
     },
   )) as string;
+}
+
+export async function checkIdByNickname(nickname: string) {
+  return (await fetcher(
+    process.env.LOCAL_SERVER + `api/v2/user/${nickname}`,
+  )) as number;
 }
