@@ -118,17 +118,17 @@ const ChartBoardPage = ({ totalList }: { totalList: Array<string> }) => {
               <span key={idx}>
                 <Button
                   size="small"
-                  style={{
-                    border: `${
-                      sorted === sortedButton[arr]
-                        ? '1px solid #818cf8'
-                        : 'none'
-                    }`,
-                  }}
+                  // style={{
+                  //   border: `${
+                  //     sorted === sortedButton[arr]
+                  //       ? '1px solid #818cf8'
+                  //       : 'none'
+                  //   }`,
+                  // }}
                   // FIXME: ts error i dont know.....
                   onClick={(e) => {
                     e.preventDefault();
-                    setSorted(sortedButton[arr]);
+                    // setSorted(sortedButton[arr]);
                   }}
                   disabled={loading}>
                   {loading ? arr + '...' : arr}
