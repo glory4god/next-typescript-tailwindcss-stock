@@ -98,4 +98,3 @@
 
 ## 프로젝트 기술서는 아래 링크에 있습니다.
 https://fixed-mask-ed8.notion.site/1e018fbaa0b34f5d86be186ccd062544
->>>>>>> 5b143cc67d460cfb9b39f2d7e0f6a839a423552d
